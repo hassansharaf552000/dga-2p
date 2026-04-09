@@ -1,0 +1,22 @@
+<div class="modal-backdrop">
+  <div class="modal modal--{{ size }}">
+    @if (showHeader) {
+      <div class="modal__header">
+        <h2 class="modal__title">{{ title }}</h2>
+        @if (showClose) {
+          <button class="modal__close" type="button">×</button>
+        }
+      </div>
+    }
+    <div class="modal__content">
+      <ng-content></ng-content>
+      <p>Modal content goes here. This is placeholder text for the modal body.</p>
+    </div>
+    @if (showFooter) {
+      <div class="modal__footer">
+        <button class="modal__btn modal__btn--secondary">{{ secondaryAction }}</button>
+        <button class="modal__btn modal__btn--primary">{{ primaryAction }}</button>
+      </div>
+    }
+  </div>
+</div>

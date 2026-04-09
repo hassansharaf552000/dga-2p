@@ -1,0 +1,42 @@
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  &__value {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  &__unit {
+    font-size: 16px;
+    color: #666;
+  }
+
+  &__trend {
+    font-size: 14px;
+    font-weight: 500;
+    &--up { color: #28a745; }
+    &--down { color: #dc3545; }
+    &--neutral { color: #666; }
+  }
+
+  &__description {
+    font-size: 12px;
+    color: #999;
+  }
+}

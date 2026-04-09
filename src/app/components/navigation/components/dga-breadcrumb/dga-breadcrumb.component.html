@@ -1,0 +1,39 @@
+<nav class="dga-breadcrumb" aria-label="Breadcrumb" [attr.dir]="rtl ? 'rtl' : null">
+  <ol class="dga-breadcrumb__list">
+    @for (item of visibleItems; track item.label; let last = $last) {
+      <li class="dga-breadcrumb__item" [class.dga-breadcrumb__item--overflow]="item.overflow">
+        @if (item.overflow) {
+          <button class="dga-breadcrumb__overflow" type="button" (click)="toggleOverflow($event)">
+            <span class="dga-breadcrumb__link">...</span>
+          </button>
+          @if (overflowOpen) {
+            <div class="dga-breadcrumb__menu" role="menu">
+              @for (overflowItem of overflowItems; track overflowItem.label) {
+                <a
+                  class="dga-breadcrumb__menu-item"
+                  role="menuitem"
+                  [href]="overflowItem.url || '#'"
+                  (click)="closeOverflow()">
+                  {{ overflowItem.label }}
+                </a>
+              }
+            </div>
+          }
+        } @else if (item.url && !last) {
+          <a class="dga-breadcrumb__link" [href]="item.url">{{ item.label }}</a>
+        } @else {
+          <span class="dga-breadcrumb__current" [attr.aria-current]="last ? 'page' : null">{{ item.label }}</span>
+        }
+        @if (!last) {
+          @if (useIconSeparator) {
+            <span class="dga-breadcrumb__separator" aria-hidden="true">
+              <img [src]="separatorIconUrl" alt="" />
+            </span>
+          } @else {
+            <span class="dga-breadcrumb__separator">{{ separator }}</span>
+          }
+        }
+      </li>
+    }
+  </ol>
+</nav>

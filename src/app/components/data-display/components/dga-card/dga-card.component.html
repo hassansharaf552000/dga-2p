@@ -1,0 +1,50 @@
+<article [class]="cardClasses.join(' ')" [attr.dir]="rtl ? 'rtl' : 'ltr'">
+  @if (showImage) {
+    <div class="card__image">
+      <img [src]="imageUrl" alt="" />
+    </div>
+  }
+
+  @if (showFeaturedIcon) {
+    <div class="card__featured">
+      <span class="card__icon-shell">
+        <img [src]="featuredIconUrl" alt="" />
+      </span>
+    </div>
+  }
+
+  <div class="card__content">
+    <h3 class="card__title">{{ title }}</h3>
+    <p class="card__desc">{{ description }}</p>
+  </div>
+
+  @if (showTags) {
+    <div class="card__tags">
+      @for (tag of tags; track tag) {
+        <span class="card__tag">{{ tag }}</span>
+      }
+    </div>
+  }
+
+  @if (showRating) {
+    <div class="card__rating">
+      <div class="card__stars">
+        @for (star of stars; track star) {
+          <img [src]="starFullUrl" alt="" />
+        }
+      </div>
+      <span class="card__reviews">12 reviews</span>
+    </div>
+  }
+
+  @if (showPrimaryAction) {
+    <div class="card__actions">
+      @if (showSecondaryAction) {
+        <button class="card__btn card__btn--secondary">
+          Action
+        </button>
+      }
+      <button class="card__btn card__btn--primary">Action</button>
+    </div>
+  }
+</article>

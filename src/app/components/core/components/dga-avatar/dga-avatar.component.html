@@ -1,0 +1,16 @@
+<div class="{{ avatarClasses.join(' ') }}" [attr.aria-label]="alt">
+  <div class="dga-avatar__frame">
+    @if (type === 'image') {
+      <img class="dga-avatar__image" [src]="src" [alt]="alt" />
+    } @else if (type === 'icon') {
+      <span class="dga-avatar__icon" aria-hidden="true">
+        <img [src]="iconUrl" alt="" />
+      </span>
+    } @else {
+      <span class="dga-avatar__initials">{{ initials }}</span>
+    }
+  </div>
+  @if (border) {
+    <span class="dga-avatar__ring" aria-hidden="true"></span>
+  }
+</div>

@@ -1,0 +1,55 @@
+/**
+ * DGA Design System - Utility Classes
+ * Reusable helper classes for common patterns
+ */
+
+/* Container */
+.container {
+  max-width: var(--container-max-width-desktop);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding-desktop);
+  padding-right: var(--container-padding-desktop);
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding-left: var(--container-padding-mobile);
+    padding-right: var(--container-padding-mobile);
+  }
+}
+
+/* Text Utilities */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-paragraph-secondary); }
+.text-success { color: var(--text-success); }
+.text-info { color: var(--text-info); }
+.text-warning { color: var(--text-warning); }
+.text-error { color: var(--text-error); }
+.text-oncolor { color: var(--text-oncolor-primary); }
+
+/* Background Utilities */
+.bg-primary { background-color: var(--bg-primary); }
+.bg-card { background-color: var(--bg-card); }
+.bg-body { background-color: var(--bg-body); }
+.bg-success { background-color: var(--bg-success); }
+.bg-info { background-color: var(--bg-info); }
+.bg-warning { background-color: var(--bg-warning); }
+.bg-error { background-color: var(--bg-error); }
+
+/* Border Utilities */
+.border-primary { border-color: var(--border-primary); }
+.border-neutral { border-color: var(--border-neutral-primary); }
+.border-success { border-color: var(--border-success); }
+.border-info { border-color: var(--border-info); }
+.border-warning { border-color: var(--border-warning); }
+.border-error { border-color: var(--border-error); }
+
+/* Rounded Utilities */
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-xs { border-radius: var(--radius-xs); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-full); }

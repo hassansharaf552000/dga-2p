@@ -1,0 +1,45 @@
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  &__label { color: #333; }
+  &__value { color: #666; }
+
+  &__track {
+    background: #e0e0e0;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  &--small &__track { height: 4px; }
+  &--medium &__track { height: 8px; }
+  &--large &__track { height: 12px; }
+
+  &__fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+
+    &--default { background: #0066cc; }
+    &--success { background: #28a745; }
+    &--warning { background: #ffc107; }
+    &--error { background: #dc3545; }
+
+    &--indeterminate {
+      animation: indeterminate 1.5s infinite linear;
+      width: 30% !important;
+    }
+  }
+}
+
+@keyframes indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}

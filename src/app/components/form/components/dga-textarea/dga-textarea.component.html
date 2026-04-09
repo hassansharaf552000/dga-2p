@@ -1,0 +1,16 @@
+<div class="textarea" [class.textarea--error]="error" [class.textarea--disabled]="disabled">
+  @if (label) {
+    <label class="textarea__label">{{ label }}</label>
+  }
+  <textarea 
+    class="textarea__field" 
+    [placeholder]="placeholder"
+    [rows]="rows"
+    [disabled]="disabled"
+    [attr.maxlength]="maxLength > 0 ? maxLength : null">{{ value }}</textarea>
+  @if (error) {
+    <span class="textarea__error">{{ error }}</span>
+  } @else if (helperText) {
+    <span class="textarea__helper">{{ helperText }}</span>
+  }
+</div>

@@ -1,0 +1,13 @@
+<nav class="second-nav second-nav--{{ variant }}" 
+     [class.second-nav--sticky]="sticky"
+     [class.second-nav--bordered]="showBorder">
+  <div class="second-nav__container">
+    @for (item of items; track item.id) {
+      <a class="second-nav__link" 
+         [class.second-nav__link--active]="item.active"
+         [href]="item.url || '#'">
+        {{ item.label }}
+      </a>
+    }
+  </div>
+</nav>

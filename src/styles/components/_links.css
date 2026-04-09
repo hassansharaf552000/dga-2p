@@ -1,0 +1,27 @@
+/**
+ * DGA Design System - Link Component
+ */
+
+a,
+.link {
+  color: var(--link-primary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+a:hover,
+.link:hover {
+  color: var(--link-primary-hover);
+  text-decoration: underline;
+}
+
+a:active,
+.link:active {
+  color: var(--link-primary-pressed);
+}
+
+a:visited,
+.link:visited {
+  color: var(--link-primary-visited);
+}

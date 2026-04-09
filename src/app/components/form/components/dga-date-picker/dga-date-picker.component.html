@@ -1,0 +1,16 @@
+<div class="date-picker" [class.date-picker--error]="error" [class.date-picker--disabled]="disabled">
+  @if (label) {
+    <label class="date-picker__label">{{ label }}</label>
+  }
+  <div class="date-picker__wrapper">
+    <input 
+      type="date" 
+      class="date-picker__input"
+      [value]="value"
+      [disabled]="disabled" />
+    <span class="date-picker__icon">📅</span>
+  </div>
+  @if (error) {
+    <span class="date-picker__error">{{ error }}</span>
+  }
+</div>

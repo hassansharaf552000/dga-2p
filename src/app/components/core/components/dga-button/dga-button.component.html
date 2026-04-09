@@ -1,0 +1,19 @@
+<button
+  class="{{ buttonClasses.join(' ') }}"
+  [disabled]="isDisabled"
+  [attr.aria-label]="iconOnly ? label : null"
+  [attr.dir]="rtl ? 'rtl' : null">
+  @if (showLeadIcon) {
+    <span class="dga-button__icon" aria-hidden="true">
+      <img [src]="leadIconUrl" alt="" />
+    </span>
+  }
+  @if (!iconOnly) {
+    <span class="dga-button__label">{{ label }}</span>
+  }
+  @if (showTrailIcon) {
+    <span class="dga-button__icon" aria-hidden="true">
+      <img [src]="trailIconUrl" alt="" />
+    </span>
+  }
+</button>

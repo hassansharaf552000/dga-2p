@@ -1,0 +1,20 @@
+<div class="toast toast--{{ variant }} toast--{{ position }}">
+  <div class="toast__icon">
+    @if (variant === 'info') { ℹ️ }
+    @else if (variant === 'success') { ✅ }
+    @else if (variant === 'warning') { ⚠️ }
+    @else if (variant === 'error') { ❌ }
+  </div>
+  <div class="toast__content">
+    @if (title) {
+      <strong class="toast__title">{{ title }}</strong>
+    }
+    <span class="toast__message">{{ message }}</span>
+  </div>
+  @if (dismissible) {
+    <button class="toast__close" type="button">×</button>
+  }
+  @if (showProgress) {
+    <div class="toast__progress"></div>
+  }
+</div>

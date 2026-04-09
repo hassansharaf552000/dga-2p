@@ -1,0 +1,18 @@
+<nav class="menu menu--{{ variant }}" [class.menu--compact]="compact">
+  <ul class="menu__list">
+    @for (item of items; track item.id) {
+      @if (item.divider) {
+        <li class="menu__divider"></li>
+      } @else {
+        <li class="menu__item" [class.menu__item--disabled]="item.disabled">
+          <a class="menu__link" [class.menu__link--disabled]="item.disabled">
+            @if (showIcons && item.icon) {
+              <span class="menu__icon">{{ item.icon }}</span>
+            }
+            <span class="menu__label">{{ item.label }}</span>
+          </a>
+        </li>
+      }
+    }
+  </ul>
+</nav>

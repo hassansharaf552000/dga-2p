@@ -1,0 +1,19 @@
+<div class="progress-indicator progress-indicator--{{ variant }}">
+  @for (step of steps; track step.label; let i = $index; let last = $last) {
+    <div class="progress-indicator__step" 
+      [class.progress-indicator__step--completed]="step.completed"
+      [class.progress-indicator__step--active]="step.active">
+      <div class="progress-indicator__circle">
+        @if (step.completed) {
+          ✓
+        } @else {
+          {{ i + 1 }}
+        }
+      </div>
+      <span class="progress-indicator__label">{{ step.label }}</span>
+    </div>
+    @if (!last) {
+      <div class="progress-indicator__connector" [class.progress-indicator__connector--completed]="step.completed"></div>
+    }
+  }
+</div>

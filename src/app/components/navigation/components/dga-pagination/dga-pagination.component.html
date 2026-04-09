@@ -1,0 +1,23 @@
+<nav class="pagination pagination--{{ size }}" aria-label="Pagination">
+  @if (showFirstLast) {
+    <button class="pagination__btn" [disabled]="currentPage === 1">⟨⟨</button>
+  }
+  <button class="pagination__btn" [disabled]="currentPage === 1">⟨</button>
+  
+  @for (page of visiblePages; track page) {
+    <button class="pagination__btn" [class.pagination__btn--active]="page === currentPage">
+      {{ page }}
+    </button>
+  }
+  
+  <button class="pagination__btn" [disabled]="currentPage === totalPages">⟩</button>
+  @if (showFirstLast) {
+    <button class="pagination__btn" [disabled]="currentPage === totalPages">⟩⟩</button>
+  }
+
+  @if (showPageSize) {
+    <span class="pagination__info">
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+  }
+</nav>

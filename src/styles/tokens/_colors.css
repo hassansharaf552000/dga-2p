@@ -1,0 +1,122 @@
+/**
+ * DGA Design System - Primitive Color Tokens
+ * Base color palette values
+ */
+
+:root {
+  /* Base Colors */
+  --color-base-white: #ffffff;
+  --color-base-black: #161616;
+
+  /* Primary SA Flag Colors */
+  --color-primary-25: #f7fdf9;
+  --color-primary-50: #f3fcf6;
+  --color-primary-100: #dff6e7;
+  --color-primary-200: #b8eacb;
+  --color-primary-300: #88d8ad;
+  --color-primary-400: #54c08a;
+  --color-primary-500: #25935f;
+  --color-primary-600: #1b8354;
+  --color-primary-700: #166a45;
+  --color-primary-800: #14573a;
+  --color-primary-900: #104631;
+  --color-primary-950: #092a1e;
+
+  /* Secondary Gold Colors */
+  --color-secondary-25: #fffef7;
+  --color-secondary-50: #fffef2;
+  --color-secondary-100: #fffce6;
+  --color-secondary-200: #fcf3bd;
+  --color-secondary-300: #fae996;
+  --color-secondary-400: #f7d54d;
+  --color-secondary-500: #f5bd02;
+  --color-secondary-600: #dba102;
+  --color-secondary-700: #b87b02;
+  --color-secondary-800: #945c01;
+  --color-secondary-900: #6e3c00;
+  --color-secondary-950: #472400;
+
+  /* Tertiary Lavender Colors */
+  --color-tertiary-25: #fefcff;
+  --color-tertiary-50: #f9f5fa;
+  --color-tertiary-100: #f2e9f5;
+  --color-tertiary-200: #e1cce8;
+  --color-tertiary-300: #ccadd9;
+  --color-tertiary-400: #a57bba;
+  --color-tertiary-500: #80519f;
+  --color-tertiary-600: #6d428f;
+  --color-tertiary-700: #532d75;
+  --color-tertiary-800: #3d1d5e;
+  --color-tertiary-900: #281047;
+  --color-tertiary-950: #16072e;
+
+  /* Neutral Colors */
+  --color-neutral-25: #fcfcfd;
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d2d6db;
+  --color-neutral-400: #9da4ae;
+  --color-neutral-500: #6c737f;
+  --color-neutral-600: #4d5761;
+  --color-neutral-700: #384250;
+  --color-neutral-800: #1f2a37;
+  --color-neutral-900: #111927;
+  --color-neutral-950: #0d121c;
+
+  /* Success Green Colors */
+  --color-success-25: #f6fef9;
+  --color-success-50: #ecfdf3;
+  --color-success-100: #dcfae6;
+  --color-success-200: #abefc6;
+  --color-success-300: #75e0a7;
+  --color-success-400: #47cd89;
+  --color-success-500: #17b26a;
+  --color-success-600: #079455;
+  --color-success-700: #067647;
+  --color-success-800: #085d3a;
+  --color-success-900: #074d31;
+  --color-success-950: #053321;
+
+  /* Info Blue Colors */
+  --color-info-25: #f5faff;
+  --color-info-50: #eff8ff;
+  --color-info-100: #d1e9ff;
+  --color-info-200: #b2ddff;
+  --color-info-300: #84caff;
+  --color-info-400: #53b1fd;
+  --color-info-500: #2e90fa;
+  --color-info-600: #1570ef;
+  --color-info-700: #175cd3;
+  --color-info-800: #1849a9;
+  --color-info-900: #194185;
+  --color-info-950: #102a56;
+
+  /* Warning Yellow Colors */
+  --color-warning-25: #fffcf5;
+  --color-warning-50: #fffaeb;
+  --color-warning-100: #fef0c7;
+  --color-warning-200: #fedf89;
+  --color-warning-300: #fec84b;
+  --color-warning-400: #fdb022;
+  --color-warning-500: #f79009;
+  --color-warning-600: #dc6803;
+  --color-warning-700: #b54708;
+  --color-warning-800: #93370d;
+  --color-warning-900: #7a2e0e;
+  --color-warning-950: #4e1d09;
+
+  /* Error Red Colors */
+  --color-error-25: #fffbfa;
+  --color-error-50: #fef3f2;
+  --color-error-100: #fee4e2;
+  --color-error-200: #fecdca;
+  --color-error-300: #fda29b;
+  --color-error-400: #f97066;
+  --color-error-500: #f04438;
+  --color-error-600: #d92d20;
+  --color-error-700: #b42318;
+  --color-error-800: #912018;
+  --color-error-900: #7a271a;
+  --color-error-950: #55160c;
+}

@@ -1,0 +1,126 @@
+<div class="{{ chartClass }}" [style.height.px]="height" [attr.dir]="rtl ? 'rtl' : null">
+  <div class="dga-charts__header">
+    <span class="dga-charts__title">{{ title }}</span>
+  </div>
+
+  <div class="dga-charts__body">
+    @if (type === 'bar') {
+      <div class="dga-chart dga-chart--bar">
+        @if (showLegend) {
+          <div class="dga-chart__legend">
+            @for (item of barLegend; track item.label; let i = $index) {
+              <div class="dga-chart__legend-item">
+                <span class="dga-chart__legend-label">{{ item.label }}</span>
+                <span class="dga-chart__legend-mark">
+                  <img [src]="item.mark" alt="" />
+                </span>
+              </div>
+            }
+          </div>
+        }
+
+        <div class="dga-chart__plot">
+          <div class="dga-chart__y-axis">
+            @for (value of yAxisValues; track value) {
+              <div class="dga-chart__y-line">
+                <span class="dga-chart__y-value">{{ value }}</span>
+                <span class="dga-chart__divider">
+                  <img [src]="barDivider" alt="" />
+                </span>
+              </div>
+            }
+          </div>
+
+          <div class="dga-chart__bars">
+            @for (item of barSeries; track item.label) {
+              <div class="dga-chart__bar-item">
+                <div class="dga-chart__bar">
+                  @if (showSeries3 && item.series3) {
+                    <img class="dga-chart__bar-series dga-chart__bar-series--3" [src]="item.series3" alt="" />
+                  }
+                  @if (showSeries2 && item.series2) {
+                    <img class="dga-chart__bar-series dga-chart__bar-series--2" [src]="item.series2" alt="" />
+                  }
+                  <img class="dga-chart__bar-series dga-chart__bar-series--1" [src]="item.series1" alt="" />
+                </div>
+                <span class="dga-chart__bar-label">{{ item.label }}</span>
+              </div>
+            }
+          </div>
+
+          @if (showYAxisLabel) {
+            <div class="dga-chart__y-label">Active users</div>
+          }
+        </div>
+
+        @if (showXAxisLabel) {
+          <div class="dga-chart__x-label">Month</div>
+        }
+      </div>
+    } @else if (type === 'line') {
+      <div class="dga-chart dga-chart--line">
+        @if (showLegend) {
+          <div class="dga-chart__legend">
+            @for (item of lineLegend; track item.label) {
+              <div class="dga-chart__legend-item">
+                <span class="dga-chart__legend-mark">
+                  <img [src]="item.mark" alt="" />
+                </span>
+                <span class="dga-chart__legend-label">{{ item.label }}</span>
+              </div>
+            }
+          </div>
+        }
+
+        <div class="dga-chart__plot">
+          @if (showYAxisLabel) {
+            <div class="dga-chart__y-label dga-chart__y-label--line">Active users</div>
+          }
+
+          <div class="dga-chart__line-area">
+            <div class="dga-chart__y-axis">
+              @for (value of yAxisValues; track value) {
+                <div class="dga-chart__y-line">
+                  <span class="dga-chart__y-value">{{ value }}</span>
+                  <span class="dga-chart__divider">
+                    <img [src]="lineDivider" alt="" />
+                  </span>
+                </div>
+              }
+            </div>
+            <div class="dga-chart__line-series">
+              <img class="dga-chart__line dga-chart__line--1" [src]="lineSeries[0]" alt="" />
+              <img class="dga-chart__line dga-chart__line--2" [src]="lineSeries[1]" alt="" />
+              <img class="dga-chart__line dga-chart__line--3" [src]="lineSeries[2]" alt="" />
+            </div>
+            <div class="dga-chart__x-axis">
+              @for (month of lineMonths; track month) {
+                <span class="dga-chart__x-item">{{ month }}</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        @if (showXAxisLabel) {
+          <div class="dga-chart__x-label">Month</div>
+        }
+      </div>
+    } @else {
+      <div class="dga-chart dga-chart--pie">
+        <div class="dga-chart__pie">
+          <img [src]="type === 'donut' ? donutImage : pieImage" alt="" />
+        </div>
+        @if (showData) {
+          <div class="dga-chart__legend dga-chart__legend--center">
+            <div class="dga-chart__legend-item">
+              <span class="dga-chart__legend-mark">
+                <img [src]="pieLegendMark" alt="" />
+              </span>
+              <span class="dga-chart__legend-label">Series 1</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

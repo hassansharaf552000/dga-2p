@@ -1,0 +1,24 @@
+<header class="nav-header nav-header--{{ variant }}" [class.nav-header--sticky]="sticky">
+  <div class="nav-header__container">
+    <a class="nav-header__logo" [href]="logoUrl">{{ logo }}</a>
+
+    <nav class="nav-header__nav">
+      @for (item of navItems; track item.id) {
+        <a class="nav-header__link" [href]="item.url">
+          @if (item.icon) { <span class="nav-header__icon">{{ item.icon }}</span> }
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="nav-header__actions">
+      @if (showSearch) {
+        <button class="nav-header__action">🔍</button>
+      }
+      @if (showUserMenu) {
+        <button class="nav-header__action nav-header__user">👤</button>
+      }
+      <button class="nav-header__menu-toggle">☰</button>
+    </div>
+  </div>
+</header>

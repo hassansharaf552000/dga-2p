@@ -1,0 +1,39 @@
+/**
+ * DGA Design System - Table Component
+ */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-card);
+}
+
+.table thead {
+  background-color: var(--table-bg-header);
+}
+
+.table th {
+  padding: var(--spacing-2) var(--spacing-4);
+  text-align: right;
+  font-size: var(--text-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--table-text-head);
+  border-bottom: 1px solid var(--table-border);
+}
+
+.table td {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--text-size-sm);
+  color: var(--table-text-body);
+  border-bottom: 1px solid var(--table-border);
+}
+
+.table tbody tr:hover {
+  background-color: var(--table-bg-row-hover);
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] .table th,
+[dir="rtl"] .table td {
+  text-align: right;
+}

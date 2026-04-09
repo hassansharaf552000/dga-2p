@@ -1,0 +1,8 @@
+<dl class="structured-list" [class.structured-list--bordered]="bordered" [class.structured-list--striped]="striped">
+  @for (row of rows; track row.label) {
+    <div class="structured-list__row">
+      <dt class="structured-list__label">{{ row.label }}</dt>
+      <dd class="structured-list__value">{{ row.value }}</dd>
+    </div>
+  }
+</dl>

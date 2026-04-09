@@ -1,0 +1,60 @@
+/**
+ * DGA Design System - Alpha/Opacity Tokens
+ * Semi-transparent color values
+ */
+
+:root {
+  /* Alpha White Values */
+  --alpha-white-0: rgba(255, 255, 255, 0);
+  --alpha-white-10: rgba(255, 255, 255, 0.1);
+  --alpha-white-20: rgba(255, 255, 255, 0.2);
+  --alpha-white-30: rgba(255, 255, 255, 0.3);
+  --alpha-white-40: rgba(255, 255, 255, 0.4);
+  --alpha-white-50: rgba(255, 255, 255, 0.5);
+  --alpha-white-60: rgba(255, 255, 255, 0.6);
+  --alpha-white-70: rgba(255, 255, 255, 0.7);
+  --alpha-white-80: rgba(255, 255, 255, 0.8);
+  --alpha-white-90: rgba(255, 255, 255, 0.9);
+  --alpha-white-100: #ffffff;
+
+  /* Alpha Black Values */
+  --alpha-black-0: rgba(22, 22, 22, 0);
+  --alpha-black-10: rgba(22, 22, 22, 0.1);
+  --alpha-black-20: rgba(22, 22, 22, 0.2);
+  --alpha-black-30: rgba(22, 22, 22, 0.3);
+  --alpha-black-40: rgba(22, 22, 22, 0.4);
+  --alpha-black-50: rgba(22, 22, 22, 0.5);
+  --alpha-black-60: rgba(22, 22, 22, 0.6);
+  --alpha-black-70: rgba(22, 22, 22, 0.7);
+  --alpha-black-80: rgba(22, 22, 22, 0.8);
+  --alpha-black-90: rgba(22, 22, 22, 0.9);
+  --alpha-black-100: #161616;
+
+  /* Alpha Primary Values */
+  --alpha-primary-10: rgba(27, 131, 84, 0.1);
+  --alpha-primary-20: rgba(27, 131, 84, 0.2);
+  --alpha-primary-30: rgba(27, 131, 84, 0.3);
+  --alpha-primary-40: rgba(27, 131, 84, 0.4);
+  --alpha-primary-50: rgba(27, 131, 84, 0.5);
+  --alpha-primary-60: rgba(27, 131, 84, 0.6);
+  --alpha-primary-70: rgba(27, 131, 84, 0.7);
+  --alpha-primary-80: rgba(27, 131, 84, 0.8);
+  --alpha-primary-90: rgba(27, 131, 84, 0.9);
+  --alpha-primary-100: #1b8354;
+
+  /* Alpha Success Values */
+  --alpha-success-10: rgba(6, 118, 71, 0.1);
+  --alpha-success-20: rgba(6, 118, 71, 0.2);
+
+  /* Alpha Info Values */
+  --alpha-info-10: rgba(21, 112, 239, 0.1);
+  --alpha-info-20: rgba(21, 112, 239, 0.2);
+
+  /* Alpha Warning Values */
+  --alpha-warning-10: rgba(220, 104, 3, 0.1);
+  --alpha-warning-20: rgba(220, 104, 3, 0.2);
+
+  /* Alpha Error Values */
+  --alpha-error-10: rgba(217, 45, 32, 0.1);
+  --alpha-error-20: rgba(217, 45, 32, 0.2);
+}

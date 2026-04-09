@@ -1,0 +1,19 @@
+<div class="metric">
+  <span class="metric__label">{{ label }}</span>
+  <div class="metric__value-row">
+    <span class="metric__value">{{ value }}</span>
+    @if (unit) {
+      <span class="metric__unit">{{ unit }}</span>
+    }
+    @if (trendValue) {
+      <span class="metric__trend metric__trend--{{ trend }}">
+        @if (trend === 'up') { ↑ }
+        @else if (trend === 'down') { ↓ }
+        {{ trendValue }}
+      </span>
+    }
+  </div>
+  @if (description) {
+    <span class="metric__description">{{ description }}</span>
+  }
+</div>

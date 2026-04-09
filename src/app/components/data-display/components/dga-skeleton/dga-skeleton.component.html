@@ -1,0 +1,20 @@
+<div class="skeleton skeleton--{{ variant }}" [class.skeleton--animated]="animated">
+  @if (variant === 'text') {
+    @for (line of [].constructor(lines); track $index; let last = $last) {
+      <div class="skeleton__line" [style.width]="last ? '60%' : width" [style.height]="height"></div>
+    }
+  } @else if (variant === 'circle') {
+    <div class="skeleton__circle" [style.width]="width" [style.height]="width"></div>
+  } @else if (variant === 'rectangle') {
+    <div class="skeleton__rectangle" [style.width]="width" [style.height]="height"></div>
+  } @else if (variant === 'card') {
+    <div class="skeleton__card">
+      <div class="skeleton__card-image"></div>
+      <div class="skeleton__card-content">
+        <div class="skeleton__line" style="width: 80%"></div>
+        <div class="skeleton__line" style="width: 100%"></div>
+        <div class="skeleton__line" style="width: 60%"></div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,133 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background: #000B1B;
+  color: #fff;
+  overflow-y: auto;
+  position: relative;
+  margin: 0;
+  padding: 0;
+
+  &__header {
+    padding: 16px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__logo-icon {
+    width: 350px;
+    height: 50px;
+    background: url('/2p-logo.svg') no-repeat center;
+    background-size: contain;
+  }
+
+  &__logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &__nav {
+    flex: 1;
+    padding: 8px 0;
+    overflow-y: auto;
+  }
+
+  &__category {
+    margin-bottom: 4px;
+  }
+
+  &__category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    &--expanded {
+      background: rgba(255, 255, 255, 0.03);
+    }
+  }
+
+  &__category-icon {
+    font-size: 16px;
+  }
+
+  &__category-name {
+    flex: 1;
+    text-align: left;
+  }
+
+  &__category-arrow {
+    font-size: 10px;
+    opacity: 0.6;
+    transition: transform 0.2s ease;
+  }
+
+  &__components {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 8px;
+  }
+
+  &__link {
+    display: block;
+    padding: 6px 12px 6px 32px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    &--active {
+      color: #00a86b;
+      background: rgba(0, 168, 107, 0.1);
+      border-left-color: #00a86b;
+      font-weight: 500;
+    }
+  }
+}
+
+// Scrollbar styling
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}

@@ -1,0 +1,33 @@
+<div class="radial-stepper radial-stepper--{{ size }}">
+  <div class="radial-stepper__circle">
+    <svg viewBox="0 0 100 100" class="radial-stepper__svg">
+      <circle class="radial-stepper__track" cx="50" cy="50" r="45"/>
+      @if (showProgress) {
+        <circle 
+          class="radial-stepper__progress" 
+          cx="50" cy="50" r="45"
+          [style.stroke-dasharray]="'283'"
+          [style.stroke-dashoffset]="283 - (283 * progressPercent / 100)"/>
+      }
+    </svg>
+    <div class="radial-stepper__center">
+      <span class="radial-stepper__count">{{ completedSteps }}/{{ steps.length }}</span>
+      <span class="radial-stepper__label">Complete</span>
+    </div>
+  </div>
+
+  @if (showLabels) {
+    <div class="radial-stepper__steps">
+      @for (step of steps; track step.id; let i = $index) {
+        <div class="radial-stepper__step radial-stepper__step--{{ step.status }}">
+          <span class="radial-stepper__step-indicator">
+            @if (step.status === 'completed') { ✓ }
+            @else if (step.status === 'error') { ✕ }
+            @else { {{ i + 1 }} }
+          </span>
+          <span class="radial-stepper__step-label">{{ step.label }}</span>
+        </div>
+      }
+    </div>
+  }
+</div>

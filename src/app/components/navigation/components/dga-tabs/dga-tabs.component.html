@@ -1,0 +1,22 @@
+<div class="tabs tabs--{{ variant }} tabs--{{ orientation }}" [class.tabs--full-width]="fullWidth">
+  <div class="tabs__list" role="tablist">
+    @for (tab of tabs; track tab.id) {
+      <button 
+        class="tabs__tab" 
+        [class.tabs__tab--active]="tab.id === activeTab"
+        [class.tabs__tab--disabled]="tab.disabled"
+        [disabled]="tab.disabled"
+        role="tab"
+        [attr.aria-selected]="tab.id === activeTab">
+        @if (tab.icon) {
+          <span class="tabs__icon">{{ tab.icon }}</span>
+        }
+        {{ tab.label }}
+      </button>
+    }
+  </div>
+  <div class="tabs__content">
+    <ng-content></ng-content>
+    <p>Content for {{ activeTab }}</p>
+  </div>
+</div>

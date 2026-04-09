@@ -1,0 +1,52 @@
+.stamp {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 3px solid;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0.8;
+
+  &--approved {
+    border-color: #28a745;
+    color: #28a745;
+  }
+
+  &--rejected {
+    border-color: #dc3545;
+    color: #dc3545;
+  }
+
+  &--pending {
+    border-color: #ffc107;
+    color: #856404;
+  }
+
+  &--custom {
+    border-color: #0066cc;
+    color: #0066cc;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__text {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+
+  &__date {
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  &__signature {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+  }
+}

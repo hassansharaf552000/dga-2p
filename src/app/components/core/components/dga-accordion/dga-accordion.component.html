@@ -1,0 +1,13 @@
+<div class="{{ accordionClasses.join(' ') }}" [attr.dir]="rtl ? 'rtl' : null">
+  <div class="dga-accordion__header">
+    <span class="dga-accordion__title">{{ title }}</span>
+    <span class="dga-accordion__icon" aria-hidden="true">
+      <img [src]="expanded ? iconUpUrl : iconDownUrl" alt="" />
+    </span>
+  </div>
+  @if (expanded) {
+    <div class="dga-accordion__content">
+      {{ content }}
+    </div>
+  }
+</div>

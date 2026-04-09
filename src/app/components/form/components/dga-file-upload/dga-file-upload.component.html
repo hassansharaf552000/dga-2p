@@ -1,0 +1,27 @@
+<div class="file-upload" [class.file-upload--disabled]="disabled" [class.file-upload--drag-drop]="dragDrop">
+  @if (dragDrop) {
+    <div class="file-upload__drop-zone">
+      <span class="file-upload__icon">📁</span>
+      <p class="file-upload__text">Drag & drop files here or</p>
+      <label class="file-upload__button">
+        Browse
+        <input 
+          type="file" 
+          class="file-upload__input"
+          [accept]="accept"
+          [multiple]="multiple"
+          [disabled]="disabled" />
+      </label>
+    </div>
+  } @else {
+    <label class="file-upload__inline">
+      <span class="file-upload__label">{{ label }}</span>
+      <input 
+        type="file" 
+        class="file-upload__input"
+        [accept]="accept"
+        [multiple]="multiple"
+        [disabled]="disabled" />
+    </label>
+  }
+</div>

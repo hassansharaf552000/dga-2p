@@ -1,0 +1,20 @@
+<div class="number-input" [class.number-input--error]="error" [class.number-input--disabled]="disabled">
+  @if (label) {
+    <label class="number-input__label">{{ label }}</label>
+  }
+  <div class="number-input__wrapper">
+    <button class="number-input__btn" type="button" [disabled]="disabled">−</button>
+    <input 
+      type="number" 
+      class="number-input__field"
+      [value]="value"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+      [disabled]="disabled" />
+    <button class="number-input__btn" type="button" [disabled]="disabled">+</button>
+  </div>
+  @if (error) {
+    <span class="number-input__error">{{ error }}</span>
+  }
+</div>

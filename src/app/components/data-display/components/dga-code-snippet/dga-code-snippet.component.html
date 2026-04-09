@@ -1,0 +1,58 @@
+<div class="code-snippet" [class.code-snippet--multi]="type === 'multi-line'" [class.code-snippet--single]="type === 'single-line'">
+  @if (type === 'multi-line' && showTabList) {
+    <div class="code-snippet__tabs">
+      <div class="code-snippet__tabs-divider"></div>
+      <div class="code-snippet__tabs-list">
+        @for (tab of tabs; track $index) {
+          <button
+            type="button"
+            class="code-snippet__tab"
+            [class.code-snippet__tab--active]="$index === activeTabIndex">
+            <span class="code-snippet__tab-label">{{ tab }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="code-snippet__body">
+    @if (type === 'multi-line' && showSidebar) {
+      <div class="code-snippet__sidebar">
+        @for (line of lineNumbers; track line) {
+          <span class="code-snippet__line-number">{{ line }}</span>
+        }
+      </div>
+    }
+
+    <div class="code-snippet__content">
+      @if (type === 'single-line') {
+        <div class="code-snippet__single">
+          <span class="code-snippet__prefix">{{ prefix }}</span>
+          <span class="code-snippet__text">{{ code }}</span>
+        </div>
+        @if (showCopyButton) {
+          <button class="code-snippet__copy code-snippet__copy--single" type="button" aria-label="Copy">
+            <img [src]="singleLineCopyIconUrl" alt="" />
+          </button>
+        }
+      }
+
+      @if (type === 'multi-line') {
+        <div class="code-snippet__block">
+          <pre class="code-snippet__pre"><code class="code-snippet__code">@for (line of highlightedLines; track $index) {<span class="code-snippet__line" [class.code-snippet__line--comment]="line.isComment">{{ line.text }}</span>}</code></pre>
+          @if (showCopyButton) {
+            <button class="code-snippet__copy code-snippet__copy--multi" type="button" aria-label="Copy">
+              <img [src]="multiLineCopyIconUrl" alt="" />
+            </button>
+          }
+        </div>
+        @if (showShowMore) {
+          <button class="code-snippet__show-more" type="button">
+            <span class="code-snippet__show-more-label">Show More</span>
+            <img [src]="showMoreIconUrl" alt="" class="code-snippet__show-more-icon" />
+          </button>
+        }
+      }
+    </div>
+  </div>
+</div>

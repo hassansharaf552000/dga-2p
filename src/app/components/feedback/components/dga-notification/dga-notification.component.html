@@ -1,0 +1,24 @@
+<div class="notification notification--{{ variant }}" [class.notification--unread]="!read">
+  <div class="notification__indicator"></div>
+  @if (avatar) {
+    <div class="notification__avatar">
+      <img [src]="avatar" alt="" />
+    </div>
+  } @else {
+    <div class="notification__icon">
+      @if (variant === 'info') { ℹ️ }
+      @else if (variant === 'success') { ✅ }
+      @else if (variant === 'warning') { ⚠️ }
+      @else if (variant === 'error') { ❌ }
+    </div>
+  }
+  <div class="notification__content">
+    <div class="notification__header">
+      <span class="notification__title">{{ title }}</span>
+      @if (timestamp) {
+        <span class="notification__time">{{ timestamp }}</span>
+      }
+    </div>
+    <p class="notification__message">{{ message }}</p>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="stamp stamp--{{ variant }}" [style.transform]="'rotate(' + rotation + 'deg)'">
+  <div class="stamp__inner">
+    <span class="stamp__text">{{ text || variant.toUpperCase() }}</span>
+    @if (date) {
+      <span class="stamp__date">{{ date }}</span>
+    }
+    @if (signature) {
+      <span class="stamp__signature">{{ signature }}</span>
+    }
+  </div>
+</div>

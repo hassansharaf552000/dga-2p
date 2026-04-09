@@ -1,0 +1,114 @@
+.dga-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dga-space-2);
+  font-family: var(--dga-font-text), sans-serif;
+  font-size: var(--dga-text-md-size);
+  line-height: var(--dga-text-md-line);
+  color: var(--dga-text-default);
+  cursor: pointer;
+  user-select: none;
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__box {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    border: 1px solid #161616;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    position: relative;
+  }
+
+  &__box img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  &__label {
+    font-size: var(--dga-text-md-size);
+    line-height: var(--dga-text-md-line);
+  }
+
+  &--small {
+    font-size: var(--dga-text-sm-size);
+
+    .dga-checkbox__box {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &--xsmall {
+    font-size: var(--dga-text-xs-size);
+
+    .dga-checkbox__box {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &--primary.dga-checkbox--checked .dga-checkbox__box,
+  &--primary.dga-checkbox--indeterminate .dga-checkbox__box {
+    background: #161616;
+    border-color: #161616;
+  }
+
+  &--neutral.dga-checkbox--checked .dga-checkbox__box,
+  &--neutral.dga-checkbox--indeterminate .dga-checkbox__box {
+    background: #161616;
+    border-color: #161616;
+  }
+
+  &--hovered {
+    .dga-checkbox__box::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 9999px;
+      background: #f3f4f6;
+      z-index: -1;
+    }
+  }
+
+  &--pressed {
+    .dga-checkbox__box::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 9999px;
+      background: #f3f4f6;
+      z-index: -1;
+    }
+  }
+
+  &--focused {
+    .dga-checkbox__box::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 2px solid #161616;
+      border-radius: 2px;
+      z-index: -1;
+    }
+  }
+
+  &--disabled,
+  &--read-only {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--rtl {
+    direction: rtl;
+  }
+}

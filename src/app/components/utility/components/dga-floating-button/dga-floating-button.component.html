@@ -1,0 +1,13 @@
+<div class="fab-container fab-container--{{ position }}">
+  <button 
+    class="fab fab--{{ size }}" 
+    [class.fab--extended]="extended"
+    [class.fab--disabled]="disabled"
+    [style.background]="color"
+    [disabled]="disabled">
+    <span class="fab__icon">{{ icon }}</span>
+    @if (extended && label) {
+      <span class="fab__label">{{ label }}</span>
+    }
+  </button>
+</div>

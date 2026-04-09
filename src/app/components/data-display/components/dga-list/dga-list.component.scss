@@ -1,0 +1,23 @@
+.list {
+  margin: 0;
+  padding: 0;
+
+  &--none { list-style: none; }
+  &--disc { list-style: disc; padding-left: 20px; }
+  &--decimal { list-style: decimal; padding-left: 20px; }
+  &--check { list-style: none; }
+
+  &__item {
+    padding: 8px 0;
+  }
+
+  &--dividers &__item {
+    border-bottom: 1px solid #e0e0e0;
+    &:last-child { border-bottom: none; }
+  }
+
+  &__check {
+    color: #28a745;
+    margin-right: 8px;
+  }
+}

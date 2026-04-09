@@ -1,0 +1,83 @@
+/**
+ * DGA Design System - Responsive Breakpoints
+ * Tablet & mobile overrides for typography and spacing
+ */
+
+/* Tablet Breakpoint */
+@media (max-width: 1024px) and (min-width: 768px) {
+  :root {
+    /* Typography - Font Sizes (Tablet) */
+    --text-size-2xs: 8px;
+    --text-size-xs: 10px;
+    --text-size-sm: 12px;
+    --text-size-md: 14px;
+    --text-size-lg: 16px;
+    --text-size-xl: 18px;
+    --text-size-display-xs: 20px;
+    --text-size-display-sm: 24px;
+    --text-size-display-md: 30px;
+    --text-size-display-lg: 36px;
+    --text-size-display-xl: 48px;
+    --text-size-display-2xl: 56px;
+
+    /* Typography - Line Heights (Tablet) */
+    --line-height-2xs: 12px;
+    --line-height-xs: 14px;
+    --line-height-sm: 16px;
+    --line-height-md: 20px;
+    --line-height-lg: 24px;
+    --line-height-xl: 26px;
+    --line-height-display-xs: 28px;
+    --line-height-display-sm: 32px;
+    --line-height-display-md: 40px;
+    --line-height-display-lg: 48px;
+    --line-height-display-xl: 64px;
+    --line-height-display-2xl: 72px;
+
+    /* Component Spacing (Tablet) */
+    --card-padding-lg: var(--spacing-6);
+    --card-padding-md: var(--spacing-6);
+    --card-padding-sm: var(--spacing-6);
+    --section-padding: var(--spacing-6);
+  }
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 767px) {
+  :root {
+    /* Typography - Font Sizes (Mobile) */
+    --text-size-2xs: 8px;
+    --text-size-xs: 8px;
+    --text-size-sm: 10px;
+    --text-size-md: 12px;
+    --text-size-lg: 14px;
+    --text-size-xl: 16px;
+    --text-size-display-xs: 18px;
+    --text-size-display-sm: 20px;
+    --text-size-display-md: 24px;
+    --text-size-display-lg: 32px;
+    --text-size-display-xl: 40px;
+    --text-size-display-2xl: 48px;
+
+    /* Typography - Line Heights (Mobile) */
+    --line-height-2xs: 10px;
+    --line-height-xs: 12px;
+    --line-height-sm: 14px;
+    --line-height-md: 18px;
+    --line-height-lg: 20px;
+    --line-height-xl: 24px;
+    --line-height-display-xs: 24px;
+    --line-height-display-sm: 28px;
+    --line-height-display-md: 32px;
+    --line-height-display-lg: 40px;
+    --line-height-display-xl: 56px;
+    --line-height-display-2xl: 64px;
+
+    /* Component Spacing (Mobile) */
+    --card-padding-lg: var(--spacing-4);
+    --card-padding-md: var(--spacing-4);
+    --card-padding-sm: var(--spacing-4);
+    --section-padding: var(--spacing-4);
+    --container-padding: var(--container-padding-mobile);
+  }
+}

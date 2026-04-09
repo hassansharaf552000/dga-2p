@@ -1,0 +1,6 @@
+<span class="badge badge--{{ variant }} badge--{{ color }}">
+  @if (variant === 'count' && (count > 0 || showZero)) {
+    {{ displayCount }}
+  }
+  <ng-content></ng-content>
+</span>

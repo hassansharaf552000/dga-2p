@@ -1,0 +1,32 @@
+<div class="dga-carousel dga-carousel--{{ style }}" [attr.dir]="rtl ? 'rtl' : null">
+  @if (style !== 'dots-only') {
+    <div class="dga-carousel__content">
+      @if (style === 'arrows') {
+        <button class="dga-carousel__arrow dga-carousel__arrow--left" type="button" aria-label="Previous">
+          <img [src]="arrowLeft" alt="" />
+        </button>
+      }
+
+      <div class="dga-carousel__swap">
+        <p class="dga-carousel__swap-title">{{ contentText }}</p>
+        <p class="dga-carousel__swap-subtitle">Replace with any other component</p>
+      </div>
+
+      @if (style === 'arrows') {
+        <button class="dga-carousel__arrow dga-carousel__arrow--right" type="button" aria-label="Next">
+          <img [src]="arrowRight" alt="" />
+        </button>
+      }
+    </div>
+  }
+
+  @if (style !== 'arrows') {
+    <div class="dga-carousel__dots">
+      @for (dot of dots; track dot) {
+        <span class="dga-carousel__dot">
+          <img [src]="dot === current ? (style === 'dots-only' ? dotActiveSmall : dotActive) : (style === 'dots-only' ? dotInactiveSmall : dotInactive)" alt="" />
+        </span>
+      }
+    </div>
+  }
+</div>

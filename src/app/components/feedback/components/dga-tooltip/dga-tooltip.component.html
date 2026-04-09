@@ -1,0 +1,9 @@
+<div class="tooltip-wrapper">
+  <div class="tooltip-trigger">
+    <ng-content></ng-content>
+    <button class="tooltip-demo-btn">Hover me</button>
+  </div>
+  <div class="tooltip tooltip--{{ position }}" [class.tooltip--arrow]="showArrow" [style.max-width.px]="maxWidth">
+    {{ content }}
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="dga-content-switcher dga-content-switcher--{{ size }}" [class.dga-content-switcher--on-color]="onColor" [attr.dir]="rtl ? 'rtl' : null">
+  @for (item of items; track item.id; let i = $index; let last = $last) {
+    <button
+      class="dga-content-switcher__item"
+      [class.dga-content-switcher__item--first]="i === 0"
+      [class.dga-content-switcher__item--last]="last"
+      [class.dga-content-switcher__item--selected]="item.state === 'selected'"
+      [class.dga-content-switcher__item--focused]="item.state === 'focused'"
+      [class.dga-content-switcher__item--hovered]="item.state === 'hovered'"
+      type="button">
+      <span class="dga-content-switcher__label">{{ item.label }}</span>
+    </button>
+  }
+</div>

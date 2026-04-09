@@ -1,0 +1,65 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+
+  &--vertical {
+    flex-direction: row;
+    .tabs__list { flex-direction: column; border-bottom: none; border-right: 1px solid #ddd; }
+  }
+
+  &--full-width .tabs__tab { flex: 1; }
+
+  &__list {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  &__tab {
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+
+    &:hover:not(:disabled) { color: #0066cc; }
+    
+    &--active {
+      color: #0066cc;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #0066cc;
+      }
+    }
+
+    &--disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+
+  &--pills {
+    .tabs__list { border-bottom: none; gap: 8px; }
+    .tabs__tab {
+      border-radius: 20px;
+      &::after { display: none; }
+      &--active { background: #0066cc; color: white; }
+    }
+  }
+
+  &--underline .tabs__tab--active::after { height: 3px; }
+
+  &__icon { margin-right: 8px; }
+
+  &__content {
+    padding: 20px;
+    color: #666;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,13 @@
+.link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &--default { color: #0066cc; &:hover { text-decoration: underline; } }
+  &--subtle { color: #666; &:hover { color: #0066cc; } }
+  &--prominent { color: #0066cc; font-weight: 500; }
+
+  &--disabled { opacity: 0.5; pointer-events: none; }
+
+  &__external-icon { margin-left: 4px; font-size: 0.8em; }
+}

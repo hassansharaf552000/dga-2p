@@ -1,0 +1,16 @@
+<nav class="toc" [class.toc--sticky]="sticky">
+  @if (showTitle) {
+    <h4 class="toc__title">{{ title }}</h4>
+  }
+  <ul class="toc__list">
+    @for (item of items; track item.id) {
+      <li class="toc__item toc__item--level-{{ item.level }}">
+        <a class="toc__link" 
+           [class.toc__link--active]="highlightActive && item.active"
+           [href]="'#' + item.id">
+          {{ item.label }}
+        </a>
+      </li>
+    }
+  </ul>
+</nav>

@@ -1,0 +1,91 @@
+.dga-content-switcher {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--dga-radius-md);
+  font-family: var(--dga-font-text), sans-serif;
+}
+
+.dga-content-switcher__item {
+  border: 0.5px solid var(--dga-border-neutral-primary);
+  background: var(--dga-bg-neutral-100);
+  color: var(--dga-text-default);
+  padding: var(--dga-space-2);
+  height: 32px;
+  min-width: 51px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--dga-text-md-size);
+  line-height: var(--dga-text-md-line);
+  cursor: pointer;
+}
+
+.dga-content-switcher__item--first {
+  border-top-left-radius: var(--dga-radius-md);
+  border-bottom-left-radius: var(--dga-radius-md);
+}
+
+.dga-content-switcher__item--last {
+  border-top-right-radius: var(--dga-radius-md);
+  border-bottom-right-radius: var(--dga-radius-md);
+}
+
+.dga-content-switcher__item--selected {
+  background: #0d121c;
+  color: var(--dga-text-on-color);
+  border-color: #0d121c;
+}
+
+.dga-content-switcher__item--hovered {
+  background: #f3f4f6;
+}
+
+.dga-content-switcher__item--focused {
+  border: 2px solid #161616;
+  position: relative;
+}
+
+.dga-content-switcher__item--focused::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffffff;
+  pointer-events: none;
+}
+
+.dga-content-switcher--on-color .dga-content-switcher__item {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--dga-text-on-color);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dga-content-switcher--on-color .dga-content-switcher__item--selected {
+  background: var(--dga-bg-card);
+  color: var(--dga-text-default);
+}
+
+.dga-content-switcher--small .dga-content-switcher__item {
+  height: 32px;
+}
+
+.dga-content-switcher--medium .dga-content-switcher__item {
+  height: 40px;
+  min-width: 64px;
+}
+
+.dga-content-switcher--large .dga-content-switcher__item {
+  height: 48px;
+  min-width: 76px;
+}
+
+.dga-content-switcher[dir='rtl'] {
+  direction: rtl;
+}
+
+.dga-content-switcher[dir='rtl'] .dga-content-switcher__item--first {
+  border-radius: 0 var(--dga-radius-md) var(--dga-radius-md) 0;
+}
+
+.dga-content-switcher[dir='rtl'] .dga-content-switcher__item--last {
+  border-radius: var(--dga-radius-md) 0 0 var(--dga-radius-md);
+}

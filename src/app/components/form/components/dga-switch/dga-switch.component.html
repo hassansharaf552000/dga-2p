@@ -1,0 +1,13 @@
+<label class="switch switch--{{ size }}" [class.switch--disabled]="disabled">
+  <input 
+    type="checkbox" 
+    class="switch__input"
+    [checked]="checked"
+    [disabled]="disabled" />
+  <span class="switch__track">
+    <span class="switch__thumb"></span>
+  </span>
+  @if (label) {
+    <span class="switch__label">{{ label }}</span>
+  }
+</label>

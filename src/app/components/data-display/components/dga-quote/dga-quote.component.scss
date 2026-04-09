@@ -1,0 +1,37 @@
+.quote {
+  margin: 0;
+  padding: 16px 24px;
+
+  &--default {
+    font-style: italic;
+  }
+
+  &--bordered {
+    border-left: 4px solid #0066cc;
+    background: #f9f9f9;
+  }
+
+  &--filled {
+    background: #0066cc;
+    color: white;
+    border-radius: 8px;
+  }
+
+  &__text {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  &--filled &__footer { color: rgba(255,255,255,0.8); }
+
+  &__author { font-style: normal; }
+  &__source { &::before { content: ', '; } }
+}

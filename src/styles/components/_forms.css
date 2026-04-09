@@ -1,0 +1,67 @@
+/**
+ * DGA Design System - Form Components
+ */
+
+.form-group {
+  margin-bottom: var(--spacing-4);
+}
+
+.form-label {
+  display: block;
+  font-size: var(--text-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-default);
+  margin-bottom: var(--spacing-2);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--text-size-md);
+  line-height: var(--line-height-md);
+  color: var(--field-text-filled);
+  background-color: var(--field-bg-default);
+  border: 1px solid var(--field-border-default);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease-in-out;
+  font-family: var(--font-family-text);
+}
+
+.form-input:hover,
+.form-textarea:hover,
+.form-select:hover {
+  border-color: var(--field-border-hover);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--field-border-pressed);
+  box-shadow: 0 0 0 3px var(--alpha-primary-20);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--field-text-placeholder);
+}
+
+.form-input.error,
+.form-textarea.error,
+.form-select.error {
+  border-color: var(--field-border-error);
+}
+
+.form-helper-text {
+  font-size: var(--text-size-xs);
+  color: var(--text-paragraph-secondary);
+  margin-top: var(--spacing-1);
+}
+
+.form-error-text {
+  font-size: var(--text-size-xs);
+  color: var(--text-error);
+  margin-top: var(--spacing-1);
+}

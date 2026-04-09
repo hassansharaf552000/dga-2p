@@ -1,0 +1,17 @@
+<label class="{{ checkboxClasses.join(' ') }}" [attr.dir]="rtl ? 'rtl' : null">
+  <input
+    type="checkbox"
+    class="dga-checkbox__input"
+    [checked]="checked"
+    [disabled]="disabled || state === 'disabled'"
+    [attr.readonly]="isReadOnly ? true : null"
+  />
+  <span class="dga-checkbox__box" aria-hidden="true">
+    @if (indeterminate) {
+      <img [src]="indeterminateUrl" alt="" />
+    } @else if (checked) {
+      <img [src]="state === 'focused' && style === 'neutral' ? focusCheckedUrl : checkmarkUrl" alt="" />
+    }
+  </span>
+  <span class="dga-checkbox__label">{{ label }}</span>
+</label>

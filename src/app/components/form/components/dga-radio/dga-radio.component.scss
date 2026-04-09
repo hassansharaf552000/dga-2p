@@ -1,0 +1,41 @@
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #666;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: #0066cc;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.2s;
+    }
+  }
+
+  &__input:checked + &__circle {
+    border-color: #0066cc;
+    &::after { transform: scale(1); }
+  }
+
+  &__label { font-size: 14px; color: #333; }
+  &--disabled { opacity: 0.5; cursor: not-allowed; }
+}

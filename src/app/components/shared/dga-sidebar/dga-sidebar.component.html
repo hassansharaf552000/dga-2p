@@ -1,0 +1,42 @@
+<aside class="sidebar">
+  <div class="sidebar__header">
+    <a routerLink="/" class="sidebar__logo">
+      <span class="sidebar__logo-icon"></span>
+    </a>
+  </div>
+
+  <nav class="sidebar__nav">
+    @for (category of categories(); track category.name) {
+      <div class="sidebar__category">
+        <button 
+          class="sidebar__category-header" 
+          [class.sidebar__category-header--expanded]="category.expanded"
+          (click)="toggleCategory(category)"
+          type="button"
+        >
+          <span class="sidebar__category-icon">{{ category.icon }}</span>
+          <span class="sidebar__category-name">{{ category.name }}</span>
+          <span class="sidebar__category-arrow">
+            {{ category.expanded ? '▼' : '▶' }}
+          </span>
+        </button>
+        
+        @if (category.expanded) {
+          <ul class="sidebar__components">
+            @for (component of category.components; track component.route) {
+              <li>
+                <a 
+                  [routerLink]="component.route" 
+                  routerLinkActive="sidebar__link--active"
+                  class="sidebar__link"
+                >
+                  {{ component.name }}
+                </a>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  </nav>
+</aside>

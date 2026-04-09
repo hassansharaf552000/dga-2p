@@ -1,0 +1,38 @@
+/**
+ * DGA Design System
+ * Main entry point - imports all design system files
+ * Generated from Figma Design Tokens
+ *
+ * Structure:
+ *   tokens/     - Primitive design tokens (colors, spacing, typography, etc.)
+ *   themes/     - Semantic theme mappings (light & dark)
+ *   base/       - Responsive breakpoints & resets
+ *   utilities/  - Reusable utility classes
+ *   components/ - Component-specific styles
+ */
+
+/* ── 1. Primitive Tokens ── */
+@import './tokens/_colors.css';
+@import './tokens/_alpha.css';
+@import './tokens/_spacing.css';
+@import './tokens/_typography.css';
+@import './tokens/_radius-widths.css';
+
+/* ── 2. Theme Mappings ── */
+@import './themes/_light.css';
+@import './themes/_dark.css';
+
+/* ── 3. Base / Responsive ── */
+@import './base/_responsive.css';
+
+/* ── 4. Utilities ── */
+@import './utilities/_utilities.css';
+
+/* ── 5. Components ── */
+@import './components/_buttons.css';
+@import './components/_cards.css';
+@import './components/_forms.css';
+@import './components/_links.css';
+@import './components/_tags.css';
+@import './components/_tables.css';
+@import './components/_typography.css';

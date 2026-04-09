@@ -1,0 +1,11 @@
+<a 
+  class="link link--{{ variant }}"
+  [class.link--disabled]="disabled"
+  [href]="href"
+  [attr.target]="external ? '_blank' : null"
+  [attr.rel]="external ? 'noopener noreferrer' : null">
+  {{ label }}
+  @if (external) {
+    <span class="link__external-icon">↗</span>
+  }
+</a>

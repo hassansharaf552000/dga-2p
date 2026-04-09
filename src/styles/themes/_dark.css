@@ -1,0 +1,212 @@
+/**
+ * DGA Design System - Dark Theme
+ * Semantic tokens mapped to primitives for dark mode
+ */
+
+[data-theme="dark"] {
+  /* Background Colors */
+  --bg-white: var(--color-neutral-950);
+  --bg-body: var(--color-neutral-900);
+  --bg-menu: var(--color-neutral-800);
+  --bg-card: var(--color-neutral-800);
+  --bg-nav-header: var(--color-primary-800);
+  --bg-surface-oncolor: var(--color-base-white);
+  --bg-black: var(--color-base-white);
+  --bg-neutral-800: var(--color-neutral-600);
+  --bg-neutral-400: var(--color-neutral-400);
+  --bg-neutral-300: var(--color-neutral-500);
+  --bg-neutral-200: var(--color-neutral-600);
+  --bg-neutral-100: var(--color-neutral-800);
+  --bg-neutral-50: var(--color-neutral-900);
+  --bg-neutral-25: var(--color-neutral-950);
+  --bg-primary: var(--color-primary-600);
+  --bg-primary-400: var(--color-primary-400);
+  --bg-primary-200: var(--color-neutral-700);
+  --bg-primary-50: var(--alpha-primary-10);
+  --bg-primary-25: var(--color-primary-950);
+  --bg-secondary-50: var(--color-neutral-800);
+  --bg-secondary-25: var(--color-neutral-900);
+  --bg-tertiary-50: var(--color-neutral-800);
+  --bg-tertiary-25: var(--color-neutral-900);
+  --bg-success: var(--color-success-600);
+  --bg-success-50: var(--alpha-success-20);
+  --bg-success-25: var(--alpha-success-10);
+  --bg-info: var(--color-info-600);
+  --bg-info-50: var(--alpha-info-20);
+  --bg-info-25: var(--alpha-info-10);
+  --bg-warning: var(--color-warning-600);
+  --bg-warning-50: var(--alpha-warning-20);
+  --bg-warning-25: var(--alpha-warning-10);
+  --bg-error: var(--color-error-600);
+  --bg-error-50: var(--alpha-error-20);
+  --bg-error-25: var(--alpha-error-10);
+  --bg-disabled: var(--color-neutral-700);
+  --bg-disabled-primary: var(--color-primary-700);
+  --bg-inverse-disabled: var(--color-neutral-700);
+
+  /* Text Colors */
+  --text-default: var(--color-base-white);
+  --text-primary: var(--color-primary-400);
+  --text-primary-sa-flag: var(--color-primary-100);
+  --text-primary-light: var(--color-primary-400);
+  --text-display: var(--color-neutral-50);
+  --text-paragraph-primary: var(--color-neutral-100);
+  --text-paragraph-secondary: var(--color-neutral-200);
+  --text-oncolor-primary: var(--color-base-white);
+  --text-oncolor-secondary: var(--alpha-white-80);
+  --text-oncolor-tertiary: var(--alpha-white-70);
+  --text-success: var(--color-success-400);
+  --text-info: var(--color-info-400);
+  --text-warning: var(--color-warning-400);
+  --text-error: var(--color-error-400);
+  --text-disabled: var(--color-neutral-400);
+  --text-disabled-oncolor: var(--alpha-black-40);
+
+  /* Border Colors */
+  --border-white: var(--color-base-black);
+  --border-white-40: var(--alpha-white-40);
+  --border-black: var(--color-base-white);
+  --border-primary: var(--color-primary-300);
+  --border-primary-light: var(--color-success-200);
+  --border-neutral-primary: var(--color-neutral-500);
+  --border-neutral-secondary: var(--color-neutral-700);
+  --border-neutral-tertiary: var(--color-neutral-800);
+  --border-bg-white: var(--color-neutral-600);
+  --border-bg-neutral: var(--color-neutral-600);
+  --border-transparent-10: var(--alpha-white-10);
+  --border-oncolor-transparent-30: var(--alpha-white-30);
+  --border-success: var(--color-success-500);
+  --border-success-light: var(--color-success-200);
+  --border-info: var(--color-info-700);
+  --border-info-light: var(--color-info-200);
+  --border-warning: var(--color-warning-700);
+  --border-warning-light: var(--color-warning-200);
+  --border-error: var(--color-error-700);
+  --border-error-light: var(--color-error-200);
+  --border-disabled: var(--color-neutral-500);
+
+  /* Button Colors */
+  --btn-bg-black-default: var(--color-neutral-950);
+  --btn-bg-black-hover: var(--color-neutral-800);
+  --btn-bg-black-pressed: var(--color-neutral-600);
+  --btn-bg-black-selected: var(--color-neutral-700);
+  --btn-bg-black-focus: var(--color-neutral-950);
+  --btn-bg-primary-default: var(--color-primary-600);
+  --btn-bg-primary-hover: var(--color-primary-700);
+  --btn-bg-primary-pressed: var(--color-primary-900);
+  --btn-bg-primary-selected: var(--color-primary-800);
+  --btn-bg-primary-focus: var(--color-primary-600);
+  --btn-bg-neutral-default: var(--color-neutral-800);
+  --btn-bg-neutral-hover: var(--color-neutral-700);
+  --btn-bg-neutral-pressed: var(--color-neutral-600);
+  --btn-bg-neutral-selected: var(--color-neutral-700);
+  --btn-bg-neutral-focus: var(--color-neutral-800);
+  --btn-bg-danger-default: var(--color-error-600);
+  --btn-bg-danger-hover: var(--color-error-700);
+  --btn-bg-danger-pressed: var(--color-error-900);
+  --btn-bg-danger-secondary-default: var(--color-error-50);
+  --btn-bg-danger-secondary-hover: var(--color-error-100);
+  --btn-bg-danger-secondary-pressed: var(--color-error-200);
+  --btn-bg-oncolor-default: var(--color-base-black);
+  --btn-bg-oncolor-hover: var(--alpha-white-80);
+  --btn-bg-oncolor-pressed: var(--alpha-white-60);
+  --btn-bg-transparent-default: var(--alpha-white-0);
+  --btn-bg-transparent-hover: var(--alpha-white-20);
+  --btn-bg-transparent-pressed: var(--alpha-white-40);
+  --btn-bg-disabled-oncolor: var(--alpha-white-20);
+
+  /* Icon Colors */
+  --icon-default: var(--color-base-white);
+  --icon-default-500: var(--color-neutral-200);
+  --icon-default-400: var(--color-neutral-500);
+  --icon-oncolor: var(--color-base-white);
+  --icon-primary: var(--color-primary-400);
+  --icon-primary-light: var(--color-primary-50);
+  --icon-primary-400: var(--color-primary-200);
+  --icon-neutral: var(--color-neutral-400);
+  --icon-neutral-light: var(--color-neutral-950);
+  --icon-success: var(--color-success-400);
+  --icon-success-light: var(--color-success-50);
+  --icon-info: var(--color-info-400);
+  --icon-info-light: var(--color-info-50);
+  --icon-warning: var(--color-warning-400);
+  --icon-warning-light: var(--color-warning-50);
+  --icon-error: var(--color-error-400);
+  --icon-error-light: var(--color-error-50);
+  --icon-disabled: var(--color-base-white);
+  --icon-disabled-oncolor: var(--color-base-white);
+
+  /* Link Colors */
+  --link-primary: var(--color-primary-600);
+  --link-primary-hover: var(--color-primary-400);
+  --link-primary-pressed: var(--color-primary-300);
+  --link-primary-focus: var(--color-primary-600);
+  --link-primary-visited: var(--color-primary-800);
+  --link-neutral: var(--color-neutral-200);
+  --link-neutral-hover: var(--color-neutral-400);
+  --link-neutral-pressed: var(--color-neutral-500);
+  --link-neutral-focus: var(--color-neutral-200);
+  --link-neutral-visited: var(--color-neutral-300);
+  --link-danger: var(--color-error-600);
+  --link-danger-hover: var(--color-error-700);
+  --link-danger-pressed: var(--color-error-900);
+  --link-danger-focus: var(--color-error-600);
+  --link-danger-visited: var(--color-error-800);
+  --link-oncolor: var(--color-base-white);
+  --link-oncolor-hover: var(--alpha-white-80);
+  --link-oncolor-pressed: var(--alpha-white-60);
+  --link-oncolor-focus: var(--color-base-white);
+  --link-oncolor-visited: var(--alpha-white-90);
+  --link-oncolor-disabled: var(--alpha-white-30);
+
+  /* Form Colors */
+  --field-bg-default: var(--color-neutral-800);
+  --field-bg-lighter: var(--color-neutral-600);
+  --field-bg-darker: var(--color-neutral-800);
+  --field-bg-pressed: #4d5761;
+  --field-border-default: var(--color-neutral-500);
+  --field-border-hover: var(--color-neutral-200);
+  --field-border-pressed: var(--color-neutral-25);
+  --field-border-error: var(--color-error-700);
+  --field-text-placeholder: var(--color-neutral-200);
+  --field-text-filled: var(--color-base-white);
+
+  /* Control Colors */
+  --control-primary: var(--alpha-white-0);
+  --control-primary-checked: var(--color-primary-600);
+  --control-primary-hover: var(--color-primary-300);
+  --control-primary-pressed: var(--color-primary-400);
+  --control-primary-focus: var(--color-primary-600);
+  --control-neutral-checked: var(--color-neutral-600);
+  --control-neutral-hover: var(--color-neutral-400);
+  --control-neutral-pressed: var(--color-neutral-400);
+  --control-border: var(--color-neutral-400);
+  --control-disabled: var(--color-neutral-300);
+
+  /* Table Colors */
+  --table-border: var(--color-neutral-600);
+  --table-text-head: var(--color-neutral-300);
+  --table-text-body: var(--color-base-white);
+  --table-bg-header: var(--color-neutral-900);
+  --table-bg-row: var(--color-neutral-900);
+  --table-bg-row-hover: var(--color-neutral-100);
+  --table-bg-row-selected: var(--color-primary-50);
+  --table-bg-disabled: var(--color-neutral-700);
+
+  /* Tag Colors */
+  --tag-bg-neutral: var(--color-neutral-600);
+  --tag-bg-neutral-light: var(--color-neutral-800);
+  --tag-bg-success: var(--color-success-700);
+  --tag-bg-success-light: var(--alpha-success-10);
+  --tag-bg-info: var(--color-info-600);
+  --tag-bg-info-light: var(--alpha-info-10);
+  --tag-bg-warning: var(--color-warning-700);
+  --tag-bg-warning-light: var(--alpha-warning-10);
+  --tag-bg-error: var(--color-error-600);
+  --tag-bg-error-light: var(--alpha-error-10);
+  --tag-text-neutral: var(--color-neutral-100);
+  --tag-text-success: var(--color-success-400);
+  --tag-text-info: var(--color-info-400);
+  --tag-text-warning: var(--color-warning-400);
+  --tag-text-error: var(--color-error-400);
+}

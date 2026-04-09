@@ -1,0 +1,27 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+
+  &--dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  &--count {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 9px;
+  }
+
+  &--default { background: #666; }
+  &--primary { background: #0066cc; }
+  &--success { background: #28a745; }
+  &--warning { background: #ffc107; color: #333; }
+  &--error { background: #dc3545; }
+}

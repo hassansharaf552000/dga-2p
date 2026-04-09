@@ -1,0 +1,164 @@
+<main class="playground">
+  <!-- Header -->
+  <header class="playground__header">
+    <div class="playground__header-content">
+      <h1 class="playground__title">{{ config.title }}</h1>
+      <p class="playground__description">{{ config.description }}</p>
+    </div>
+    <div class="playground__header-badge">
+      <span class="playground__badge">Playground</span>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="playground__main">
+    <!-- Controls Panel -->
+    <aside class="playground__controls">
+      <div class="playground__controls-header">
+        <span class="playground__controls-icon">⚙️</span>
+        <h2>Configuration</h2>
+      </div>
+
+      <div class="playground__controls-body">
+        <!-- Text inputs -->
+        @for (field of config.textFields; track field.key) {
+          <div class="playground__field">
+            <label [for]="field.key">{{ field.label }}</label>
+            <input 
+              [id]="field.key" 
+              type="text" 
+              [(ngModel)]="componentProps[field.key]"
+              class="playground__input"
+            />
+          </div>
+        }
+
+        <!-- Textarea inputs -->
+        @for (field of config.textareaFields; track field.key) {
+          <div class="playground__field">
+            <label [for]="field.key">{{ field.label }}</label>
+            <textarea 
+              [id]="field.key" 
+              rows="3" 
+              [(ngModel)]="componentProps[field.key]"
+              class="playground__textarea"
+            ></textarea>
+          </div>
+        }
+
+        <!-- Select inputs -->
+        @for (field of config.selectFields; track field.key) {
+          <div class="playground__field">
+            <label [for]="field.key">{{ field.label }}</label>
+            <select [id]="field.key" [(ngModel)]="componentProps[field.key]" class="playground__select">
+              @for (option of field.options; track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          </div>
+        }
+
+        <!-- Boolean toggles -->
+        @if (config.booleanFields.length) {
+          <div class="playground__toggles">
+            <label class="playground__toggles-title">Options</label>
+            @for (field of config.booleanFields; track field.key) {
+              <label class="playground__toggle">
+                <input type="checkbox" [(ngModel)]="componentProps[field.key]" />
+                <span class="playground__toggle-slider"></span>
+                <span class="playground__toggle-label">{{ field.label }}</span>
+              </label>
+            }
+          </div>
+        }
+      </div>
+    </aside>
+
+    <!-- Preview Panel -->
+    <section class="playground__preview">
+      <div class="playground__preview-header">
+        <span class="playground__preview-icon">👁️</span>
+        <h2>Preview</h2>
+      </div>
+      <div class="playground__preview-content">
+        <ng-content></ng-content>
+      </div>
+    </section>
+  </div>
+
+  <!-- Code Editor Section -->
+  <section class="playground__editor">
+    <div class="playground__editor-chrome">
+      <!-- Window Controls -->
+      <div class="playground__editor-controls">
+        <span class="playground__editor-dot playground__editor-dot--red"></span>
+        <span class="playground__editor-dot playground__editor-dot--yellow"></span>
+        <span class="playground__editor-dot playground__editor-dot--green"></span>
+      </div>
+
+      <!-- Tabs -->
+      <div class="playground__editor-tabs">
+        <button 
+          class="playground__editor-tab"
+          [class.playground__editor-tab--active]="activeTab() === 'html'"
+          (click)="setActiveTab('html')"
+          type="button"
+        >
+          <span class="playground__editor-tab-icon playground__editor-tab-icon--html">⬡</span>
+          HTML
+        </button>
+        <button 
+          class="playground__editor-tab"
+          [class.playground__editor-tab--active]="activeTab() === 'typescript'"
+          (click)="setActiveTab('typescript')"
+          type="button"
+        >
+          <span class="playground__editor-tab-icon playground__editor-tab-icon--ts">TS</span>
+          TypeScript
+        </button>
+        <button 
+          class="playground__editor-tab"
+          [class.playground__editor-tab--active]="activeTab() === 'css'"
+          (click)="setActiveTab('css')"
+          type="button"
+        >
+          <span class="playground__editor-tab-icon playground__editor-tab-icon--css">#</span>
+          SCSS
+        </button>
+      </div>
+
+      <!-- Actions -->
+      <div class="playground__editor-actions">
+        <button 
+          class="playground__editor-copy"
+          (click)="copyToClipboard(currentSnippet, activeTab())"
+          type="button"
+        >
+          @if (copySuccess() === activeTab()) {
+            <span class="playground__editor-copy-icon">✓</span>
+            Copied!
+          } @else {
+            <span class="playground__editor-copy-icon">📋</span>
+            Copy
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- File Path Bar -->
+    <div class="playground__editor-path">
+      <span class="playground__editor-path-icon">📄</span>
+      <span class="playground__editor-path-text">{{ currentFileName }}</span>
+    </div>
+
+    <!-- Code Content -->
+    <div class="playground__editor-body">
+      <div class="playground__editor-lines">
+        @for (num of lineNumbers; track num) {
+          <span class="playground__editor-line-num">{{ num }}</span>
+        }
+      </div>
+      <pre class="playground__editor-code"><code>{{ currentSnippet }}</code></pre>
+    </div>
+  </section>
+</main>

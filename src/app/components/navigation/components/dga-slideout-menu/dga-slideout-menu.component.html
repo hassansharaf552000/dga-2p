@@ -1,0 +1,35 @@
+<div class="slideout slideout--{{ position }}" [class.slideout--open]="isOpen" [style.width.px]="width">
+  <div class="slideout__header">
+    <span class="slideout__logo">Menu</span>
+    <button class="slideout__close">×</button>
+  </div>
+  <nav class="slideout__nav">
+    <ul class="slideout__list">
+      @for (item of items; track item.id) {
+        <li class="slideout__item">
+          <a class="slideout__link">
+            @if (item.icon) {
+              <span class="slideout__icon">{{ item.icon }}</span>
+            }
+            <span>{{ item.label }}</span>
+            @if (item.children) {
+              <span class="slideout__arrow">›</span>
+            }
+          </a>
+          @if (item.children) {
+            <ul class="slideout__sublist">
+              @for (child of item.children; track child.id) {
+                <li class="slideout__subitem">
+                  <a class="slideout__sublink">{{ child.label }}</a>
+                </li>
+              }
+            </ul>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+</div>
+@if (showOverlay && isOpen) {
+  <div class="slideout__overlay"></div>
+}

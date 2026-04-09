@@ -1,0 +1,13 @@
+<blockquote class="quote quote--{{ variant }}">
+  <p class="quote__text">{{ text }}</p>
+  @if (author || source) {
+    <footer class="quote__footer">
+      @if (author) {
+        <cite class="quote__author">— {{ author }}</cite>
+      }
+      @if (source) {
+        <span class="quote__source">{{ source }}</span>
+      }
+    </footer>
+  }
+</blockquote>

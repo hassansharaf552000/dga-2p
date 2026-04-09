@@ -1,0 +1,20 @@
+.rating {
+  display: inline-flex;
+  gap: 4px;
+
+  &__star {
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &--filled { color: #ffc107; }
+    &:hover { color: #ffc107; }
+  }
+
+  &--small &__star { font-size: 16px; }
+  &--medium &__star { font-size: 24px; }
+  &--large &__star { font-size: 32px; }
+
+  &--readonly &__star { cursor: default; }
+  &--disabled { opacity: 0.5; pointer-events: none; }
+}

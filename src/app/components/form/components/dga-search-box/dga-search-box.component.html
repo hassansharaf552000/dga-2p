@@ -1,0 +1,12 @@
+<div class="search-box" [class.search-box--disabled]="disabled">
+  <span class="search-box__icon">🔍</span>
+  <input 
+    type="text" 
+    class="search-box__input"
+    [placeholder]="placeholder"
+    [value]="value"
+    [disabled]="disabled" />
+  @if (showClear && value) {
+    <button class="search-box__clear" type="button">×</button>
+  }
+</div>

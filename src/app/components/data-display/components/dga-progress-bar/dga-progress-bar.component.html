@@ -1,0 +1,17 @@
+<div class="progress-bar progress-bar--{{ size }}">
+  @if (label || showLabel) {
+    <div class="progress-bar__header">
+      <span class="progress-bar__label">{{ label }}</span>
+      @if (showLabel && !indeterminate) {
+        <span class="progress-bar__value">{{ percentage | number:'1.0-0' }}%</span>
+      }
+    </div>
+  }
+  <div class="progress-bar__track">
+    <div 
+      class="progress-bar__fill progress-bar__fill--{{ variant }}"
+      [class.progress-bar__fill--indeterminate]="indeterminate"
+      [style.width.%]="indeterminate ? 100 : percentage">
+    </div>
+  </div>
+</div>

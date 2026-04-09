@@ -1,0 +1,65 @@
+/**
+ * DGA Design System - Button Component
+ */
+
+.btn {
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1);
+}
+
+.btn-primary {
+  background-color: var(--btn-bg-primary-default);
+  color: var(--text-oncolor-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--btn-bg-primary-hover);
+}
+
+.btn-primary:active {
+  background-color: var(--btn-bg-primary-pressed);
+}
+
+.btn-secondary {
+  background-color: var(--btn-bg-neutral-default);
+  color: var(--text-default);
+}
+
+.btn-secondary:hover {
+  background-color: var(--btn-bg-neutral-hover);
+}
+
+.btn-danger {
+  background-color: var(--btn-bg-danger-default);
+  color: var(--text-oncolor-primary);
+}
+
+.btn-danger:hover {
+  background-color: var(--btn-bg-danger-hover);
+}
+
+.btn-lg {
+  padding: var(--spacing-4);
+  font-size: var(--text-size-md);
+  line-height: var(--line-height-md);
+}
+
+.btn-md {
+  padding: var(--spacing-3);
+  font-size: var(--text-size-sm);
+  line-height: var(--line-height-sm);
+}
+
+.btn-sm {
+  padding: var(--spacing-2);
+  font-size: var(--text-size-xs);
+  line-height: var(--line-height-xs);
+}

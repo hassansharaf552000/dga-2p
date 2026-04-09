@@ -1,0 +1,41 @@
+<aside class="nav-drawer nav-drawer--{{ variant }}" 
+       [class.nav-drawer--collapsed]="collapsed"
+       [style.width.px]="collapsed ? 64 : width">
+  <div class="nav-drawer__header">
+    @if (!collapsed) {
+      <span class="nav-drawer__title">Navigation</span>
+    }
+    <button class="nav-drawer__toggle">{{ collapsed ? '→' : '←' }}</button>
+  </div>
+
+  <nav class="nav-drawer__nav">
+    @for (item of items; track item.id) {
+      <div class="nav-drawer__item">
+        <a class="nav-drawer__link">
+          @if (item.icon) {
+            <span class="nav-drawer__icon">{{ item.icon }}</span>
+          }
+          @if (!collapsed) {
+            <span class="nav-drawer__label">{{ item.label }}</span>
+            @if (item.children) {
+              <span class="nav-drawer__arrow">{{ item.expanded ? '▼' : '▶' }}</span>
+            }
+          }
+        </a>
+        @if (item.children && item.expanded && !collapsed) {
+          <div class="nav-drawer__submenu">
+            @for (child of item.children; track child.id) {
+              <a class="nav-drawer__sublink">{{ child.label }}</a>
+            }
+          </div>
+        }
+      </div>
+    }
+  </nav>
+
+  @if (showFooter && !collapsed) {
+    <div class="nav-drawer__footer">
+      <span>© 2024 DGA</span>
+    </div>
+  }
+</aside>

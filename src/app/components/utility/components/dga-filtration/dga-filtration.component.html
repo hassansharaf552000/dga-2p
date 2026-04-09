@@ -1,0 +1,49 @@
+<div class="filtration" [class.filtration--compact]="compact">
+  <div class="filtration__header">
+    <h3 class="filtration__title">Filters</h3>
+    @if (showClearAll) {
+      <button class="filtration__clear">Clear All</button>
+    }
+  </div>
+
+  <div class="filtration__body">
+    @for (group of groups; track group.id) {
+      <div class="filtration__group" [class.filtration__group--expanded]="group.expanded">
+        <button class="filtration__group-header">
+          <span>{{ group.label }}</span>
+          <span class="filtration__toggle">{{ group.expanded ? '−' : '+' }}</span>
+        </button>
+        @if (group.expanded) {
+          <div class="filtration__group-content">
+            @for (filter of group.filters; track filter.id) {
+              <div class="filtration__filter">
+                @if (filter.type === 'checkbox') {
+                  <label class="filtration__checkbox">
+                    <input type="checkbox">
+                    <span>{{ filter.label }}</span>
+                  </label>
+                } @else if (filter.type === 'radio') {
+                  <label class="filtration__radio">
+                    <input type="radio" [name]="group.id">
+                    <span>{{ filter.label }}</span>
+                  </label>
+                } @else if (filter.type === 'range') {
+                  <div class="filtration__range">
+                    <input type="range" min="0" max="1000">
+                    <span class="filtration__range-label">$0 - $1000</span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (showApply) {
+    <div class="filtration__footer">
+      <button class="filtration__apply">Apply Filters</button>
+    </div>
+  }
+</div>

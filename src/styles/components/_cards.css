@@ -1,0 +1,10 @@
+/**
+ * DGA Design System - Card Component
+ */
+
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-card);
+  padding: var(--spacing-8);
+  box-shadow: 0 1px 3px var(--alpha-black-10);
+}

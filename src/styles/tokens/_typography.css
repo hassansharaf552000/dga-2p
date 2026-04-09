@@ -1,0 +1,44 @@
+/**
+ * DGA Design System - Typography Tokens
+ * Font families, weights, sizes, and line heights
+ */
+
+:root {
+  /* Font Family */
+  --font-family-display: 'IBM Plex Sans Arabic', sans-serif;
+  --font-family-text: 'IBM Plex Sans Arabic', sans-serif;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font Sizes (Desktop) */
+  --text-size-2xs: 10px;
+  --text-size-xs: 12px;
+  --text-size-sm: 14px;
+  --text-size-md: 16px;
+  --text-size-lg: 18px;
+  --text-size-xl: 20px;
+  --text-size-display-xs: 24px;
+  --text-size-display-sm: 30px;
+  --text-size-display-md: 36px;
+  --text-size-display-lg: 48px;
+  --text-size-display-xl: 60px;
+  --text-size-display-2xl: 72px;
+
+  /* Line Heights (Desktop) */
+  --line-height-2xs: 14px;
+  --line-height-xs: 18px;
+  --line-height-sm: 20px;
+  --line-height-md: 24px;
+  --line-height-lg: 28px;
+  --line-height-xl: 30px;
+  --line-height-display-xs: 32px;
+  --line-height-display-sm: 38px;
+  --line-height-display-md: 44px;
+  --line-height-display-lg: 60px;
+  --line-height-display-xl: 72px;
+  --line-height-display-2xl: 90px;
+}

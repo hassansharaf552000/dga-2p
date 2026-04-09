@@ -1,0 +1,42 @@
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  &__input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  &__track {
+    position: relative;
+    background: #ccc;
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+
+  &__thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  &--small &__track { width: 32px; height: 18px; }
+  &--small &__thumb { width: 14px; height: 14px; }
+  &--medium &__track { width: 44px; height: 24px; }
+  &--medium &__thumb { width: 20px; height: 20px; }
+  &--large &__track { width: 56px; height: 30px; }
+  &--large &__thumb { width: 26px; height: 26px; }
+
+  &__input:checked + &__track {
+    background: #0066cc;
+  }
+  &--small &__input:checked + &__track &__thumb { transform: translateX(14px); }
+  &--medium &__input:checked + &__track &__thumb { transform: translateX(20px); }
+  &--large &__input:checked + &__track &__thumb { transform: translateX(26px); }
+
+  &__label { font-size: 14px; color: #333; }
+  &--disabled { opacity: 0.5; cursor: not-allowed; }
+}

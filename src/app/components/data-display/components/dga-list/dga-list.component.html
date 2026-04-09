@@ -1,0 +1,10 @@
+<ul class="list list--{{ style }}" [class.list--dividers]="dividers">
+  @for (item of items; track item) {
+    <li class="list__item">
+      @if (style === 'check') {
+        <span class="list__check">✓</span>
+      }
+      {{ item }}
+    </li>
+  }
+</ul>

@@ -1,0 +1,38 @@
+/**
+ * DGA Design System - Tag Component
+ */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-0-5) var(--spacing-2);
+  border-radius: var(--radius-full);
+  font-size: var(--text-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.tag-neutral {
+  background-color: var(--tag-bg-neutral-light);
+  color: var(--tag-text-neutral);
+}
+
+.tag-success {
+  background-color: var(--tag-bg-success-light);
+  color: var(--tag-text-success);
+}
+
+.tag-info {
+  background-color: var(--tag-bg-info-light);
+  color: var(--tag-text-info);
+}
+
+.tag-warning {
+  background-color: var(--tag-bg-warning-light);
+  color: var(--tag-text-warning);
+}
+
+.tag-error {
+  background-color: var(--tag-bg-error-light);
+  color: var(--tag-text-error);
+}

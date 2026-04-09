@@ -1,0 +1,19 @@
+<div class="alert alert--{{ variant }}">
+  @if (showIcon) {
+    <span class="alert__icon">
+      @if (variant === 'info') { ℹ️ }
+      @else if (variant === 'success') { ✅ }
+      @else if (variant === 'warning') { ⚠️ }
+      @else if (variant === 'error') { ❌ }
+    </span>
+  }
+  <div class="alert__content">
+    @if (title) {
+      <strong class="alert__title">{{ title }}</strong>
+    }
+    <span class="alert__message">{{ message }}</span>
+  </div>
+  @if (dismissible) {
+    <button class="alert__dismiss" type="button">×</button>
+  }
+</div>

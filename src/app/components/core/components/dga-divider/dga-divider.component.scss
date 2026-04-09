@@ -1,0 +1,28 @@
+.divider {
+  display: flex;
+  align-items: center;
+  color: #999;
+
+  &--horizontal {
+    width: 100%;
+    &::before, &::after {
+      content: '';
+      flex: 1;
+      border-top: 1px solid #e0e0e0;
+    }
+  }
+
+  &--vertical {
+    height: 100%;
+    min-height: 24px;
+    border-left: 1px solid #e0e0e0;
+  }
+
+  &--dashed { &::before, &::after { border-style: dashed; } }
+  &--dotted { &::before, &::after { border-style: dotted; } }
+
+  &__label {
+    padding: 0 16px;
+    font-size: 12px;
+  }
+}

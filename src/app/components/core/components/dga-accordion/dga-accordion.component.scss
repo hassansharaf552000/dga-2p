@@ -1,0 +1,112 @@
+.dga-accordion {
+  border-top: 1px solid var(--dga-border-neutral-primary);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--dga-font-text), sans-serif;
+  color: var(--dga-text-default);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--dga-space-3);
+    padding: var(--dga-space-3) var(--dga-space-4);
+    cursor: pointer;
+    background: var(--dga-bg-card);
+  }
+
+  &__title {
+    font-size: var(--dga-text-md-size);
+    line-height: var(--dga-text-md-line);
+    font-weight: var(--dga-font-semibold);
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  &__content {
+    padding: var(--dga-space-2) var(--dga-space-6) var(--dga-space-6) var(--dga-space-4);
+    font-size: var(--dga-text-md-size);
+    line-height: var(--dga-text-md-line);
+    font-weight: var(--dga-font-regular);
+    color: var(--dga-neutral-700);
+  }
+
+  &--small {
+    .dga-accordion__header {
+      padding: var(--dga-space-2) var(--dga-space-4);
+    }
+  }
+
+  &--large {
+    .dga-accordion__header {
+      padding: var(--dga-space-4) var(--dga-space-4);
+    }
+  }
+
+  &--icon-leading {
+    .dga-accordion__header {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+  }
+
+  &--rtl {
+    direction: rtl;
+    text-align: right;
+
+    .dga-accordion__header {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &--hovered {
+    .dga-accordion__header {
+      background: #f3f4f6;
+    }
+  }
+
+  &--pressed {
+    .dga-accordion__header {
+      background: #e5e7eb;
+    }
+  }
+
+  &--focused {
+    .dga-accordion__header {
+      outline: 2px solid #161616;
+      outline-offset: -2px;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &--flush {
+    border-top-color: var(--dga-border-neutral-secondary);
+
+    .dga-accordion__header {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .dga-accordion__content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
