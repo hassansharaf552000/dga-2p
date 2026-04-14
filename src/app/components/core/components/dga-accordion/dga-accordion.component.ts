@@ -4,6 +4,8 @@ type AccordionSize = 'small' | 'medium' | 'large';
 type AccordionState = 'default' | 'hovered' | 'pressed' | 'focused' | 'disabled';
 type AccordionIconAlignment = 'leading' | 'trailing';
 
+let nextAccordionId = 0;
+
 @Component({
   selector: 'dga-accordion',
   standalone: true,
@@ -22,10 +24,11 @@ export class DgaAccordionComponent {
   @Input() flush = false;
   @Input() rtl = false;
 
-  readonly iconDownUrl =
-    'https://www.figma.com/api/mcp/asset/69724734-7623-4128-a397-08aff0f6c129';
-  readonly iconUpUrl =
-    'https://www.figma.com/api/mcp/asset/7c3da458-b38d-4d72-b395-9caae32f86ed';
+  readonly contentId = `dga-accordion-content-${nextAccordionId++}`;
+  readonly iconDownUrl = 'assets/icons/down.svg';
+  readonly iconUpUrl = 'assets/icons/up.svg';
+  readonly iconDownDisabledUrl = 'assets/icons/arrow-down-disable.svg'; 
+  readonly iconUpDisabledUrl = 'assets/icons/arrow-up-disable.svg';
 
   get accordionClasses(): string[] {
     return [
@@ -33,12 +36,36 @@ export class DgaAccordionComponent {
       `dga-accordion--${this.size}`,
       `dga-accordion--${this.state}`,
       this.expanded ? 'dga-accordion--expanded' : '',
-      this.disabled || this.state === 'disabled' ? 'dga-accordion--disabled' : '',
+      this.isDisabled ? 'dga-accordion--disabled' : '',
       this.flush ? 'dga-accordion--flush' : '',
       this.rtl ? 'dga-accordion--rtl' : '',
       this.iconAlignment === 'leading'
         ? 'dga-accordion--icon-leading'
-        : 'dga-accordion--icon-trailing'
+        : 'dga-accordion--icon-trailing',
+      this.isIconLeft ? 'dga-accordion--icon-left' : 'dga-accordion--icon-right'
     ].filter(Boolean);
+  }
+
+  get isDisabled(): boolean {
+    return this.disabled || this.state === 'disabled';
+  }
+
+  get isIconLeft(): boolean {
+    return (!this.rtl && this.iconAlignment === 'leading')
+      || (this.rtl && this.iconAlignment === 'trailing');
+  }
+
+  get iconUrl(): string {
+    if (this.expanded) {
+      return this.isDisabled ? this.iconUpDisabledUrl : this.iconUpUrl;
+    }
+
+    return this.isDisabled ? this.iconDownDisabledUrl : this.iconDownUrl;
+  }
+
+  toggle(): void {
+    if (!this.isDisabled) {
+      this.expanded = !this.expanded;
+    }
   }
 }

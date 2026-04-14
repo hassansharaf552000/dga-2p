@@ -1,50 +1,75 @@
 <article [class]="cardClasses.join(' ')" [attr.dir]="rtl ? 'rtl' : 'ltr'">
-  @if (showImage) {
-    <div class="card__image">
-      <img [src]="imageUrl" alt="" />
+  @if (isImage) {
+    <div class="card__media">
+      <img [src]="imageSrc" [alt]="imageAlt" />
     </div>
   }
 
-  @if (showFeaturedIcon) {
-    <div class="card__featured">
-      <span class="card__icon-shell">
-        <img [src]="featuredIconUrl" alt="" />
-      </span>
-    </div>
-  }
+  <div class="card__head">
+    <span class="card__status" aria-hidden="true">
+      @if (isImage) {
+        <img [src]="featuredIconUrl" alt="" class="card__status-image" />
+      } @else {
+        <svg viewBox="0 0 24 24" class="card__status-svg">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M8.5 12.25L10.8 14.55L15.5 9.45" />
+        </svg>
+      }
+    </span>
 
-  <div class="card__content">
+    @if (isSelectable) {
+      <button
+        type="button"
+        class="card__select"
+        [class.card__select--selected]="selected"
+        [disabled]="isDisabled"
+        role="checkbox"
+        [attr.aria-checked]="selected"
+        [attr.aria-label]="selected ? 'Deselect card' : 'Select card'"
+        (click)="toggleSelected()">
+        @if (selected) {
+          <svg viewBox="0 0 12 12" class="card__select-icon" aria-hidden="true">
+            <path d="M2.5 6.1L4.9 8.5L9.5 3.9" />
+          </svg>
+        }
+      </button>
+    }
+  </div>
+
+  <div class="card__body" [attr.dir]="contentDir">
     <h3 class="card__title">{{ title }}</h3>
     <p class="card__desc">{{ description }}</p>
   </div>
 
-  @if (showTags) {
-    <div class="card__tags">
-      @for (tag of tags; track tag) {
-        <span class="card__tag">{{ tag }}</span>
-      }
-    </div>
-  }
-
-  @if (showRating) {
-    <div class="card__rating">
-      <div class="card__stars">
-        @for (star of stars; track star) {
-          <img [src]="starFullUrl" alt="" />
-        }
-      </div>
-      <span class="card__reviews">12 reviews</span>
-    </div>
-  }
-
-  @if (showPrimaryAction) {
+  @if (showsActions) {
     <div class="card__actions">
-      @if (showSecondaryAction) {
-        <button class="card__btn card__btn--secondary">
-          Action
-        </button>
-      }
-      <button class="card__btn card__btn--primary">Action</button>
+      <dga-button
+        [label]="secondaryActionLabel"
+        variant="secondary-outline"
+        size="large"
+        [leadIcon]="false"
+        [trailIcon]="false"
+        [rtl]="rtl"
+        [disabled]="isDisabled" />
+      <dga-button
+        [label]="primaryActionLabel"
+        size="large"
+        [leadIcon]="false"
+        [trailIcon]="false"
+        [rtl]="rtl"
+        [disabled]="isDisabled" />
     </div>
+  }
+
+  @if (isExpandable) {
+    <button
+      type="button"
+      class="card__toggle"
+      [disabled]="isDisabled"
+      [attr.aria-expanded]="expanded"
+      [attr.aria-label]="expanded ? 'Collapse card' : 'Expand card'"
+      (click)="toggleExpanded()">
+      <img [src]="toggleIconUrl" alt="" />
+    </button>
   }
 </article>

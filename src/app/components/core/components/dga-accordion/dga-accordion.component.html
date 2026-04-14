@@ -1,12 +1,25 @@
-<div class="{{ accordionClasses.join(' ') }}" [attr.dir]="rtl ? 'rtl' : null">
-  <div class="dga-accordion__header">
+<div class="{{ accordionClasses.join(' ') }}" [attr.dir]="rtl ? 'rtl' : 'ltr'">
+  <button
+    class="dga-accordion__header"
+    type="button"
+    [disabled]="isDisabled"
+    [attr.aria-controls]="expanded ? contentId : null"
+    [attr.aria-expanded]="expanded"
+    (click)="toggle()">
+    @if (isIconLeft) {
+      <span class="dga-accordion__icon" aria-hidden="true">
+        <img [src]="iconUrl" alt="" />
+      </span>
+    }
     <span class="dga-accordion__title">{{ title }}</span>
-    <span class="dga-accordion__icon" aria-hidden="true">
-      <img [src]="expanded ? iconUpUrl : iconDownUrl" alt="" />
-    </span>
-  </div>
+    @if (!isIconLeft) {
+      <span class="dga-accordion__icon" aria-hidden="true">
+        <img [src]="iconUrl" alt="" />
+      </span>
+    }
+  </button>
   @if (expanded) {
-    <div class="dga-accordion__content">
+    <div class="dga-accordion__content" [id]="contentId">
       {{ content }}
     </div>
   }

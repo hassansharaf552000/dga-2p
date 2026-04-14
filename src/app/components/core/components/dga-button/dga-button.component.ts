@@ -25,23 +25,22 @@ export class DgaButtonComponent {
   @Input() iconOnly = false;
   @Input() leadIcon = true;
   @Input() trailIcon = false;
+  @Input() leadIconUrl = 'assets/icons/white-button-icon.svg';
+  @Input() trailIconUrl = 'assets/icons/white-button-icon.svg';
   @Input() rtl = false;
   @Input() onColor = false;
   @Input() destructive = false;
   @Input() disabled = false;
   @Input() fullWidth = false;
 
-  protected readonly leadIconUrl =
-    'https://www.figma.com/api/mcp/asset/98c61095-9f6e-4f84-b1ac-c64038630c66';
-  protected readonly trailIconUrl =
-    'https://www.figma.com/api/mcp/asset/5945472a-e913-446c-8de8-323db6335bd6';
-
   get buttonClasses(): string[] {
+    const stateClass = this.isDisabled ? 'dga-button--disabled' : `dga-button--${this.state}`;
+
     return [
       'dga-button',
       `dga-button--${this.variant}`,
       `dga-button--${this.size}`,
-      `dga-button--${this.state}`,
+      stateClass,
       this.iconOnly ? 'dga-button--icon-only' : '',
       this.rtl ? 'dga-button--rtl' : '',
       this.onColor ? 'dga-button--on-color' : '',
@@ -51,11 +50,11 @@ export class DgaButtonComponent {
   }
 
   get showLeadIcon(): boolean {
-    return this.iconOnly || this.leadIcon;
+    return (this.iconOnly || this.leadIcon) && !!this.leadIconUrl;
   }
 
   get showTrailIcon(): boolean {
-    return !this.iconOnly && this.trailIcon;
+    return !this.iconOnly && this.trailIcon && !!this.trailIconUrl;
   }
 
   get isDisabled(): boolean {

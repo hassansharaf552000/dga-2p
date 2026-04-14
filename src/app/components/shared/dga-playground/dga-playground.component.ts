@@ -6,6 +6,7 @@ export interface PlaygroundField {
   label: string;
   type: 'text' | 'textarea' | 'select' | 'boolean';
   options?: string[];
+  visibleWhen?: (props: any) => boolean;
 }
 
 export interface PlaygroundConfig {

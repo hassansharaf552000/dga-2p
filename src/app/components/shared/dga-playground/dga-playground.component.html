@@ -22,40 +22,46 @@
       <div class="playground__controls-body">
         <!-- Text inputs -->
         @for (field of config.textFields; track field.key) {
-          <div class="playground__field">
-            <label [for]="field.key">{{ field.label }}</label>
-            <input 
-              [id]="field.key" 
-              type="text" 
-              [(ngModel)]="componentProps[field.key]"
-              class="playground__input"
-            />
-          </div>
+          @if (!field.visibleWhen || field.visibleWhen(componentProps)) {
+            <div class="playground__field">
+              <label [for]="field.key">{{ field.label }}</label>
+              <input
+                [id]="field.key"
+                type="text"
+                [(ngModel)]="componentProps[field.key]"
+                class="playground__input"
+              />
+            </div>
+          }
         }
 
         <!-- Textarea inputs -->
         @for (field of config.textareaFields; track field.key) {
-          <div class="playground__field">
-            <label [for]="field.key">{{ field.label }}</label>
-            <textarea 
-              [id]="field.key" 
-              rows="3" 
-              [(ngModel)]="componentProps[field.key]"
-              class="playground__textarea"
-            ></textarea>
-          </div>
+          @if (!field.visibleWhen || field.visibleWhen(componentProps)) {
+            <div class="playground__field">
+              <label [for]="field.key">{{ field.label }}</label>
+              <textarea
+                [id]="field.key"
+                rows="3"
+                [(ngModel)]="componentProps[field.key]"
+                class="playground__textarea"
+              ></textarea>
+            </div>
+          }
         }
 
         <!-- Select inputs -->
         @for (field of config.selectFields; track field.key) {
-          <div class="playground__field">
-            <label [for]="field.key">{{ field.label }}</label>
-            <select [id]="field.key" [(ngModel)]="componentProps[field.key]" class="playground__select">
-              @for (option of field.options; track option) {
-                <option [value]="option">{{ option }}</option>
-              }
-            </select>
-          </div>
+          @if (!field.visibleWhen || field.visibleWhen(componentProps)) {
+            <div class="playground__field">
+              <label [for]="field.key">{{ field.label }}</label>
+              <select [id]="field.key" [(ngModel)]="componentProps[field.key]" class="playground__select">
+                @for (option of field.options; track option) {
+                  <option [value]="option">{{ option }}</option>
+                }
+              </select>
+            </div>
+          }
         }
 
         <!-- Boolean toggles -->
@@ -63,11 +69,13 @@
           <div class="playground__toggles">
             <label class="playground__toggles-title">Options</label>
             @for (field of config.booleanFields; track field.key) {
-              <label class="playground__toggle">
-                <input type="checkbox" [(ngModel)]="componentProps[field.key]" />
-                <span class="playground__toggle-slider"></span>
-                <span class="playground__toggle-label">{{ field.label }}</span>
-              </label>
+              @if (!field.visibleWhen || field.visibleWhen(componentProps)) {
+                <label class="playground__toggle">
+                  <input type="checkbox" [(ngModel)]="componentProps[field.key]" />
+                  <span class="playground__toggle-slider"></span>
+                  <span class="playground__toggle-label">{{ field.label }}</span>
+                </label>
+              }
             }
           </div>
         }

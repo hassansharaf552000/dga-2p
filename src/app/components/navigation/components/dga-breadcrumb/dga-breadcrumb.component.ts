@@ -21,46 +21,69 @@ export class DgaBreadcrumbComponent {
   ];
   @Input() separator = '/';
   @Input() showHome = true;
-  @Input() maxItems = 0;
+  @Input() maxItems = 5;
   @Input() rtl = false;
   @Input() useIconSeparator = true;
 
-  protected readonly separatorIconUrl =
-    'https://www.figma.com/api/mcp/asset/5b4c83e7-c293-4592-8208-5bc1aa33aa53';
+  protected readonly separatorIconLtrUrl =
+    'assets/icons/breadcrumb-spritor.svg';
+  protected readonly separatorIconRtlUrl =
+    'assets/icons/breadcrumb-spritor.svg';
   protected overflowOpen = false;
 
-  get visibleItems(): BreadcrumbItem[] {
-    let baseItems: BreadcrumbItem[] = [...this.items];
-    if (!this.showHome && baseItems.length) {
-      baseItems = baseItems.slice(1);
-    }
+  get separatorIconUrl(): string {
+    return this.rtl ? this.separatorIconRtlUrl : this.separatorIconLtrUrl;
+  }
 
+  get visibleItems(): BreadcrumbItem[] {
+    const baseItems = this.baseItems;
     const maxItems = this.maxItems || 0;
+
     if (!maxItems || baseItems.length <= maxItems) {
       return baseItems;
     }
 
     if (maxItems < 3) {
-      return baseItems.slice(0, maxItems);
+      return baseItems.slice(-maxItems);
     }
 
     const head = baseItems[0];
-    const tail = baseItems[baseItems.length - 1];
-    return [head, { label: '...', overflow: true }, tail];
+    const tail = baseItems.slice(-this.collapsedTailCount);
+    return [head, { label: '...', overflow: true }, ...tail];
+  }
+
+  get renderedItems(): BreadcrumbItem[] {
+    const items = this.visibleItems;
+    return this.rtl ? [...items].reverse() : items;
   }
 
   get overflowItems(): BreadcrumbItem[] {
+    const baseItems = this.baseItems;
+    const maxItems = this.maxItems || 0;
+
+    if (!maxItems || baseItems.length <= maxItems || maxItems < 3) {
+      return [];
+    }
+
+    return baseItems.slice(1, -this.collapsedTailCount);
+  }
+
+  get renderedOverflowItems(): BreadcrumbItem[] {
+    const items = this.overflowItems;
+    return this.rtl ? [...items].reverse() : items;
+  }
+
+  private get baseItems(): BreadcrumbItem[] {
     let baseItems: BreadcrumbItem[] = [...this.items];
     if (!this.showHome && baseItems.length) {
       baseItems = baseItems.slice(1);
     }
 
-    const maxItems = this.maxItems || 0;
-    if (!maxItems || baseItems.length <= maxItems || maxItems < 3) {
-      return [];
-    }
+    return baseItems;
+  }
 
-    return baseItems.slice(1, baseItems.length - 1);
+  private get collapsedTailCount(): number {
+    return this.maxItems >= 5 ? 2 : 1;
   }
 
   toggleOverflow(event: MouseEvent): void {

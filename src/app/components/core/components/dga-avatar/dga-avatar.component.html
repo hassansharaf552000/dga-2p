@@ -1,13 +1,20 @@
-<div class="{{ avatarClasses.join(' ') }}" [attr.aria-label]="alt">
+<div
+  class="{{ avatarClasses.join(' ') }}"
+  [attr.aria-label]="type === 'image' ? null : alt"
+  [attr.role]="type === 'image' ? null : 'img'">
   <div class="dga-avatar__frame">
     @if (type === 'image') {
       <img class="dga-avatar__image" [src]="src" [alt]="alt" />
-    } @else if (type === 'icon') {
-      <span class="dga-avatar__icon" aria-hidden="true">
-        <img [src]="iconUrl" alt="" />
-      </span>
     } @else {
-      <span class="dga-avatar__initials">{{ initials }}</span>
+      <div class="dga-avatar__placeholder">
+        @if (type === 'icon') {
+          <span class="dga-avatar__icon" aria-hidden="true">
+            <img [src]="iconUrl" alt="" />
+          </span>
+        } @else {
+          <span class="dga-avatar__initials">{{ initials }}</span>
+        }
+      </div>
     }
   </div>
   @if (border) {

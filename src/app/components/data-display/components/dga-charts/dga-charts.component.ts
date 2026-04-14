@@ -1,12 +1,29 @@
 import { Component, Input } from '@angular/core';
 
 type ChartType = 'bar' | 'line' | 'pie' | 'donut';
+type ChartColorStyle = 'brand' | 'color';
 
-type BarSeriesImages = {
+type CartesianSeries = {
+  color: string;
   label: string;
-  series1: string;
-  series2?: string;
-  series3?: string;
+  labelRtl: string;
+  values: number[];
+};
+
+type PieSegment = {
+  color: string;
+  label: string;
+  labelRtl: string;
+  value: number;
+};
+
+type BarColumn = {
+  label: string;
+  segments: {
+    color: string;
+    heightPercent: number;
+    value: number;
+  }[];
 };
 
 @Component({
@@ -18,8 +35,8 @@ type BarSeriesImages = {
 })
 export class DgaChartsComponent {
   @Input() type: ChartType = 'bar';
-  @Input() title = 'Chart Title';
-  @Input() height = 280;
+  @Input() title = 'Charts';
+  @Input() height: number | string = 180;
   @Input() rtl = false;
   @Input() showLegend = true;
   @Input() showXAxisLabel = true;
@@ -27,75 +44,262 @@ export class DgaChartsComponent {
   @Input() showSeries2 = true;
   @Input() showSeries3 = true;
   @Input() showData = true;
+  @Input() colorStyle: ChartColorStyle = 'brand';
+  @Input() seriesCount: number | string = 3;
 
-  readonly barLegend = [
-    { label: 'Value 3', mark: 'https://www.figma.com/api/mcp/asset/66aaf6fd-b0a6-4797-a4b7-2780c9517674' },
-    { label: 'Value 2', mark: 'https://www.figma.com/api/mcp/asset/e34979f8-3b7f-4a08-b736-acf30988842a' },
-    { label: 'Value 1', mark: 'https://www.figma.com/api/mcp/asset/a8ad0053-07d9-49d3-a1a3-d2549499ee08' }
-  ];
+  protected readonly maxValue = 800;
+  protected readonly axisValues = ['800', '700', '600', '500', '400', '300', '200', '100', '0'];
 
-  readonly barDivider = 'https://www.figma.com/api/mcp/asset/bfdc31a1-e4a2-40a7-8414-ed72c8d76b12';
+  private readonly barLabelsLtr = ['Jan', 'Fab', 'Mar', 'Apr', 'May', 'Jun'];
+  private readonly barLabelsRtl = ['محرم', 'صفر', 'ربيع أول', 'ربيع ثاني', 'جماد الأول', 'جماد الثاني'];
+  private readonly lineLabelsLtr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+  private readonly lineLabelsRtl = ['محرم', 'صفر', 'ربيع I', 'ربيع II', 'جماد I', 'جماد II', 'رجب', 'شعبان', 'رمضان'];
 
-  readonly barSeries: BarSeriesImages[] = [
+  private readonly barSeriesDefinitions: CartesianSeries[] = [
     {
-      label: 'Month 6',
-      series3: 'https://www.figma.com/api/mcp/asset/994dd4ba-ce79-45a8-9537-480e4270571a',
-      series2: 'https://www.figma.com/api/mcp/asset/154c6989-b59f-4f0b-bb03-03737c2bad3f',
-      series1: 'https://www.figma.com/api/mcp/asset/bb94c12b-e6b7-4c2f-9587-c49f7005dcca'
+      label: 'Series 1',
+      labelRtl: 'قيمة 1',
+      color: 'var(--dga-700)',
+      values: [160, 340, 50, 110, 290, 250]
     },
     {
-      label: 'Month 5',
-      series3: 'https://www.figma.com/api/mcp/asset/5dbb092e-a8e0-4a14-850b-46fca5c58b17',
-      series2: 'https://www.figma.com/api/mcp/asset/1900c395-99d0-4bc9-95d8-bec031da2ac5',
-      series1: 'https://www.figma.com/api/mcp/asset/0cf55251-de43-425c-b7dd-4a5e55d72769'
+      label: 'Series 2',
+      labelRtl: 'قيمة 2',
+      color: 'var(--dga-400)',
+      values: [140, 260, 55, 130, 230, 180]
     },
     {
-      label: 'Month 4',
-      series3: 'https://www.figma.com/api/mcp/asset/ee77d269-f3a1-4f6b-93a2-0ad575513b86',
-      series2: 'https://www.figma.com/api/mcp/asset/bcc6685f-4c03-4dab-b7cd-c1ef4145a71b',
-      series1: 'https://www.figma.com/api/mcp/asset/35998c1c-4cec-4057-8500-82c5bdf8eeda'
-    },
-    {
-      label: 'Month 3',
-      series3: 'https://www.figma.com/api/mcp/asset/a09fd2e1-21e6-44f2-993a-9f028119e2b8',
-      series2: 'https://www.figma.com/api/mcp/asset/884103d1-61e9-4b0c-99a2-2699d1d26d93',
-      series1: 'https://www.figma.com/api/mcp/asset/90dd3882-5e66-42d2-9654-3d79740167bc'
-    },
-    {
-      label: 'Month 2',
-      series3: 'https://www.figma.com/api/mcp/asset/2b629914-6dc8-40e6-ab1c-46cda67105c2',
-      series2: 'https://www.figma.com/api/mcp/asset/46186461-304a-4deb-9bea-e9c4917c0d54',
-      series1: 'https://www.figma.com/api/mcp/asset/82b807b8-1686-424e-a6ca-efd5ae3e8a19'
-    },
-    {
-      label: 'Month 1',
-      series3: 'https://www.figma.com/api/mcp/asset/89e4b04b-2396-4467-9063-cdd3ba1ea2d4',
-      series2: 'https://www.figma.com/api/mcp/asset/fc76ef5e-91d0-4cf2-9c6c-bf1d02c25cf1',
-      series1: 'https://www.figma.com/api/mcp/asset/e74bfc6d-9d45-4145-9985-0b0a682f6edc'
+      label: 'Series 3',
+      labelRtl: 'قيمة 3',
+      color: 'var(--dga-neutral-200)',
+      values: [110, 200, 35, 80, 170, 150]
     }
   ];
 
-  readonly lineLegend = [
-    { label: 'Series 1', mark: 'https://www.figma.com/api/mcp/asset/9a2b3dbe-cf5f-4e68-99d0-0ca5da65ac5e' },
-    { label: 'Series 2', mark: 'https://www.figma.com/api/mcp/asset/9a2b3dbe-cf5f-4e68-99d0-0ca5da65ac5e' },
-    { label: 'Series 3', mark: 'https://www.figma.com/api/mcp/asset/9a2b3dbe-cf5f-4e68-99d0-0ca5da65ac5e' }
+  private readonly lineSeriesDefinitions: CartesianSeries[] = [
+    {
+      label: 'Series 1',
+      labelRtl: 'قيمة 1',
+      color: 'var(--dga-700)',
+      values: [560, 580, 590, 610, 650, 620, 680, 660, 720]
+    },
+    {
+      label: 'Series 2',
+      labelRtl: 'قيمة 2',
+      color: 'var(--dga-500)',
+      values: [380, 390, 395, 405, 450, 420, 470, 455, 500]
+    },
+    {
+      label: 'Series 3',
+      labelRtl: 'قيمة 3',
+      color: 'var(--dga-200)',
+      values: [120, 150, 170, 200, 290, 220, 360, 320, 450]
+    }
   ];
 
-  readonly lineDivider = 'https://www.figma.com/api/mcp/asset/0dbb6970-b079-4039-a800-4ee85c4ce073';
-  readonly lineSeries = [
-    'https://www.figma.com/api/mcp/asset/11d56443-c837-427a-9a1d-ab835109990d',
-    'https://www.figma.com/api/mcp/asset/fef50b50-b27e-4d17-8b4e-23b1b81fa72b',
-    'https://www.figma.com/api/mcp/asset/57ca9438-ac32-4aa9-9aef-8e0b8e0b421e'
+  private readonly pieDistributions: Record<number, number[]> = {
+    1: [100],
+    2: [50, 50],
+    3: [52, 30, 18],
+    4: [45, 25, 15, 15],
+    5: [37, 22, 16, 14, 11],
+    6: [25, 18, 12, 16, 14, 15]
+  };
+
+  private readonly brandPalette = [
+    'var(--dga-600)',
+    'var(--dga-400)',
+    'var(--dga-200)',
+    'var(--dga-700)',
+    'var(--dga-900)',
+    'var(--dga-800)'
   ];
 
-  readonly pieImage = 'https://www.figma.com/api/mcp/asset/864e8687-1ebe-4d56-b49a-56531b2bd1eb';
-  readonly donutImage = 'https://www.figma.com/api/mcp/asset/4dd67910-e33c-48d4-9a96-9f39e2ddbb1d';
-  readonly pieLegendMark = 'https://www.figma.com/api/mcp/asset/7728bebf-3451-4fcf-8005-41a62ea86bfb';
+  private readonly colorPalette = [
+    'var(--dga-gold-400)',
+    'var(--dga-300)',
+    'var(--dga-warning-400)',
+    'var(--dga-info-400)',
+    'var(--dga-lavender-400)',
+    'var(--dga-error-400)'
+  ];
 
-  readonly yAxisValues = ['800', '700', '600', '500', '400', '300', '200', '100', '0'];
-  readonly lineMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+  protected readonly circularSize = 240;
+  protected readonly lineWidth = 438;
 
-  get chartClass(): string {
-    return `dga-charts dga-charts--${this.type}`;
+  get chartClasses(): string[] {
+    return [
+      'dga-charts',
+      `dga-charts--${this.type}`,
+      this.rtl ? 'dga-charts--rtl' : ''
+    ].filter(Boolean);
+  }
+
+  get isCircular(): boolean {
+    return this.type === 'pie' || this.type === 'donut';
+  }
+
+  get canvasHeight(): number {
+    return this.parseNumber(this.height, 180);
+  }
+
+  get lineHeight(): number {
+    return Math.max(140, this.canvasHeight);
+  }
+
+  get legendVisible(): boolean {
+    return this.isCircular ? this.showLegend && this.showData : this.showLegend;
+  }
+
+  get xAxisLabel(): string {
+    return this.rtl ? 'الشهر' : 'Month';
+  }
+
+  get yAxisLabel(): string {
+    return this.rtl ? 'المستخدمين النشطين' : 'Active users';
+  }
+
+  get xAxisLabels(): string[] {
+    if (this.type === 'line') {
+      return this.rtl ? [...this.lineLabelsRtl].reverse() : this.lineLabelsLtr;
+    }
+
+    return this.rtl ? [...this.barLabelsRtl].reverse() : this.barLabelsLtr;
+  }
+
+  get barLegendSeries(): CartesianSeries[] {
+    return this.localizeLegend(this.visibleBarSeries);
+  }
+
+  get lineLegendSeries(): CartesianSeries[] {
+    return this.localizeLegend(this.visibleLineSeries);
+  }
+
+  get barColumns(): BarColumn[] {
+    const labels = this.xAxisLabels;
+    const columns = this.visibleBarSeries.map((series) =>
+      this.rtl ? [...series.values].reverse() : series.values
+    );
+
+    return labels.map((label, index) => ({
+      label,
+      segments: columns
+        .map((values, seriesIndex) => ({
+          color: this.visibleBarSeries[seriesIndex].color,
+          heightPercent: (values[index] / this.maxValue) * 100,
+          value: values[index]
+        }))
+        .filter((segment) => segment.value > 0)
+        .reverse()
+    }));
+  }
+
+  get pieSegments(): PieSegment[] {
+    const count = this.clampedSeriesCount;
+    const palette = (this.colorStyle === 'color' ? this.colorPalette : this.brandPalette).slice(0, count);
+    const distribution = this.pieDistributions[count];
+
+    return palette.map((color, index) => ({
+      color,
+      label: `Series ${index + 1}`,
+      labelRtl: `قيمة ${index + 1}`,
+      value: distribution[index]
+    }));
+  }
+
+  get pieLegendSegments(): PieSegment[] {
+    const segments = [...this.pieSegments];
+    return this.rtl ? segments.reverse() : segments;
+  }
+
+  get pieGradient(): string {
+    let start = 0;
+    const stops = this.pieSegments.map((segment) => {
+      const end = start + segment.value;
+      const stop = `${segment.color} ${start}% ${end}%`;
+      start = end;
+      return stop;
+    });
+
+    return `conic-gradient(${stops.join(', ')})`;
+  }
+
+  get circularAriaLabel(): string {
+    const labels = this.pieLegendSegments.map((segment) =>
+      `${this.rtl ? segment.labelRtl : segment.label} ${segment.value}%`
+    );
+
+    return `${this.title}: ${labels.join(', ')}`;
+  }
+
+  get linePaths(): { color: string; path: string }[] {
+    return this.visibleLineSeries.map((series) => ({
+      color: series.color,
+      path: this.buildSmoothPath(this.rtl ? [...series.values].reverse() : series.values)
+    }));
+  }
+
+  protected legendLabel(label: string, labelRtl: string): string {
+    return this.rtl ? labelRtl : label;
+  }
+
+  private get visibleBarSeries(): CartesianSeries[] {
+    return this.barSeriesDefinitions.filter((series, index) => {
+      if (index === 1) {
+        return this.showSeries2;
+      }
+
+      if (index === 2) {
+        return this.showSeries3;
+      }
+
+      return true;
+    });
+  }
+
+  private get visibleLineSeries(): CartesianSeries[] {
+    return this.lineSeriesDefinitions.filter((series, index) => {
+      if (index === 1) {
+        return this.showSeries2;
+      }
+
+      if (index === 2) {
+        return this.showSeries3;
+      }
+
+      return true;
+    });
+  }
+
+  private get clampedSeriesCount(): 1 | 2 | 3 | 4 | 5 | 6 {
+    const count = Math.round(this.parseNumber(this.seriesCount, 3));
+    return Math.min(6, Math.max(1, count)) as 1 | 2 | 3 | 4 | 5 | 6;
+  }
+
+  private localizeLegend<T extends { label: string; labelRtl: string }>(series: T[]): T[] {
+    const items = [...series];
+    return this.rtl ? items.reverse() : items;
+  }
+
+  private parseNumber(value: number | string, fallback: number): number {
+    const parsed = typeof value === 'number' ? value : Number(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  }
+
+  private buildSmoothPath(values: number[]): string {
+    const points = values.map((value, index) => ({
+      x: (index / (values.length - 1)) * this.lineWidth,
+      y: this.lineHeight - (value / this.maxValue) * this.lineHeight
+    }));
+
+    return points.reduce((path, point, index, array) => {
+      if (index === 0) {
+        return `M ${point.x},${point.y}`;
+      }
+
+      const previous = array[index - 1];
+      const controlX = previous.x + (point.x - previous.x) / 2;
+      return `${path} C ${controlX},${previous.y} ${controlX},${point.y} ${point.x},${point.y}`;
+    }, '');
   }
 }

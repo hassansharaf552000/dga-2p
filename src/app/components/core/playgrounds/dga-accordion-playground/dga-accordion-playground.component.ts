@@ -14,8 +14,10 @@ type AccordionIconAlignment = 'leading' | 'trailing';
   styleUrl: './dga-accordion-playground.component.scss'
 })
 export class DgaAccordionPlaygroundComponent {
-  readonly iconDownUrl = 'https://www.figma.com/api/mcp/asset/69724734-7623-4128-a397-08aff0f6c129';
-  readonly iconUpUrl = 'https://www.figma.com/api/mcp/asset/7c3da458-b38d-4d72-b395-9caae32f86ed';
+  readonly iconDownUrl = 'https://www.figma.com/api/mcp/asset/f1c4c68d-5bdf-4410-b13f-6d864414de4b';
+  readonly iconUpUrl = 'https://www.figma.com/api/mcp/asset/9e734a9f-d2b0-4863-a45b-2b71e554688c';
+  readonly iconDownDisabledUrl = 'https://www.figma.com/api/mcp/asset/3de58b1c-6221-4226-9cb4-ae654e7021e6';
+  readonly iconUpDisabledUrl = 'https://www.figma.com/api/mcp/asset/22465341-4f21-4317-a9e6-bb959e3965ea';
 
   componentProps = {
     title: 'Accordion Title',
@@ -56,27 +58,41 @@ export class DgaAccordionPlaygroundComponent {
   };
 
   generateHtmlSnippet(props: any): string {
+    const isDisabled = props.disabled || props.state === 'disabled';
+    const isIconLeft = (!props.rtl && props.iconAlignment === 'leading')
+      || (props.rtl && props.iconAlignment === 'trailing');
+    const iconUrl = props.expanded
+      ? (isDisabled ? this.iconUpDisabledUrl : this.iconUpUrl)
+      : (isDisabled ? this.iconDownDisabledUrl : this.iconDownUrl);
     const classes = [
       'dga-accordion',
       `dga-accordion--${props.size}`,
       `dga-accordion--${props.state}`,
       props.expanded ? 'dga-accordion--expanded' : '',
-      props.disabled || props.state === 'disabled' ? 'dga-accordion--disabled' : '',
+      isDisabled ? 'dga-accordion--disabled' : '',
       props.flush ? 'dga-accordion--flush' : '',
       props.rtl ? 'dga-accordion--rtl' : '',
       props.iconAlignment === 'leading'
         ? 'dga-accordion--icon-leading'
-        : 'dga-accordion--icon-trailing'
+        : 'dga-accordion--icon-trailing',
+      isIconLeft ? 'dga-accordion--icon-left' : 'dga-accordion--icon-right'
     ].filter(Boolean);
 
     const lines: string[] = [];
-    lines.push(`<div class="${classes.join(' ')}"${props.rtl ? ' dir="rtl"' : ''}>`);
-    lines.push('  <div class="dga-accordion__header">');
+    lines.push(`<div class="${classes.join(' ')}" dir="${props.rtl ? 'rtl' : 'ltr'}">`);
+    lines.push(`  <button class="dga-accordion__header" type="button"${isDisabled ? ' disabled' : ''} aria-expanded="${props.expanded}">`);
+    if (isIconLeft) {
+      lines.push('    <span class="dga-accordion__icon" aria-hidden="true">');
+      lines.push(`      <img src="${iconUrl}" alt="" />`);
+      lines.push('    </span>');
+    }
     lines.push(`    <span class="dga-accordion__title">${props.title}</span>`);
-    lines.push('    <span class="dga-accordion__icon" aria-hidden="true">');
-    lines.push(`      <img src="${props.expanded ? this.iconUpUrl : this.iconDownUrl}" alt="" />`);
-    lines.push('    </span>');
-    lines.push('  </div>');
+    if (!isIconLeft) {
+      lines.push('    <span class="dga-accordion__icon" aria-hidden="true">');
+      lines.push(`      <img src="${iconUrl}" alt="" />`);
+      lines.push('    </span>');
+    }
+    lines.push('  </button>');
     if (props.expanded) {
       lines.push('  <div class="dga-accordion__content">');
       lines.push(`    ${props.content}`);
@@ -88,36 +104,52 @@ export class DgaAccordionPlaygroundComponent {
 
   generateCssSnippet(): string {
     return `.dga-accordion {
+  --dga-accordion-header-block-padding: var(--dga-space-3);
+  --dga-accordion-header-inline-padding: var(--dga-space-4);
+  --dga-accordion-header-bg: var(--dga-bg-card);
+  --dga-accordion-title-color: var(--dga-text-default);
+  --dga-accordion-content-color: var(--dga-neutral-700);
+  --dga-accordion-content-padding-left: var(--dga-space-4);
+  --dga-accordion-content-padding-right: var(--dga-space-4);
   border-top: 1px solid var(--dga-border-neutral-primary);
   display: flex;
   flex-direction: column;
   width: 100%;
   font-family: var(--dga-font-text), sans-serif;
   color: var(--dga-text-default);
-}
-
-.dga-accordion__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--dga-space-3);
-  padding: var(--dga-space-3) var(--dga-space-4);
-  cursor: pointer;
   background: var(--dga-bg-card);
 }
 
+.dga-accordion__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--dga-space-4);
+  padding: var(--dga-accordion-header-block-padding) var(--dga-accordion-header-inline-padding);
+  cursor: pointer;
+  background: var(--dga-accordion-header-bg);
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}
+
 .dga-accordion__title {
+  flex: 1 1 auto;
   font-size: var(--dga-text-md-size);
   line-height: var(--dga-text-md-line);
   font-weight: var(--dga-font-semibold);
+  color: var(--dga-accordion-title-color);
+  text-align: start;
 }
 
 .dga-accordion__icon {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .dga-accordion__icon img {
@@ -127,61 +159,77 @@ export class DgaAccordionPlaygroundComponent {
 }
 
 .dga-accordion__content {
-  padding: var(--dga-space-2) var(--dga-space-6) var(--dga-space-6) var(--dga-space-4);
+  padding:
+    var(--dga-space-2)
+    var(--dga-accordion-content-padding-right)
+    var(--dga-space-6)
+    var(--dga-accordion-content-padding-left);
   font-size: var(--dga-text-md-size);
   line-height: var(--dga-text-md-line);
   font-weight: var(--dga-font-regular);
-  color: var(--dga-neutral-700);
+  color: var(--dga-accordion-content-color);
+  text-align: start;
 }
 
-.dga-accordion--small .dga-accordion__header {
-  padding: var(--dga-space-2) var(--dga-space-4);
+.dga-accordion--small {
+  --dga-accordion-header-block-padding: var(--dga-space-2);
 }
 
-.dga-accordion--large .dga-accordion__header {
-  padding: var(--dga-space-4) var(--dga-space-4);
+.dga-accordion--large {
+  --dga-accordion-header-block-padding: var(--dga-space-4);
 }
 
-.dga-accordion--icon-leading .dga-accordion__header {
-  flex-direction: row-reverse;
-  justify-content: flex-end;
+.dga-accordion--icon-left {
+  --dga-accordion-content-padding-left: var(--dga-space-12);
+  --dga-accordion-content-padding-right: var(--dga-space-4);
+}
+
+.dga-accordion--icon-right {
+  --dga-accordion-content-padding-left: var(--dga-space-4);
+  --dga-accordion-content-padding-right: var(--dga-space-12);
 }
 
 .dga-accordion--rtl {
-  direction: rtl;
   text-align: right;
 }
 
-.dga-accordion--rtl .dga-accordion__header {
-  flex-direction: row-reverse;
+.dga-accordion--hovered {
+  --dga-accordion-header-bg: var(--dga-bg-neutral-100);
 }
 
-.dga-accordion--hovered .dga-accordion__header {
-  background: #f3f4f6;
-}
-
-.dga-accordion--pressed .dga-accordion__header {
-  background: #e5e7eb;
+.dga-accordion--pressed {
+  --dga-accordion-header-bg: var(--dga-neutral-200);
 }
 
 .dga-accordion--focused .dga-accordion__header {
-  outline: 2px solid #161616;
-  outline-offset: -2px;
+  box-shadow: inset 0 0 0 2px var(--dga-text-default);
 }
 
 .dga-accordion--disabled {
-  opacity: 0.5;
-  pointer-events: none;
+  --dga-accordion-header-bg: var(--dga-bg-card);
+  --dga-accordion-title-color: var(--dga-neutral-400);
+  --dga-accordion-content-color: var(--dga-neutral-400);
+}
+
+.dga-accordion--disabled .dga-accordion__header {
+  cursor: default;
+  box-shadow: none;
 }
 
 .dga-accordion--flush {
-  border-top-color: var(--dga-border-neutral-secondary);
+  --dga-accordion-header-inline-padding: var(--dga-space-none);
 }
 
-.dga-accordion--flush .dga-accordion__header,
-.dga-accordion--flush .dga-accordion__content {
-  padding-left: 0;
-  padding-right: 0;
+.dga-accordion--flush.dga-accordion--icon-left {
+  --dga-accordion-content-padding-right: var(--dga-space-none);
+}
+
+.dga-accordion--flush.dga-accordion--icon-right {
+  --dga-accordion-content-padding-left: var(--dga-space-none);
+}
+
+.dga-accordion__header:focus-visible {
+  outline: none;
 }
 `;
   }
