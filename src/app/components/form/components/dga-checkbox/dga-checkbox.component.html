@@ -1,17 +1,35 @@
 <label class="{{ checkboxClasses.join(' ') }}" [attr.dir]="rtl ? 'rtl' : null">
-  <input
-    type="checkbox"
-    class="dga-checkbox__input"
-    [checked]="checked"
-    [disabled]="disabled || state === 'disabled'"
-    [attr.readonly]="isReadOnly ? true : null"
-  />
-  <span class="dga-checkbox__box" aria-hidden="true">
-    @if (indeterminate) {
-      <img [src]="indeterminateUrl" alt="" />
-    } @else if (checked) {
-      <img [src]="state === 'focused' && style === 'neutral' ? focusCheckedUrl : checkmarkUrl" alt="" />
-    }
+  <span class="dga-checkbox__control">
+    <input
+      [id]="inputId"
+      type="checkbox"
+      class="dga-checkbox__input"
+      [attr.name]="name || null"
+      [attr.value]="value || null"
+      [attr.aria-label]="computedAriaLabel"
+      [attr.aria-invalid]="errorMessage ? true : null"
+      [attr.aria-readonly]="isReadOnly ? true : null"
+      [required]="required"
+      [checked]="checked"
+      [indeterminate]="indeterminate"
+      [disabled]="isDisabled"
+      (click)="onInputClick($event)"
+      (change)="onInputChange($event)"
+    />
+    <span class="dga-checkbox__box" aria-hidden="true"></span>
   </span>
-  <span class="dga-checkbox__label">{{ label }}</span>
+
+  @if (hasContent) {
+    <span class="dga-checkbox__content">
+      @if (label) {
+        <span class="dga-checkbox__label">{{ label }}</span>
+      }
+      @if (description) {
+        <span class="dga-checkbox__description">{{ description }}</span>
+      }
+      @if (errorMessage) {
+        <span class="dga-checkbox__message" role="alert">{{ errorMessage }}</span>
+      }
+    </span>
+  }
 </label>

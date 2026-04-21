@@ -1,32 +1,76 @@
-<div class="dga-carousel dga-carousel--{{ style }}" [attr.dir]="rtl ? 'rtl' : null">
-  @if (style !== 'dots-only') {
+<section
+  class="{{ carouselClasses.join(' ') }}"
+  role="region"
+  [attr.aria-label]="ariaLabel"
+  [attr.dir]="rtl ? 'rtl' : null"
+  (keydown)="onKeydown($event)"
+>
+  @if (showContent) {
     <div class="dga-carousel__content">
-      @if (style === 'arrows') {
-        <button class="dga-carousel__arrow dga-carousel__arrow--left" type="button" aria-label="Previous">
-          <img [src]="arrowLeft" alt="" />
+      @if (showArrows) {
+        <button
+          class="dga-carousel__arrow dga-carousel__arrow--previous"
+          type="button"
+          [disabled]="!canGoPrevious"
+          [attr.aria-controls]="carouselId + '-slide'"
+          aria-label="Previous slide"
+          (click)="previous()"
+        >
+          <span class="dga-carousel__arrow-icon" aria-hidden="true"></span>
         </button>
       }
 
-      <div class="dga-carousel__swap">
-        <p class="dga-carousel__swap-title">{{ contentText }}</p>
-        <p class="dga-carousel__swap-subtitle">Replace with any other component</p>
-      </div>
+      <article
+        class="dga-carousel__slide"
+        [id]="carouselId + '-slide'"
+        role="group"
+        aria-roledescription="slide"
+        [attr.aria-label]="slideLabel(safeActiveIndex)"
+      >
+        @if (currentSlide.imageUrl) {
+          <img
+            class="dga-carousel__image"
+            [src]="currentSlide.imageUrl"
+            [alt]="currentSlide.imageAlt || ''"
+          />
+        }
+        <div class="dga-carousel__body">
+          @if (currentSlide.title) {
+            <p class="dga-carousel__title">{{ currentSlide.title }}</p>
+          }
+          @if (currentSlide.description) {
+            <p class="dga-carousel__description">{{ currentSlide.description }}</p>
+          }
+        </div>
+      </article>
 
-      @if (style === 'arrows') {
-        <button class="dga-carousel__arrow dga-carousel__arrow--right" type="button" aria-label="Next">
-          <img [src]="arrowRight" alt="" />
+      @if (showArrows) {
+        <button
+          class="dga-carousel__arrow dga-carousel__arrow--next"
+          type="button"
+          [disabled]="!canGoNext"
+          [attr.aria-controls]="carouselId + '-slide'"
+          aria-label="Next slide"
+          (click)="next()"
+        >
+          <span class="dga-carousel__arrow-icon" aria-hidden="true"></span>
         </button>
       }
     </div>
   }
 
-  @if (style !== 'arrows') {
-    <div class="dga-carousel__dots">
-      @for (dot of dots; track dot) {
-        <span class="dga-carousel__dot">
-          <img [src]="dot === current ? (style === 'dots-only' ? dotActiveSmall : dotActive) : (style === 'dots-only' ? dotInactiveSmall : dotInactive)" alt="" />
-        </span>
+  @if (showDots) {
+    <div class="dga-carousel__dots" aria-label="Slide navigation">
+      @for (dot of indicators; track dot) {
+        <button
+          class="dga-carousel__dot"
+          type="button"
+          [class.dga-carousel__dot--active]="dot === safeActiveIndex"
+          [attr.aria-label]="'Go to ' + slideLabel(dot)"
+          [attr.aria-current]="dot === safeActiveIndex ? 'true' : null"
+          (click)="goTo(dot)"
+        ></button>
       }
     </div>
   }
-</div>
+</section>

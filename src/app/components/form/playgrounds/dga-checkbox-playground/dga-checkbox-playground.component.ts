@@ -1,10 +1,25 @@
 import { Component } from '@angular/core';
-import { DgaCheckboxComponent } from '../../components/dga-checkbox/dga-checkbox.component';
+import {
+  CheckboxSize,
+  CheckboxState,
+  CheckboxStyle,
+  DgaCheckboxComponent
+} from '../../components/dga-checkbox/dga-checkbox.component';
 import { DgaPlaygroundComponent, PlaygroundConfig } from '../../../shared/dga-playground/dga-playground.component';
 
-type CheckboxSize = 'xsmall' | 'small' | 'medium';
-type CheckboxStyle = 'primary' | 'neutral';
-type CheckboxState = 'default' | 'hovered' | 'pressed' | 'focused' | 'read-only' | 'disabled';
+interface CheckboxPlaygroundProps {
+  label: string;
+  description: string;
+  errorMessage: string;
+  checked: boolean;
+  indeterminate: boolean;
+  disabled: boolean;
+  required: boolean;
+  size: CheckboxSize;
+  variant: CheckboxStyle;
+  state: CheckboxState;
+  rtl: boolean;
+}
 
 @Component({
   selector: 'dga-checkbox-playground',
@@ -14,176 +29,156 @@ type CheckboxState = 'default' | 'hovered' | 'pressed' | 'focused' | 'read-only'
   styleUrl: './dga-checkbox-playground.component.scss'
 })
 export class DgaCheckboxPlaygroundComponent {
-  componentProps = {
-    label: 'Checkbox',
+  componentProps: CheckboxPlaygroundProps = {
+    label: 'Checkbox Label',
+    description: 'When a selection needs a further detailed explanation, it goes here.',
+    errorMessage: '',
     checked: true,
     indeterminate: false,
     disabled: false,
-    size: 'medium' as CheckboxSize,
-    style: 'primary' as CheckboxStyle,
-    state: 'default' as CheckboxState,
+    required: false,
+    size: 'medium',
+    variant: 'primary',
+    state: 'default',
     rtl: false
-  } as const;
+  };
 
   playgroundConfig: PlaygroundConfig = {
     title: 'Checkbox',
-    description: 'Binary selection input with states, sizes, and styles.',
+    description: 'Binary and mixed-state selection input with DGA sizes, styles, and interaction states.',
     selector: 'dga-checkbox',
     componentName: 'DgaCheckbox',
     textFields: [
-      { key: 'label', label: 'Label', type: 'text' }
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'description', label: 'Description', type: 'text' },
+      { key: 'errorMessage', label: 'Error message', type: 'text' }
     ],
     textareaFields: [],
     selectFields: [
       { key: 'size', label: 'Size', type: 'select', options: ['xsmall', 'small', 'medium'] },
-      { key: 'style', label: 'Style', type: 'select', options: ['primary', 'neutral'] },
-      { key: 'state', label: 'State', type: 'select', options: ['default', 'hovered', 'pressed', 'focused', 'read-only', 'disabled'] }
+      { key: 'variant', label: 'Variant', type: 'select', options: ['primary', 'neutral'] },
+      {
+        key: 'state',
+        label: 'State',
+        type: 'select',
+        options: ['default', 'hovered', 'pressed', 'focused', 'read-only', 'disabled']
+      }
     ],
     booleanFields: [
       { key: 'checked', label: 'Checked', type: 'boolean' },
       { key: 'indeterminate', label: 'Indeterminate', type: 'boolean' },
       { key: 'disabled', label: 'Disabled', type: 'boolean' },
+      { key: 'required', label: 'Required', type: 'boolean' },
       { key: 'rtl', label: 'RTL', type: 'boolean' }
     ],
-    generateHtml: (props) => this.generateHtmlSnippet(props),
+    generateHtml: (props) => this.generateHtmlSnippet(props as CheckboxPlaygroundProps),
     generateCss: () => this.generateCssSnippet()
   };
 
-  generateHtmlSnippet(props: any): string {
-    const classes = [
-      'dga-checkbox',
-      `dga-checkbox--${props.size}`,
-      `dga-checkbox--${props.style}`,
-      `dga-checkbox--${props.state}`,
-      props.checked ? 'dga-checkbox--checked' : '',
-      props.indeterminate ? 'dga-checkbox--indeterminate' : '',
-      props.disabled || props.state === 'disabled' ? 'dga-checkbox--disabled' : '',
-      props.rtl ? 'dga-checkbox--rtl' : ''
+  generateHtmlSnippet(props: CheckboxPlaygroundProps): string {
+    const attrs = [
+      this.stringAttr('label', props.label),
+      this.stringAttr('description', props.description),
+      this.stringAttr('errorMessage', props.errorMessage),
+      this.stringAttr('size', props.size),
+      this.stringAttr('variant', props.variant),
+      this.stringAttr('state', props.state),
+      props.checked ? '[checked]="true"' : '',
+      props.indeterminate ? '[indeterminate]="true"' : '',
+      props.disabled ? '[disabled]="true"' : '',
+      props.required ? '[required]="true"' : '',
+      props.rtl ? '[rtl]="true"' : ''
     ].filter(Boolean);
 
-    const lines: string[] = [];
-    lines.push(`<label class="${classes.join(' ')}"${props.rtl ? ' dir="rtl"' : ''}>`);
-    lines.push('  <input type="checkbox" class="dga-checkbox__input"');
-    if (props.checked) lines.push('    checked');
-    if (props.disabled || props.state === 'disabled') lines.push('    disabled');
-    lines.push('  />');
-    lines.push('  <span class="dga-checkbox__box" aria-hidden="true">');
-    if (props.indeterminate) {
-      lines.push(`    <img src="https://www.figma.com/api/mcp/asset/0a9d2aa3-c81b-4eb5-b361-0d77974c30fe" alt="" />`);
-    } else if (props.checked) {
-      lines.push(`    <img src="https://www.figma.com/api/mcp/asset/4f49421d-e1bc-4b62-8262-77f609339a4b" alt="" />`);
-    }
-    lines.push('  </span>');
-    lines.push(`  <span class="dga-checkbox__label">${props.label}</span>`);
-    lines.push('</label>');
-    return lines.join('\n');
+    return [`<dga-checkbox`, ...attrs.map((attr) => `  ${attr}`), `></dga-checkbox>`].join('\n');
   }
 
   generateCssSnippet(): string {
     return `.dga-checkbox {
+  --dga-checkbox-size: 24px;
+  --dga-checkbox-border: var(--dga-neutral-500);
+  --dga-checkbox-checked-bg: var(--dga-600);
+  --dga-checkbox-mark-color: var(--dga-text-on-color);
+
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--dga-space-2);
-  font-family: var(--dga-font-text), sans-serif;
-  font-size: var(--dga-text-md-size);
-  line-height: var(--dga-text-md-line);
   color: var(--dga-text-default);
+  font-family: var(--dga-font-text), sans-serif;
   cursor: pointer;
-  user-select: none;
+}
+
+.dga-checkbox__control,
+.dga-checkbox__box {
+  width: var(--dga-checkbox-size);
+  height: var(--dga-checkbox-size);
+}
+
+.dga-checkbox__control {
+  position: relative;
+  flex: 0 0 var(--dga-checkbox-size);
 }
 
 .dga-checkbox__input {
   position: absolute;
+  inset: 0;
+  z-index: 2;
+  margin: 0;
   opacity: 0;
-  width: 0;
-  height: 0;
+  cursor: inherit;
 }
 
 .dga-checkbox__box {
-  width: 24px;
-  height: 24px;
-  border-radius: 2px;
-  border: 1px solid #161616;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid var(--dga-checkbox-border);
+  border-radius: var(--dga-radius-xs);
   background: transparent;
-  position: relative;
 }
 
-.dga-checkbox__box img {
-  width: 100%;
-  height: 100%;
-  display: block;
+.dga-checkbox--checked .dga-checkbox__box,
+.dga-checkbox--indeterminate .dga-checkbox__box,
+.dga-checkbox__input:checked + .dga-checkbox__box {
+  border-color: var(--dga-checkbox-checked-bg);
+  background: var(--dga-checkbox-checked-bg);
 }
 
-.dga-checkbox__label {
-  font-size: var(--dga-text-md-size);
-  line-height: var(--dga-text-md-line);
+.dga-checkbox--neutral {
+  --dga-checkbox-checked-bg: var(--dga-neutral-950);
 }
 
 .dga-checkbox--small {
-  font-size: var(--dga-text-sm-size);
-}
-
-.dga-checkbox--small .dga-checkbox__box {
-  width: 20px;
-  height: 20px;
+  --dga-checkbox-size: 20px;
 }
 
 .dga-checkbox--xsmall {
-  font-size: var(--dga-text-xs-size);
+  --dga-checkbox-size: 16px;
 }
 
-.dga-checkbox--xsmall .dga-checkbox__box {
-  width: 16px;
-  height: 16px;
+.dga-checkbox__label {
+  font-weight: var(--dga-font-medium);
 }
 
-.dga-checkbox--primary.dga-checkbox--checked .dga-checkbox__box,
-.dga-checkbox--primary.dga-checkbox--indeterminate .dga-checkbox__box,
-.dga-checkbox--neutral.dga-checkbox--checked .dga-checkbox__box,
-.dga-checkbox--neutral.dga-checkbox--indeterminate .dga-checkbox__box {
-  background: #161616;
-  border-color: #161616;
+.dga-checkbox__description {
+  color: var(--dga-text-secondary);
 }
 
-.dga-checkbox--hovered .dga-checkbox__box::after {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border-radius: 9999px;
-  background: #f3f4f6;
-  z-index: -1;
-}
-
-.dga-checkbox--pressed .dga-checkbox__box::after {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border-radius: 9999px;
-  background: #f3f4f6;
-  z-index: -1;
-}
-
-.dga-checkbox--focused .dga-checkbox__box::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border: 2px solid #161616;
-  border-radius: 2px;
-  z-index: -1;
-}
-
-.dga-checkbox--disabled,
-.dga-checkbox--read-only {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.dga-checkbox--rtl {
-  direction: rtl;
+.dga-checkbox__message {
+  color: var(--dga-error-700);
 }
 `;
+  }
+
+  private stringAttr(name: string, value: string): string {
+    return value ? `${name}="${this.escapeAttribute(value)}"` : '';
+  }
+
+  private escapeAttribute(value: string): string {
+    return value
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 }

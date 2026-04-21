@@ -1,9 +1,26 @@
 <dga-playground [config]="playgroundConfig" [componentProps]="componentProps">
   <dga-digital-stamp
     [variant]="componentProps.variant"
+    [size]="componentProps.size"
+    [layout]="componentProps.layout"
+    [stampStyle]="componentProps.stampStyle"
+    [state]="componentProps.state"
+    [title]="componentProps.title"
     [text]="componentProps.text"
+    [organization]="componentProps.organization"
     [date]="componentProps.date"
+    [dateLabel]="componentProps.dateLabel"
+    [reference]="componentProps.reference"
+    [referenceLabel]="componentProps.referenceLabel"
     [signature]="componentProps.signature"
-    [rotation]="componentProps.rotation">
+    [signatureLabel]="componentProps.signatureLabel"
+    [qrLabel]="componentProps.qrLabel"
+    [rotation]="componentProps.rotation"
+    [showIcon]="componentProps.showIcon"
+    [showQr]="componentProps.showQr"
+    [showMeta]="componentProps.showMeta"
+    [rtl]="componentProps.rtl"
+    [onColor]="componentProps.onColor"
+    [disabled]="componentProps.disabled">
   </dga-digital-stamp>
 </dga-playground>

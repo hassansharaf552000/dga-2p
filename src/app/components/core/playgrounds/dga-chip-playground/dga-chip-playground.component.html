@@ -1,14 +1,17 @@
 <dga-playground [config]="playgroundConfig" [componentProps]="componentProps">
   <dga-chip
     [label]="componentProps.label"
-    [style]="componentProps.style"
+    [variant]="componentProps.variant"
     [size]="componentProps.size"
     [state]="componentProps.state"
+    [(selected)]="componentProps.selected"
     [rounded]="componentProps.rounded"
     [rtl]="componentProps.rtl"
     [onColor]="componentProps.onColor"
     [leadIcon]="componentProps.leadIcon"
     [trailIcon]="componentProps.trailIcon"
+    [removable]="componentProps.removable"
+    [selectable]="componentProps.selectable"
     [disabled]="componentProps.disabled">
   </dga-chip>
 </dga-playground>

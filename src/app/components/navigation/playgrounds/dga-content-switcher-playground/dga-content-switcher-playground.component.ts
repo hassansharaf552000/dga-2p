@@ -1,8 +1,16 @@
 import { Component } from '@angular/core';
-import { DgaContentSwitcherComponent } from '../../components/dga-content-switcher/dga-content-switcher.component';
+import {
+  ContentSwitcherSize,
+  DgaContentSwitcherComponent
+} from '../../components/dga-content-switcher/dga-content-switcher.component';
 import { DgaPlaygroundComponent, PlaygroundConfig } from '../../../shared/dga-playground/dga-playground.component';
 
-type SwitcherSize = 'small' | 'medium' | 'large';
+interface ContentSwitcherPlaygroundProps {
+  size: ContentSwitcherSize;
+  selectedId: string;
+  onColor: boolean;
+  rtl: boolean;
+}
 
 @Component({
   selector: 'dga-content-switcher-playground',
@@ -12,37 +20,73 @@ type SwitcherSize = 'small' | 'medium' | 'large';
   styleUrl: './dga-content-switcher-playground.component.scss'
 })
 export class DgaContentSwitcherPlaygroundComponent {
-  componentProps = {
-    size: 'small' as SwitcherSize,
+  readonly items = [
+    { id: 'item1', label: 'Item' },
+    { id: 'item2', label: 'Item' },
+    { id: 'item3', label: 'Item' },
+    { id: 'item4', label: 'Item' }
+  ];
+
+  componentProps: ContentSwitcherPlaygroundProps = {
+    size: 'small',
+    selectedId: 'item1',
     onColor: false,
-    rtl: false,
-    items: [
-      { id: 'item1', label: 'Item', state: 'selected' },
-      { id: 'item2', label: 'Item', state: 'normal' },
-      { id: 'item3', label: 'Item', state: 'normal' },
-      { id: 'item4', label: 'Item', state: 'normal' }
-    ]
-  } as const;
+    rtl: false
+  };
 
   playgroundConfig: PlaygroundConfig = {
     title: 'Content Switcher',
-    description: 'Segmented content switcher with size and on-color variants.',
+    description: 'Segmented navigation control for switching between related content views.',
     selector: 'dga-content-switcher',
     componentName: 'DgaContentSwitcher',
     textFields: [],
     textareaFields: [],
     selectFields: [
-      { key: 'size', label: 'Size', type: 'select', options: ['small', 'medium', 'large'] }
+      { key: 'size', label: 'Size', type: 'select', options: ['small', 'medium', 'large'] },
+      { key: 'selectedId', label: 'Selected item', type: 'select', options: ['item1', 'item2', 'item3', 'item4'] }
     ],
     booleanFields: [
       { key: 'onColor', label: 'On Color', type: 'boolean' },
       { key: 'rtl', label: 'RTL', type: 'boolean' }
     ],
-    generateHtml: (props) => `<dga-content-switcher\n  [items]=\"items\"\n  size=\"${props.size}\"\n  [onColor]=\"${props.onColor}\"\n  [rtl]=\"${props.rtl}\">\n</dga-content-switcher>`,
+    generateHtml: (props) => this.generateHtmlSnippet(props as ContentSwitcherPlaygroundProps),
     generateCss: () => this.generateCssSnippet()
   };
 
+  generateHtmlSnippet(props: ContentSwitcherPlaygroundProps): string {
+    const attrs = [
+      '[items]="items"',
+      `size="${props.size}"`,
+      `selectedId="${props.selectedId}"`,
+      props.onColor ? '[onColor]="true"' : '',
+      props.rtl ? '[rtl]="true"' : ''
+    ].filter(Boolean);
+
+    return [`<dga-content-switcher`, ...attrs.map((attr) => `  ${attr}`), `></dga-content-switcher>`].join('\n');
+  }
+
   generateCssSnippet(): string {
-    return `.dga-content-switcher {\n  display: inline-flex;\n  align-items: center;\n  border-radius: var(--dga-radius-md);\n  font-family: var(--dga-font-text), sans-serif;\n}\n\n.dga-content-switcher__item {\n  border: 0.5px solid var(--dga-border-neutral-primary);\n  background: var(--dga-bg-neutral-100);\n  color: var(--dga-text-default);\n  padding: var(--dga-space-2);\n  height: 32px;\n  min-width: 51px;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  font-size: var(--dga-text-md-size);\n  line-height: var(--dga-text-md-line);\n  cursor: pointer;\n}\n\n.dga-content-switcher__item--first {\n  border-top-left-radius: var(--dga-radius-md);\n  border-bottom-left-radius: var(--dga-radius-md);\n}\n\n.dga-content-switcher__item--last {\n  border-top-right-radius: var(--dga-radius-md);\n  border-bottom-right-radius: var(--dga-radius-md);\n}\n\n.dga-content-switcher__item--selected {\n  background: #0d121c;\n  color: var(--dga-text-on-color);\n  border-color: #0d121c;\n}\n\n.dga-content-switcher__item--hovered {\n  background: #f3f4f6;\n}\n\n.dga-content-switcher__item--focused {\n  border: 2px solid #161616;\n  position: relative;\n}\n\n.dga-content-switcher__item--focused::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border: 1px solid #ffffff;\n  pointer-events: none;\n}\n\n.dga-content-switcher--on-color .dga-content-switcher__item {\n  background: rgba(255, 255, 255, 0.2);\n  color: var(--dga-text-on-color);\n  border-color: rgba(255, 255, 255, 0.2);\n}\n\n.dga-content-switcher--on-color .dga-content-switcher__item--selected {\n  background: var(--dga-bg-card);\n  color: var(--dga-text-default);\n}\n\n.dga-content-switcher--small .dga-content-switcher__item {\n  height: 32px;\n}\n\n.dga-content-switcher--medium .dga-content-switcher__item {\n  height: 40px;\n  min-width: 64px;\n}\n\n.dga-content-switcher--large .dga-content-switcher__item {\n  height: 48px;\n  min-width: 76px;\n}\n\n.dga-content-switcher[dir='rtl'] {\n  direction: rtl;\n}\n\n.dga-content-switcher[dir='rtl'] .dga-content-switcher__item--first {\n  border-radius: 0 var(--dga-radius-md) var(--dga-radius-md) 0;\n}\n\n.dga-content-switcher[dir='rtl'] .dga-content-switcher__item--last {\n  border-radius: var(--dga-radius-md) 0 0 var(--dga-radius-md);\n}\n`;
+    return `.dga-content-switcher {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--dga-radius-md);
+  font-family: var(--dga-font-text), sans-serif;
+}
+
+.dga-content-switcher__item {
+  min-width: 51px;
+  height: 32px;
+  padding: 0 var(--dga-space-2);
+  border: 1px solid var(--dga-border-neutral-primary);
+  background: var(--dga-bg-neutral-100);
+  color: var(--dga-text-default);
+}
+
+.dga-content-switcher__item--selected {
+  border-color: var(--dga-neutral-950);
+  background: var(--dga-neutral-950);
+  color: var(--dga-text-on-color);
+}
+`;
   }
 }

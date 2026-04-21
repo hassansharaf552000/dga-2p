@@ -1,17 +1,23 @@
 <button
-  class="{{ chipClasses }}"
+  class="{{ chipClasses.join(' ') }}"
   type="button"
   [attr.dir]="rtl ? 'rtl' : null"
-  [disabled]="isDisabled">
+  [attr.aria-label]="computedAriaLabel"
+  [attr.aria-pressed]="selectable ? isSelected : null"
+  [disabled]="isDisabled"
+  (click)="onChipClick()"
+  (keydown)="onKeydown($event)"
+>
   @if (showLeadIcon) {
-    <span class="dga-chip__icon dga-chip__icon--lead" aria-hidden="true">
-      <img [src]="leadIconUrl" alt="" />
-    </span>
+    <span class="dga-chip__icon dga-chip__icon--lead" aria-hidden="true"></span>
   }
   <span class="dga-chip__label">{{ label }}</span>
   @if (showTrailIcon) {
-    <span class="dga-chip__icon dga-chip__icon--trail" aria-hidden="true">
-      <img [src]="trailIconUrl" alt="" />
-    </span>
+    <span
+      class="dga-chip__icon dga-chip__icon--trail"
+      [class.dga-chip__icon--remove]="removable"
+      aria-hidden="true"
+      (click)="removable ? onRemoveClick($event) : null"
+    ></span>
   }
 </button>

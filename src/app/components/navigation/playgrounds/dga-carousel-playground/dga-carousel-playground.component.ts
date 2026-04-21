@@ -1,8 +1,17 @@
 import { Component } from '@angular/core';
-import { DgaCarouselComponent } from '../../components/dga-carousel/dga-carousel.component';
+import {
+  CarouselVariant,
+  DgaCarouselComponent
+} from '../../components/dga-carousel/dga-carousel.component';
 import { DgaPlaygroundComponent, PlaygroundConfig } from '../../../shared/dga-playground/dga-playground.component';
 
-type CarouselStyle = 'dots' | 'arrows' | 'dots-only';
+interface CarouselPlaygroundProps {
+  variant: CarouselVariant;
+  rtl: boolean;
+  loop: boolean;
+  total: string;
+  current: number;
+}
 
 @Component({
   selector: 'dga-carousel-playground',
@@ -12,31 +21,106 @@ type CarouselStyle = 'dots' | 'arrows' | 'dots-only';
   styleUrl: './dga-carousel-playground.component.scss'
 })
 export class DgaCarouselPlaygroundComponent {
-  componentProps = {
-    style: 'dots' as CarouselStyle,
+  componentProps: CarouselPlaygroundProps = {
+    variant: 'dots',
     rtl: false,
-    total: 4,
+    loop: false,
+    total: '4',
     current: 0
-  } as const;
+  };
 
   playgroundConfig: PlaygroundConfig = {
     title: 'Carousel',
-    description: 'Carousel with dots or arrows style variants.',
+    description: 'Carousel navigation with dots, arrows, and dots-only variants.',
     selector: 'dga-carousel',
     componentName: 'DgaCarousel',
-    textFields: [],
+    textFields: [
+      { key: 'total', label: 'Total slides', type: 'text' }
+    ],
     textareaFields: [],
     selectFields: [
-      { key: 'style', label: 'Style', type: 'select', options: ['dots', 'arrows', 'dots-only'] }
+      { key: 'variant', label: 'Variant', type: 'select', options: ['dots', 'arrows', 'dots-only'] },
+      { key: 'current', label: 'Current slide', type: 'select', options: ['0', '1', '2', '3'] }
     ],
     booleanFields: [
-      { key: 'rtl', label: 'RTL', type: 'boolean' }
+      { key: 'rtl', label: 'RTL', type: 'boolean' },
+      { key: 'loop', label: 'Loop', type: 'boolean' }
     ],
-    generateHtml: (props) => `<dga-carousel\n  style="${props.style}"\n  [rtl]="${props.rtl}"\n  [total]="${props.total}"\n  [current]="${props.current}">\n</dga-carousel>`,
+    generateHtml: (props) => this.generateHtmlSnippet(props as CarouselPlaygroundProps),
     generateCss: () => this.generateCssSnippet()
   };
 
+  generateHtmlSnippet(props: CarouselPlaygroundProps): string {
+    const attrs = [
+      `variant="${props.variant}"`,
+      `[total]="${Number(props.total) || 1}"`,
+      `[current]="${props.current}"`,
+      props.rtl ? '[rtl]="true"' : '',
+      props.loop ? '[loop]="true"' : ''
+    ].filter(Boolean);
+
+    return [`<dga-carousel`, ...attrs.map((attr) => `  ${attr}`), `></dga-carousel>`].join('\n');
+  }
+
   generateCssSnippet(): string {
-    return `.dga-carousel {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: var(--dga-space-6);\n  font-family: var(--dga-font-text), sans-serif;\n}\n\n.dga-carousel__content {\n  width: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 44px;\n}\n\n.dga-carousel__swap {\n  flex: 1;\n  border: 1px dashed var(--dga-border-brand);\n  background: var(--dga-bg-brand-light);\n  padding: var(--dga-space-4);\n  border-radius: var(--dga-radius-sm);\n  text-align: center;\n  color: var(--dga-text-brand-secondary);\n}\n\n.dga-carousel__swap-title {\n  margin: 0 0 var(--dga-space-3);\n  font-weight: var(--dga-font-semibold);\n  font-size: var(--dga-text-sm-size);\n  line-height: var(--dga-text-sm-line);\n}\n\n.dga-carousel__swap-subtitle {\n  margin: 0;\n  font-weight: var(--dga-font-semibold);\n  font-size: var(--dga-text-sm-size);\n  line-height: var(--dga-text-sm-line);\n}\n\n.dga-carousel__arrow {\n  width: 48px;\n  height: 48px;\n  border-radius: var(--dga-radius-full);\n  background: var(--dga-600);\n  border: none;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n}\n\n.dga-carousel__arrow img {\n  width: 24px;\n  height: 24px;\n}\n\n.dga-carousel__dots {\n  display: inline-flex;\n  align-items: center;\n  gap: var(--dga-space-2);\n  padding: var(--dga-space-3);\n  border-radius: var(--dga-radius-full);\n}\n\n.dga-carousel__dot {\n  width: 12px;\n  height: 12px;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.dga-carousel__dot img {\n  width: 100%;\n  height: 100%;\n  display: block;\n}\n\n.dga-carousel--dots-only .dga-carousel__dots {\n  padding: var(--dga-space-1) var(--dga-space-3);\n}\n\n.dga-carousel[dir='rtl'] .dga-carousel__content {\n  flex-direction: row-reverse;\n}\n`;
+    return `.dga-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dga-space-6);
+  width: 100%;
+  font-family: var(--dga-font-text), sans-serif;
+}
+
+.dga-carousel__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 44px;
+  width: 100%;
+}
+
+.dga-carousel__slide {
+  display: flex;
+  flex: 1;
+  min-height: 136px;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--dga-border-brand);
+  border-radius: var(--dga-radius-sm);
+  background: var(--dga-bg-brand-light);
+  color: var(--dga-text-brand-secondary);
+  text-align: center;
+}
+
+.dga-carousel__arrow {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: var(--dga-radius-full);
+  background: var(--dga-600);
+  color: var(--dga-text-on-color);
+}
+
+.dga-carousel__dots {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dga-space-2);
+  padding: var(--dga-space-3);
+}
+
+.dga-carousel__dot {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: var(--dga-radius-full);
+  background: var(--dga-neutral-300);
+}
+
+.dga-carousel__dot--active {
+  width: 32px;
+  background: var(--dga-600);
+}
+`;
   }
 }

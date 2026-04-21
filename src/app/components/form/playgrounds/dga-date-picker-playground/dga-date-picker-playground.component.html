@@ -1,9 +1,26 @@
 <dga-playground [config]="playgroundConfig" [componentProps]="componentProps">
   <dga-date-picker
     [label]="componentProps.label"
-    [value]="componentProps.value"
+    [mode]="componentProps.mode"
+    [variant]="componentProps.variant"
+    [(value)]="componentProps.value"
+    [(startValue)]="componentProps.startValue"
+    [(endValue)]="componentProps.endValue"
     [placeholder]="componentProps.placeholder"
+    [startPlaceholder]="componentProps.startPlaceholder"
+    [endPlaceholder]="componentProps.endPlaceholder"
+    [rangeSeparator]="componentProps.rangeSeparator"
+    [helperText]="componentProps.helperText"
+    [min]="componentProps.min"
+    [max]="componentProps.max"
+    [size]="componentProps.size"
+    [state]="componentProps.state"
     [disabled]="componentProps.disabled"
+    [readOnly]="componentProps.readOnly"
+    [required]="componentProps.required"
+    [onColor]="componentProps.onColor"
+    [fullWidth]="componentProps.fullWidth"
+    [rtl]="componentProps.rtl"
     [error]="componentProps.error">
   </dga-date-picker>
 </dga-playground>

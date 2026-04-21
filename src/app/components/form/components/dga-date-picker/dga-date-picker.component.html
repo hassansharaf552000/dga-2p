@@ -1,16 +1,139 @@
-<div class="date-picker" [class.date-picker--error]="error" [class.date-picker--disabled]="disabled">
+<div class="{{ datePickerClasses.join(' ') }}" [attr.dir]="rtl ? 'rtl' : null">
   @if (label) {
-    <label class="date-picker__label">{{ label }}</label>
+    <label class="dga-date-picker__label" [for]="isRangeMode ? inputId + '-start' : inputId">{{ label }}</label>
   }
-  <div class="date-picker__wrapper">
-    <input 
-      type="date" 
-      class="date-picker__input"
-      [value]="value"
-      [disabled]="disabled" />
-    <span class="date-picker__icon">📅</span>
-  </div>
+
+  @if (isRangeMode) {
+    <div class="dga-date-picker__range" [attr.aria-label]="label || 'Date range'">
+      <input
+        class="dga-date-picker__input dga-date-picker__input--range"
+        [id]="inputId + '-start'"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        [placeholder]="startPlaceholder"
+        [value]="startDisplayValue"
+        [disabled]="isDisabled"
+        [readOnly]="isReadOnly"
+        [required]="required"
+        [attr.aria-invalid]="error ? true : null"
+        [attr.aria-expanded]="calendarOpen"
+        [attr.aria-controls]="inputId + '-calendar'"
+        [attr.aria-label]="label ? label + ' start date' : 'Start date'"
+        (focus)="onRangeInputFocus('start')"
+        (input)="onRangeInput('start', $any($event.target).value)"
+        (keydown)="onInputKeydown($event)"
+      />
+      <span class="dga-date-picker__range-separator">{{ rangeSeparator }}</span>
+      <input
+        class="dga-date-picker__input dga-date-picker__input--range"
+        [id]="inputId + '-end'"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        [placeholder]="endPlaceholder"
+        [value]="endDisplayValue"
+        [disabled]="isDisabled"
+        [readOnly]="isReadOnly"
+        [required]="required"
+        [attr.aria-invalid]="error ? true : null"
+        [attr.aria-expanded]="calendarOpen"
+        [attr.aria-controls]="inputId + '-calendar'"
+        [attr.aria-label]="label ? label + ' end date' : 'End date'"
+        (focus)="onRangeInputFocus('end')"
+        (input)="onRangeInput('end', $any($event.target).value)"
+        (keydown)="onInputKeydown($event)"
+      />
+      <button
+        class="dga-date-picker__trigger"
+        type="button"
+        [disabled]="!isInteractive"
+        [attr.aria-label]="calendarOpen ? 'Close calendar' : 'Open calendar'"
+        [attr.aria-controls]="inputId + '-calendar'"
+        [attr.aria-expanded]="calendarOpen"
+        (click)="toggleCalendar()"
+      >
+        <span class="dga-date-picker__icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  } @else {
+    <div class="dga-date-picker__field">
+      <input
+        class="dga-date-picker__input"
+        [id]="inputId"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        [placeholder]="placeholder"
+        [value]="displayValue"
+        [disabled]="isDisabled"
+        [readOnly]="isReadOnly"
+        [required]="required"
+        [attr.aria-invalid]="error ? true : null"
+        [attr.aria-expanded]="calendarOpen"
+        [attr.aria-controls]="inputId + '-calendar'"
+        (focus)="openCalendar()"
+        (input)="onInput($any($event.target).value)"
+        (keydown)="onInputKeydown($event)"
+      />
+      <button
+        class="dga-date-picker__trigger"
+        type="button"
+        [disabled]="!isInteractive"
+        [attr.aria-label]="calendarOpen ? 'Close calendar' : 'Open calendar'"
+        [attr.aria-controls]="inputId + '-calendar'"
+        [attr.aria-expanded]="calendarOpen"
+        (click)="toggleCalendar()"
+      >
+        <span class="dga-date-picker__icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  }
+
   @if (error) {
-    <span class="date-picker__error">{{ error }}</span>
+    <span class="dga-date-picker__message" role="alert">{{ error }}</span>
+  } @else if (helperText) {
+    <span class="dga-date-picker__helper">{{ helperText }}</span>
+  }
+
+  @if (calendarOpen) {
+    <div class="dga-date-picker__calendar" [id]="inputId + '-calendar'" role="dialog" aria-modal="false">
+      <div class="dga-date-picker__calendar-header">
+        <button class="dga-date-picker__nav dga-date-picker__nav--previous" type="button" aria-label="Previous month" (click)="previousMonth()">
+          <span aria-hidden="true"></span>
+        </button>
+        <p class="dga-date-picker__month">{{ monthLabel }}</p>
+        <button class="dga-date-picker__nav dga-date-picker__nav--next" type="button" aria-label="Next month" (click)="nextMonth()">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="dga-date-picker__weekdays" aria-hidden="true">
+        @for (day of weekdayLabels; track day) {
+          <span>{{ day }}</span>
+        }
+      </div>
+
+      <div class="dga-date-picker__grid" role="grid" [attr.aria-label]="monthLabel">
+        @for (cell of calendarCells; track cell.value) {
+          <button
+            class="dga-date-picker__day"
+            type="button"
+            role="gridcell"
+            [class.dga-date-picker__day--outside]="!cell.inMonth"
+            [class.dga-date-picker__day--selected]="cell.selected"
+            [class.dga-date-picker__day--in-range]="cell.inRange"
+            [class.dga-date-picker__day--range-start]="cell.rangeStart"
+            [class.dga-date-picker__day--range-end]="cell.rangeEnd"
+            [class.dga-date-picker__day--today]="cell.today"
+            [disabled]="cell.disabled"
+            [attr.aria-selected]="cell.selected || cell.inRange"
+            (click)="selectDate(cell)"
+          >
+            {{ cell.day }}
+          </button>
+        }
+      </div>
+    </div>
   }
 </div>

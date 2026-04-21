@@ -1,11 +1,14 @@
 <dga-playground [config]="playgroundConfig" [componentProps]="componentProps">
   <dga-checkbox
     [label]="componentProps.label"
-    [checked]="componentProps.checked"
-    [indeterminate]="componentProps.indeterminate"
+    [description]="componentProps.description"
+    [errorMessage]="componentProps.errorMessage"
+    [(checked)]="componentProps.checked"
+    [(indeterminate)]="componentProps.indeterminate"
     [disabled]="componentProps.disabled"
+    [required]="componentProps.required"
     [size]="componentProps.size"
-    [style]="componentProps.style"
+    [variant]="componentProps.variant"
     [state]="componentProps.state"
     [rtl]="componentProps.rtl">
   </dga-checkbox>

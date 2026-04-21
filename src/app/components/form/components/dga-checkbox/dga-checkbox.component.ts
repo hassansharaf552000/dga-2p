@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-type CheckboxSize = 'xsmall' | 'small' | 'medium';
-type CheckboxStyle = 'primary' | 'neutral';
-type CheckboxState = 'default' | 'hovered' | 'pressed' | 'focused' | 'read-only' | 'disabled';
+export type CheckboxSize = 'xsmall' | 'small' | 'medium';
+export type CheckboxStyle = 'primary' | 'neutral';
+export type CheckboxState = 'default' | 'hovered' | 'pressed' | 'focused' | 'read-only' | 'disabled';
+
+let nextCheckboxId = 0;
 
 @Component({
   selector: 'dga-checkbox',
@@ -13,32 +15,80 @@ type CheckboxState = 'default' | 'hovered' | 'pressed' | 'focused' | 'read-only'
 })
 export class DgaCheckboxComponent {
   @Input() label = 'Checkbox';
+  @Input() description = '';
+  @Input() errorMessage = '';
+  @Input() name = '';
+  @Input() value = '';
+  @Input() inputId = `dga-checkbox-${nextCheckboxId++}`;
+  @Input() ariaLabel = '';
+  @Input() required = false;
   @Input() checked = false;
   @Input() indeterminate = false;
   @Input() disabled = false;
   @Input() size: CheckboxSize = 'medium';
-  @Input() style: CheckboxStyle = 'primary';
+  @Input() variant: CheckboxStyle = 'primary';
   @Input() state: CheckboxState = 'default';
   @Input() rtl = false;
 
-  readonly checkmarkUrl = 'https://www.figma.com/api/mcp/asset/4f49421d-e1bc-4b62-8262-77f609339a4b';
-  readonly indeterminateUrl = 'https://www.figma.com/api/mcp/asset/0a9d2aa3-c81b-4eb5-b361-0d77974c30fe';
-  readonly focusCheckedUrl = 'https://www.figma.com/api/mcp/asset/b59092fb-dd19-42d9-a8e2-b3f31a1b739b';
+  @Input('style')
+  set legacyStyle(value: CheckboxStyle | null | undefined) {
+    if (value) this.variant = value;
+  }
+
+  @Output() checkedChange = new EventEmitter<boolean>();
+  @Output() indeterminateChange = new EventEmitter<boolean>();
 
   get checkboxClasses(): string[] {
+    const stateClass = this.isDisabled ? 'dga-checkbox--disabled' : `dga-checkbox--${this.state}`;
+
     return [
       'dga-checkbox',
       `dga-checkbox--${this.size}`,
-      `dga-checkbox--${this.style}`,
-      `dga-checkbox--${this.state}`,
+      `dga-checkbox--${this.variant}`,
+      stateClass,
       this.checked ? 'dga-checkbox--checked' : '',
       this.indeterminate ? 'dga-checkbox--indeterminate' : '',
-      this.disabled || this.state === 'disabled' ? 'dga-checkbox--disabled' : '',
       this.rtl ? 'dga-checkbox--rtl' : ''
     ].filter(Boolean);
   }
 
+  get hasContent(): boolean {
+    return !!(this.label || this.description || this.errorMessage);
+  }
+
   get isReadOnly(): boolean {
     return this.state === 'read-only';
+  }
+
+  get isDisabled(): boolean {
+    return this.disabled || this.state === 'disabled';
+  }
+
+  get computedAriaLabel(): string | null {
+    return this.hasContent ? null : this.ariaLabel || 'Checkbox';
+  }
+
+  onInputClick(event: MouseEvent): void {
+    if (!this.isReadOnly) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onInputChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (this.isReadOnly || this.isDisabled) {
+      input.checked = this.checked;
+      input.indeterminate = this.indeterminate;
+      return;
+    }
+
+    if (this.indeterminate) {
+      this.indeterminate = false;
+      this.indeterminateChange.emit(false);
+    }
+
+    this.checked = input.checked;
+    this.checkedChange.emit(this.checked);
   }
 }

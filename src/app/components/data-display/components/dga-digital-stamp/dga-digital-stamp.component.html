@@ -1,11 +1,67 @@
-<div class="stamp stamp--{{ variant }}" [style.transform]="'rotate(' + rotation + 'deg)'">
-  <div class="stamp__inner">
-    <span class="stamp__text">{{ text || variant.toUpperCase() }}</span>
-    @if (date) {
-      <span class="stamp__date">{{ date }}</span>
+<article
+  class="{{ stampClasses.join(' ') }}"
+  [attr.dir]="rtl ? 'rtl' : null"
+  [attr.aria-label]="computedAriaLabel"
+  [style.transform]="rotationTransform">
+  @if (showIcon) {
+    <span class="dga-digital-stamp__mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" class="dga-digital-stamp__icon">
+        @switch (variant) {
+          @case ('rejected') {
+            <path d="M7 7L17 17M17 7L7 17" />
+          }
+          @case ('pending') {
+            <path d="M12 7V12L15 15" />
+          }
+          @case ('expired') {
+            <path d="M8 8L16 16M16 8L8 16" />
+          }
+          @default {
+            <path d="M7.75 12.25L10.5 15L16.25 9.25" />
+          }
+        }
+        <circle cx="12" cy="12" r="9" />
+      </svg>
+    </span>
+  }
+
+  <div class="dga-digital-stamp__content">
+    <span class="dga-digital-stamp__eyebrow">{{ title }}</span>
+    <strong class="dga-digital-stamp__status">{{ displayText }}</strong>
+
+    @if (organization) {
+      <span class="dga-digital-stamp__organization">{{ organization }}</span>
     }
-    @if (signature) {
-      <span class="stamp__signature">{{ signature }}</span>
+
+    @if (hasMeta) {
+      <dl class="dga-digital-stamp__meta">
+        @if (reference) {
+          <div>
+            <dt>{{ referenceLabel }}</dt>
+            <dd>{{ reference }}</dd>
+          </div>
+        }
+        @if (date) {
+          <div>
+            <dt>{{ dateLabel }}</dt>
+            <dd>{{ date }}</dd>
+          </div>
+        }
+        @if (signature) {
+          <div>
+            <dt>{{ signatureLabel }}</dt>
+            <dd>{{ signature }}</dd>
+          </div>
+        }
+      </dl>
     }
   </div>
-</div>
+
+  @if (showQr) {
+    <span class="dga-digital-stamp__qr" [attr.aria-label]="qrLabel" role="img">
+      @for (cell of qrCells; track cell) {
+        <span [class.dga-digital-stamp__qr-cell--filled]="isQrCellFilled(cell)"></span>
+      }
+    </span>
+  }
+</article>

@@ -1,0 +1,95 @@
+.dga-digital-stamp--approved,
+.dga-digital-stamp--verified {
+  --stamp-bg: var(--dga-success-50);
+  --stamp-fg: var(--dga-success-800);
+  --stamp-border: var(--dga-success-600);
+  --stamp-accent: var(--dga-success-600);
+}
+
+.dga-digital-stamp--rejected {
+  --stamp-bg: var(--dga-error-50);
+  --stamp-fg: var(--dga-error-800);
+  --stamp-border: var(--dga-error-600);
+  --stamp-accent: var(--dga-error-600);
+}
+
+.dga-digital-stamp--pending {
+  --stamp-bg: var(--dga-warning-50);
+  --stamp-fg: var(--dga-warning-800);
+  --stamp-border: var(--dga-warning-600);
+  --stamp-accent: var(--dga-warning-600);
+}
+
+.dga-digital-stamp--expired,
+.dga-digital-stamp--custom {
+  --stamp-bg: var(--dga-neutral-100);
+  --stamp-fg: var(--dga-neutral-800);
+  --stamp-border: var(--dga-neutral-500);
+  --stamp-accent: var(--dga-neutral-700);
+}
+
+.dga-digital-stamp--outline {
+  --stamp-bg: transparent;
+}
+
+.dga-digital-stamp--solid {
+  --stamp-bg: var(--stamp-accent);
+  --stamp-fg: var(--dga-text-on-color);
+  --stamp-border: var(--stamp-accent);
+}
+
+.dga-digital-stamp--on-color {
+  --stamp-bg: rgb(255 255 255 / 14%);
+  --stamp-fg: var(--dga-text-on-color);
+  --stamp-border: rgb(255 255 255 / 42%);
+}
+
+.dga-digital-stamp--small {
+  --stamp-pad: var(--dga-space-2);
+  --stamp-gap: var(--dga-space-2);
+  --stamp-mark: 32px;
+}
+
+.dga-digital-stamp--large {
+  --stamp-pad: var(--dga-space-5);
+  --stamp-gap: var(--dga-space-4);
+  --stamp-mark: 48px;
+}
+
+.dga-digital-stamp--vertical {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+}
+
+.dga-digital-stamp--compact {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.dga-digital-stamp--compact .dga-digital-stamp__qr,
+.dga-digital-stamp--compact .dga-digital-stamp__organization,
+.dga-digital-stamp--compact .dga-digital-stamp__meta {
+  display: none;
+}
+
+.dga-digital-stamp--hovered,
+.dga-digital-stamp:hover {
+  box-shadow: 0 4px 12px rgb(16 24 40 / 12%);
+}
+
+.dga-digital-stamp--focused {
+  outline: 2px solid var(--dga-text-default);
+  outline-offset: 2px;
+}
+
+.dga-digital-stamp--disabled {
+  --stamp-bg: var(--dga-neutral-100);
+  --stamp-fg: var(--dga-neutral-400);
+  --stamp-border: var(--dga-neutral-300);
+  --stamp-accent: var(--dga-neutral-400);
+  opacity: 0.72;
+}
+
+.dga-digital-stamp--rtl {
+  direction: rtl;
+}

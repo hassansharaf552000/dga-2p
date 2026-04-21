@@ -1,13 +1,20 @@
-<div class="dga-content-switcher dga-content-switcher--{{ size }}" [class.dga-content-switcher--on-color]="onColor" [attr.dir]="rtl ? 'rtl' : null">
-  @for (item of items; track item.id; let i = $index; let last = $last) {
+<div
+  class="{{ switcherClasses.join(' ') }}"
+  role="tablist"
+  [attr.aria-label]="ariaLabel"
+  [attr.dir]="rtl ? 'rtl' : null"
+>
+  @for (item of items; track item.id; let i = $index) {
     <button
-      class="dga-content-switcher__item"
-      [class.dga-content-switcher__item--first]="i === 0"
-      [class.dga-content-switcher__item--last]="last"
-      [class.dga-content-switcher__item--selected]="item.state === 'selected'"
-      [class.dga-content-switcher__item--focused]="item.state === 'focused'"
-      [class.dga-content-switcher__item--hovered]="item.state === 'hovered'"
-      type="button">
+      class="{{ itemClasses(item, i).join(' ') }}"
+      type="button"
+      role="tab"
+      [disabled]="isItemDisabled(item)"
+      [attr.aria-selected]="isSelected(item)"
+      [attr.tabindex]="isSelected(item) ? 0 : -1"
+      (click)="selectItem(item)"
+      (keydown)="onItemKeydown($event, item)"
+    >
       <span class="dga-content-switcher__label">{{ item.label }}</span>
     </button>
   }

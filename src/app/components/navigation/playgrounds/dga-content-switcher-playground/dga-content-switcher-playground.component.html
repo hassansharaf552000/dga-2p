@@ -1,7 +1,8 @@
 <dga-playground [config]="playgroundConfig" [componentProps]="componentProps">
   <dga-content-switcher
-    [items]="componentProps.items"
+    [items]="items"
     [size]="componentProps.size"
+    [(selectedId)]="componentProps.selectedId"
     [onColor]="componentProps.onColor"
     [rtl]="componentProps.rtl">
   </dga-content-switcher>

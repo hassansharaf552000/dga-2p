@@ -1,8 +1,9 @@
 <dga-playground [config]="playgroundConfig" [componentProps]="componentProps">
   <dga-carousel
-    [style]="componentProps.style"
+    [variant]="componentProps.variant"
     [rtl]="componentProps.rtl"
+    [loop]="componentProps.loop"
     [total]="componentProps.total"
-    [current]="componentProps.current">
+    [(current)]="componentProps.current">
   </dga-carousel>
 </dga-playground>
