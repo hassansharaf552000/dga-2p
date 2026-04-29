@@ -1,101 +1,237 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-export type DigitalStampVariant = 'verified' | 'approved' | 'rejected' | 'pending' | 'expired' | 'custom';
-export type DigitalStampSize = 'small' | 'medium' | 'large';
-export type DigitalStampLayout = 'horizontal' | 'vertical' | 'compact';
-export type DigitalStampStyle = 'soft' | 'outline' | 'solid';
-export type DigitalStampState = 'default' | 'hovered' | 'focused' | 'disabled';
+export type DigitalStampDevice = 'desktop' | 'mobile';
+export type DigitalStampExtension = 'gov.sa' | 'edu.sa' | 'med.sa' | 'org.sa' | 'sch.sa' | '.sa';
+
+interface ExtensionCopy {
+  enTitlePrefix: string;
+  enDescription: string;
+  arTitlePrefix: string;
+  arDescription: string;
+}
+
+const EXTENSION_COPY: Record<DigitalStampExtension, ExtensionCopy> = {
+  'gov.sa': {
+    enTitlePrefix: 'Official Saudi Government websites URL ends with ',
+    enDescription:
+      'Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with {extension}.',
+    arTitlePrefix: 'روابط المواقع الإلكترونية الرسمية الحكومية تنتهي بـ',
+    arDescription:
+      'جميع روابط المواقع الرسمية التابعة للجهات الحكومية في المملكة العربية السعودية تنتهي بـ {extension}'
+  },
+  'edu.sa': {
+    enTitlePrefix: 'Official Saudi education websites URL ends with ',
+    enDescription:
+      'Website belongs to an official education organization in the Kingdom of Saudi Arabia always ends with {extension}.',
+    arTitlePrefix: 'روابط المواقع الإلكترونية التعليمية الرسمية تنتهي بـ',
+    arDescription:
+      'جميع روابط المواقع الرسمية التابعة للجهات التعليمية في المملكة العربية السعودية تنتهي بـ {extension}'
+  },
+  'med.sa': {
+    enTitlePrefix: 'Official Saudi health websites URL ends with ',
+    enDescription:
+      'Website belongs to an official health organization in the Kingdom of Saudi Arabia always ends with {extension}.',
+    arTitlePrefix: 'روابط المواقع الإلكترونية الصحية الرسمية تنتهي بـ',
+    arDescription:
+      'جميع روابط المواقع الرسمية التابعة للجهات الصحية في المملكة العربية السعودية تنتهي بـ {extension}'
+  },
+  'org.sa': {
+    enTitlePrefix: 'Official Saudi organization websites URL ends with ',
+    enDescription:
+      'Website belongs to an official organization in the Kingdom of Saudi Arabia always ends with {extension}.',
+    arTitlePrefix: 'روابط المواقع الإلكترونية للمنظمات الرسمية تنتهي بـ',
+    arDescription:
+      'جميع روابط المواقع الرسمية التابعة للمنظمات في المملكة العربية السعودية تنتهي بـ {extension}'
+  },
+  'sch.sa': {
+    enTitlePrefix: 'Official Saudi school websites URL ends with ',
+    enDescription:
+      'Website belongs to an official school in the Kingdom of Saudi Arabia always ends with {extension}.',
+    arTitlePrefix: 'روابط المواقع الإلكترونية المدرسية الرسمية تنتهي بـ',
+    arDescription:
+      'جميع روابط المواقع الرسمية التابعة للمدارس في المملكة العربية السعودية تنتهي بـ {extension}'
+  },
+  '.sa': {
+    enTitlePrefix: 'Official Saudi websites URL ends with ',
+    enDescription:
+      'Website belongs to an official Saudi organization and uses a verified Saudi domain ending with {extension}.',
+    arTitlePrefix: 'روابط المواقع الإلكترونية السعودية الرسمية تنتهي بـ',
+    arDescription: 'جميع روابط المواقع السعودية الرسمية تنتهي بـ {extension}'
+  }
+};
 
 @Component({
   selector: 'dga-digital-stamp',
   standalone: true,
   imports: [],
   templateUrl: './dga-digital-stamp.component.html',
-  styleUrls: ['./dga-digital-stamp.component.scss', './dga-digital-stamp-variants.component.scss']
+  styleUrls: [
+    './dga-digital-stamp.component.scss',
+    './dga-digital-stamp-details.component.scss',
+    './dga-digital-stamp-variants.component.scss'
+  ]
 })
 export class DgaDigitalStampComponent {
-  @Input() variant: DigitalStampVariant = 'verified';
-  @Input() size: DigitalStampSize = 'medium';
-  @Input() layout: DigitalStampLayout = 'horizontal';
-  @Input() stampStyle: DigitalStampStyle = 'soft';
-  @Input() state: DigitalStampState = 'default';
-  @Input() title = 'Digital Stamp';
-  @Input() text = '';
-  @Input() organization = 'Digital Government Authority';
-  @Input() date = '';
-  @Input() dateLabel = 'Date';
-  @Input() reference = '';
-  @Input() referenceLabel = 'Reference';
-  @Input() signature = '';
-  @Input() signatureLabel = 'Signed by';
-  @Input() qrLabel = 'Verification code';
-  @Input() rotation: number | string = 0;
+  private _extension: DigitalStampExtension = 'gov.sa';
+
+  @Input() opened = false;
+  @Input() device: DigitalStampDevice = 'desktop';
   @Input() rtl = false;
-  @Input() onColor = false;
-  @Input() showIcon = true;
-  @Input() showQr = true;
-  @Input() showMeta = true;
   @Input() disabled = false;
 
-  readonly qrCells = Array.from({ length: 25 }, (_, index) => index);
-
-  @Input('status')
-  set statusAlias(value: DigitalStampVariant | null | undefined) {
-    if (value) this.variant = value;
+  @Input()
+  set extension(value: DigitalStampExtension | string) {
+    this._extension = this.normalizeExtension(value);
+  }
+  get extension(): DigitalStampExtension {
+    return this._extension;
   }
 
-  @Input('style')
-  set styleAlias(value: DigitalStampStyle | null | undefined) {
-    if (value) this.stampStyle = value;
+  @Input() message = '';
+  @Input() linkLabel = '';
+  @Input() domainTitlePrefix = '';
+  @Input() domainDescription = '';
+  @Input() securityTitlePrefix = '';
+  @Input() securityDescription = '';
+  @Input() registrationLabel = '';
+  @Input() registrationNumber = '20230103200';
+  @Input() registrationHref = '';
+  @Input() showRegistration = true;
+  @Input() showSecurity = true;
+  @Input() showDomain = true;
+
+  @Output() openedChange = new EventEmitter<boolean>();
+
+  @Input('isOpen')
+  set isOpenAlias(value: boolean | null | undefined) {
+    if (value !== null && value !== undefined) {
+      this.opened = value;
+    }
+  }
+
+  @Input('mobile')
+  set mobileAlias(value: boolean | null | undefined) {
+    if (value) {
+      this.device = 'mobile';
+    }
   }
 
   get stampClasses(): string[] {
-    const stateClass = this.isDisabled ? 'dga-digital-stamp--disabled' : `dga-digital-stamp--${this.state}`;
-
     return [
       'dga-digital-stamp',
-      `dga-digital-stamp--${this.variant}`,
-      `dga-digital-stamp--${this.size}`,
-      `dga-digital-stamp--${this.layout}`,
-      `dga-digital-stamp--${this.stampStyle}`,
-      stateClass,
-      this.onColor ? 'dga-digital-stamp--on-color' : '',
-      this.rtl ? 'dga-digital-stamp--rtl' : ''
+      `dga-digital-stamp--${this.device}`,
+      this.opened ? 'dga-digital-stamp--opened' : 'dga-digital-stamp--closed',
+      this.rtl ? 'dga-digital-stamp--rtl' : '',
+      this.isDisabled ? 'dga-digital-stamp--disabled' : ''
     ].filter(Boolean);
   }
 
   get isDisabled(): boolean {
-    return this.disabled || this.state === 'disabled';
+    return this.disabled;
   }
 
-  get displayText(): string {
-    if (this.text) return this.text;
+  get displayMessage(): string {
+    if (this.message) {
+      return this.message;
+    }
 
-    return {
-      verified: 'Verified',
-      approved: 'Approved',
-      rejected: 'Rejected',
-      pending: 'Pending',
-      expired: 'Expired',
-      custom: 'Stamped'
-    }[this.variant];
+    return this.rtl
+      ? 'موقع حكومي مسجل لدى هيئة الحكومة الرقمية'
+      : 'A government website registered with the Digital Government Authority.';
   }
 
-  get hasMeta(): boolean {
-    return this.showMeta && (!!this.date || !!this.reference || !!this.signature);
+  get displayLinkLabel(): string {
+    if (this.linkLabel) {
+      return this.linkLabel;
+    }
+
+    return this.rtl ? 'كيف تتحقق؟' : 'How you know?';
   }
 
-  get rotationTransform(): string {
-    const amount = Number(this.rotation);
-    return Number.isFinite(amount) && amount !== 0 ? `rotate(${amount}deg)` : '';
+  get domainPrefix(): string {
+    if (this.domainTitlePrefix) {
+      return this.domainTitlePrefix;
+    }
+
+    const copy = EXTENSION_COPY[this.extension];
+    return this.rtl ? copy.arTitlePrefix : copy.enTitlePrefix;
+  }
+
+  get domainDescriptionText(): string {
+    if (this.domainDescription) {
+      return this.domainDescription;
+    }
+
+    const copy = EXTENSION_COPY[this.extension];
+    const template = this.rtl ? copy.arDescription : copy.enDescription;
+    return template.replace('{extension}', this.sentenceExtension);
+  }
+
+  get securityPrefix(): string {
+    if (this.securityTitlePrefix) {
+      return this.securityTitlePrefix;
+    }
+
+    return this.rtl
+      ? 'المواقع الإلكترونية الحكومية الموثوقة تستخدم بروتوكول '
+      : 'Official Reliable websites use ';
+  }
+
+  get securityDescriptionText(): string {
+    if (this.securityDescription) {
+      return this.securityDescription;
+    }
+
+    return this.rtl
+      ? 'تحقق من أن الموقع يستخدم بروتوكول HTTPS'
+      : 'Ensure the website is using the HTTPS protocol.';
+  }
+
+  get registrationLabelText(): string {
+    if (this.registrationLabel) {
+      return this.registrationLabel;
+    }
+
+    return this.rtl
+      ? 'مسجل لدى هيئة الحكومة الرقمية برقم:'
+      : 'Registered on Digital Government Authority:';
+  }
+
+  get headingExtension(): string {
+    if (this.rtl && this.extension !== '.sa') {
+      return this.extension;
+    }
+
+    return this.sentenceExtension;
+  }
+
+  get sentenceExtension(): string {
+    return this.extension.startsWith('.') ? this.extension : `.${this.extension}`;
   }
 
   get computedAriaLabel(): string {
-    return [this.title, this.displayText, this.reference, this.date].filter(Boolean).join(', ');
+    return [this.displayMessage, this.displayLinkLabel, this.registrationNumber]
+      .filter(Boolean)
+      .join(', ');
   }
 
-  isQrCellFilled(index: number): boolean {
-    const seed = `${this.displayText}${this.reference}${this.date}`.length;
-    return [0, 1, 2, 5, 10, 11, 12, 14, 17, 18, 20, 22, 24].includes(index) || (index + seed) % 4 === 0;
+  toggleOpened(): void {
+    if (this.isDisabled) {
+      return;
+    }
+
+    this.opened = !this.opened;
+    this.openedChange.emit(this.opened);
+  }
+
+  private normalizeExtension(value: DigitalStampExtension | string): DigitalStampExtension {
+    const normalized = `${value || 'gov.sa'}`.trim().toLowerCase();
+
+    if (normalized === '.sa') {
+      return '.sa';
+    }
+
+    const withoutLeadingDot = normalized.replace(/^\./, '') as DigitalStampExtension;
+    return withoutLeadingDot in EXTENSION_COPY ? withoutLeadingDot : 'gov.sa';
   }
 }

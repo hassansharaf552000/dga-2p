@@ -1,67 +1,108 @@
-<article
-  class="{{ stampClasses.join(' ') }}"
-  [attr.dir]="rtl ? 'rtl' : null"
-  [attr.aria-label]="computedAriaLabel"
-  [style.transform]="rotationTransform">
-  @if (showIcon) {
-    <span class="dga-digital-stamp__mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" class="dga-digital-stamp__icon">
-        @switch (variant) {
-          @case ('rejected') {
-            <path d="M7 7L17 17M17 7L7 17" />
-          }
-          @case ('pending') {
-            <path d="M12 7V12L15 15" />
-          }
-          @case ('expired') {
-            <path d="M8 8L16 16M16 8L8 16" />
-          }
-          @default {
-            <path d="M7.75 12.25L10.5 15L16.25 9.25" />
-          }
+<section
+  [class]="stampClasses.join(' ')"
+  [attr.dir]="rtl ? 'rtl' : 'ltr'"
+  [attr.aria-label]="computedAriaLabel">
+  <div class="dga-digital-stamp__summary">
+    <div class="dga-digital-stamp__summary-main">
+      <span class="dga-digital-stamp__flag" aria-hidden="true">
+        <svg viewBox="0 0 20 14" focusable="false">
+          <rect width="20" height="14" fill="#006923" />
+          <path
+            d="M5.3 5.2h9.2M6.2 6.7h7.5M7.4 4h5.8M5.2 9.3h9.7"
+            stroke="#fff"
+            stroke-width="0.75"
+            stroke-linecap="round" />
+          <path d="M14.7 8.1c-.7 1-1.8 1.5-3.1 1.5H6.4" stroke="#fff" stroke-width="0.7" stroke-linecap="round" />
+        </svg>
+      </span>
+      <p class="dga-digital-stamp__message">{{ displayMessage }}</p>
+    </div>
+
+    <button
+      type="button"
+      class="dga-digital-stamp__toggle"
+      [disabled]="isDisabled"
+      [attr.aria-expanded]="opened"
+      (click)="toggleOpened()">
+      <span>{{ displayLinkLabel }}</span>
+      <svg class="dga-digital-stamp__toggle-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        @if (opened) {
+          <path d="M4 10l4-4 4 4" />
+        } @else {
+          <path d="M4 6l4 4 4-4" />
         }
-        <circle cx="12" cy="12" r="9" />
       </svg>
-    </span>
-  }
-
-  <div class="dga-digital-stamp__content">
-    <span class="dga-digital-stamp__eyebrow">{{ title }}</span>
-    <strong class="dga-digital-stamp__status">{{ displayText }}</strong>
-
-    @if (organization) {
-      <span class="dga-digital-stamp__organization">{{ organization }}</span>
-    }
-
-    @if (hasMeta) {
-      <dl class="dga-digital-stamp__meta">
-        @if (reference) {
-          <div>
-            <dt>{{ referenceLabel }}</dt>
-            <dd>{{ reference }}</dd>
-          </div>
-        }
-        @if (date) {
-          <div>
-            <dt>{{ dateLabel }}</dt>
-            <dd>{{ date }}</dd>
-          </div>
-        }
-        @if (signature) {
-          <div>
-            <dt>{{ signatureLabel }}</dt>
-            <dd>{{ signature }}</dd>
-          </div>
-        }
-      </dl>
-    }
+    </button>
   </div>
 
-  @if (showQr) {
-    <span class="dga-digital-stamp__qr" [attr.aria-label]="qrLabel" role="img">
-      @for (cell of qrCells; track cell) {
-        <span [class.dga-digital-stamp__qr-cell--filled]="isQrCellFilled(cell)"></span>
+  @if (opened) {
+    <div class="dga-digital-stamp__details">
+      @if (showDomain || showSecurity) {
+        <div class="dga-digital-stamp__extension">
+          @if (showDomain) {
+            <article class="dga-digital-stamp__proof">
+              <span class="dga-digital-stamp__proof-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M9.5 14.5l5-5" />
+                  <path d="M8 10.5l-1.1 1.1a3.2 3.2 0 0 0 4.5 4.5l1.1-1.1" />
+                  <path d="M16 13.5l1.1-1.1a3.2 3.2 0 0 0-4.5-4.5L11.5 9" />
+                </svg>
+              </span>
+
+              <div class="dga-digital-stamp__proof-text">
+                <h3 class="dga-digital-stamp__proof-title">
+                  <span>{{ domainPrefix }}</span>
+                  <strong>{{ headingExtension }}</strong>
+                </h3>
+                <p class="dga-digital-stamp__proof-description">{{ domainDescriptionText }}</p>
+              </div>
+            </article>
+          }
+
+          @if (showSecurity) {
+            <article class="dga-digital-stamp__proof">
+              <span class="dga-digital-stamp__proof-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M7.5 10V8a4.5 4.5 0 0 1 9 0v2" />
+                  <rect x="5.5" y="10" width="13" height="9" rx="2" />
+                  <path d="M12 13.5v2" />
+                </svg>
+              </span>
+
+              <div class="dga-digital-stamp__proof-text">
+                <h3 class="dga-digital-stamp__proof-title">
+                  <span>{{ securityPrefix }}</span>
+                  <strong>HTTPS</strong>
+                </h3>
+                <p class="dga-digital-stamp__proof-description">{{ securityDescriptionText }}</p>
+              </div>
+            </article>
+          }
+        </div>
       }
-    </span>
+
+      @if (showRegistration && registrationNumber) {
+        <div class="dga-digital-stamp__registration">
+          <span class="dga-digital-stamp__dga-logo" aria-hidden="true">
+            <svg viewBox="0 0 24 32" focusable="false">
+              <path d="M12 2v6M12 24v6" stroke="#6D5DF7" stroke-width="1.8" stroke-linecap="round" />
+              <path d="M4 8l5 5M20 8l-5 5M4 24l5-5M20 24l-5-5" stroke="#16A4C7" stroke-width="1.8" stroke-linecap="round" />
+              <path d="M8 16h8M12 12v8" stroke="#1B8354" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </span>
+
+          <div class="dga-digital-stamp__registration-text">
+            <span>{{ registrationLabelText }}</span>
+            @if (registrationHref) {
+              <a class="dga-digital-stamp__registration-link" [href]="registrationHref">
+                {{ registrationNumber }}
+              </a>
+            } @else {
+              <span class="dga-digital-stamp__registration-link">{{ registrationNumber }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
   }
-</article>
+</section>

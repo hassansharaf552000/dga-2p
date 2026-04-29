@@ -1,0 +1,115 @@
+.dga-digital-stamp__extension {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--dga-space-4, 16px);
+  width: 100%;
+}
+
+.dga-digital-stamp__proof {
+  display: flex;
+  flex: 1 1 360px;
+  align-items: flex-start;
+  gap: var(--stamp-proof-gap);
+  min-width: 0;
+}
+
+.dga-digital-stamp__proof-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 var(--stamp-proof-icon);
+  width: var(--stamp-proof-icon);
+  height: var(--stamp-proof-icon);
+  border: 1px solid var(--stamp-success-border);
+  border-radius: var(--dga-radius-full, 9999px);
+  background: transparent;
+  color: var(--stamp-success-border);
+  box-shadow: var(--dga-shadow-xs, 0 1px 2px 0 rgb(16 24 40 / 5%));
+}
+
+.dga-digital-stamp__proof-icon svg {
+  width: var(--stamp-proof-icon-inner);
+  height: var(--stamp-proof-icon-inner);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dga-digital-stamp__proof-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--dga-space-3, 12px);
+  min-width: 0;
+}
+
+.dga-digital-stamp__proof-title {
+  margin: 0;
+  color: var(--stamp-text);
+  font-size: var(--dga-text-lg-size, 18px);
+  font-weight: var(--dga-font-semibold, 600);
+  line-height: var(--dga-text-lg-line, 28px);
+  letter-spacing: 0;
+}
+
+.dga-digital-stamp__proof-title strong {
+  color: var(--stamp-link);
+  font-weight: inherit;
+}
+
+.dga-digital-stamp__proof-description {
+  margin: 0;
+  color: var(--stamp-paragraph);
+  font-size: var(--dga-text-md-size, 16px);
+  font-weight: var(--dga-font-regular, 400);
+  line-height: var(--dga-text-md-line, 24px);
+  letter-spacing: 0;
+}
+
+.dga-digital-stamp__registration {
+  display: flex;
+  align-items: center;
+  gap: var(--dga-space-6, 24px);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--dga-space-2, 8px) var(--dga-space-6, 24px);
+  border-radius: var(--dga-radius-md, 8px);
+  background: var(--dga-bg-card, #fff);
+}
+
+.dga-digital-stamp__dga-logo {
+  display: inline-flex;
+  flex: 0 0 21px;
+  width: 21px;
+  height: 31px;
+}
+
+.dga-digital-stamp__dga-logo svg {
+  display: block;
+  width: 21px;
+  height: 31px;
+}
+
+.dga-digital-stamp__registration-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dga-space-3, 12px);
+  min-width: 0;
+  color: var(--stamp-text);
+  font-size: var(--dga-text-md-size, 16px);
+  font-weight: var(--dga-font-regular, 400);
+  line-height: var(--dga-text-md-line, 24px);
+}
+
+.dga-digital-stamp__registration-link {
+  color: var(--stamp-link);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+
+span.dga-digital-stamp__registration-link {
+  cursor: default;
+}
